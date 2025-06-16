@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wildcard.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ddecilap <ddecilap@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 09:12:01 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/16 12:53:18 by ddecilap         ###   ########.fr       */
+/*   Updated: 2025/06/16 22:22:38 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	init_wildcard_ctx(t_wildcard_ctx *ctx)
 {
 	ctx->capacity = WILDCARD_CAPACITY;
 	ctx->count = 0;
-	ctx->results = malloc(sizeof(char *) * ctx->capacity);
+	ctx->results = my_malloc(sizeof(char *) * ctx->capacity);
 	if (!ctx->results)
 		exit_error("malloc failed in wildcard");
 }
@@ -45,7 +45,7 @@ static void	wildcard_grow_results(t_wildcard_ctx *ctx)
 
 	i = 0;
 	new_cap = ctx->capacity * 2;
-	new_results = malloc(sizeof(char *) * new_cap);
+	new_results = my_malloc(sizeof(char *) * new_cap);
 	if (!new_results)
 	{
 		free_wildcard_ctx(ctx);

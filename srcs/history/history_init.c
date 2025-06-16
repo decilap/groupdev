@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   history_init.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 12:33:52 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/06 20:38:32 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/16 22:22:38 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ bool	add_to_history(t_hist **history, char *cmd)
 {
 	t_hist	*new_node;
 
-	new_node = malloc(sizeof(t_hist));
+	new_node = my_malloc(sizeof(t_hist));
 	if (!new_node)
 	{
 		perror(RED "minishell: 6 unset" RESET);

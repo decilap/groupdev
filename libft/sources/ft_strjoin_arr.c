@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_str_join_arr.c                                  :+:      :+:    :+:   */
+/*   ft_strjoin_arr.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ddecilap <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 16:10:51 by ddecilap          #+#    #+#             */
-/*   Updated: 2024/11/19 14:33:30 by ddecilap         ###   ########.fr       */
+/*   Updated: 2025/06/16 22:22:38 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	*ft_strjoin_array(char **line, char *buff)
 		return (NULL);
 	len_line = ft_strlen(*line);
 	len_buff = ft_strlen(buff);
-	tmp = malloc(len_line + len_buff + 1);
+	tmp = my_malloc(len_line + len_buff + 1);
 	if (!tmp)
 		return (NULL);
 	copy_strings(tmp, *line, buff);

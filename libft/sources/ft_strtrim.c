@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ddecilap <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 14:36:23 by ddecilap          #+#    #+#             */
-/*   Updated: 2024/11/27 17:45:26 by ddecilap         ###   ########.fr       */
+/*   Updated: 2025/06/16 22:22:38 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 	while (end > start && ft_strchr(set, *(end - 1)))
 		end--;
 	trim_len = end - start;
-	str_trim = (char *)malloc(trim_len + 1);
+	str_trim = (char *)my_malloc(trim_len + 1);
 	if (!str_trim)
 		return (NULL);
 	ft_memcpy(str_trim, start, trim_len);

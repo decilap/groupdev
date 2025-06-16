@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_tokens.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 14:47:00 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/14 18:15:10 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/16 22:22:38 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@
  */
 static void	allocate_cmd_args(t_cmd *cmd, int count)
 {
-	cmd->args = malloc(sizeof(char *) * (count + 1));
+	cmd->args = my_malloc(sizeof(char *) * (count + 1));
 	if (!cmd->args)
 		exit_error("malloc failed (args)");
-	cmd->quote_chars = malloc(sizeof(t_quote_state) * (count + 1));
+	cmd->quote_chars = my_malloc(sizeof(t_quote_state) * (count + 1));
 	if (!cmd->quote_chars)
 	{
 		free(cmd->args);

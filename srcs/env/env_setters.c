@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_setters.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 16:20:54 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/14 23:35:17 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/16 22:22:38 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static void	append_new_env(char *new_var, t_shell *shell, int count)
 	char	**new_env;
 
 	j = 0;
-	new_env = malloc(sizeof(char *) * (count + 2));
+	new_env = my_malloc(sizeof(char *) * (count + 2));
 	if (!new_env)
 		return (perror(RED "minishell: 4 export" RESET));
 	while (j < count)

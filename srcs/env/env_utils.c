@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 15:40:19 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/14 23:36:22 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/16 22:22:38 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,7 @@ void	remove_env_var(const char *name, t_shell *sh)
 	len = ft_strlen(name);
 	while (sh->env[i])
 		i++;
-	new_env = malloc(sizeof(char *) * (i + 1));
+	new_env = my_malloc(sizeof(char *) * (i + 1));
 	if (!new_env)
 		return (perror("minishell: 5 unset"));
 	i = -1;

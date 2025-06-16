@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   history_tool2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 12:15:10 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/14 18:08:16 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/16 22:22:38 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static char	*ft_stradd(char *str, char buff)
 
 	i = 0;
 	len = ft_strlen(str);
-	ret = (char *)malloc(sizeof(char) * (len + 2));
+	ret = (char *)my_malloc(sizeof(char) * (len + 2));
 	if (ret == NULL)
 		return (NULL);
 	while (str && str[i])

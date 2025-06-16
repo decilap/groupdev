@@ -6,7 +6,7 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 12:15:10 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/11 15:44:49 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/16 23:29:11 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,12 @@ static char	*ft_stradd(char *str, char buff)
 
 	i = 0;
 	len = ft_strlen(str);
-	ret = (char *)malloc(sizeof(char) * (len + 2));
+	ret = (char *)my_malloc(sizeof(char) * (len + 2));
 	if (ret == NULL)
+	{
+		free(str);
 		return (NULL);
+	}
 	while (str && str[i])
 	{
 		ret[i] = str[i];

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   group_commands.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 14:33:30 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/14 22:55:42 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/16 22:22:38 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_cmd	*setup_new_cmd(void)
 {
 	t_cmd	*cmd;
 
-	cmd = malloc(sizeof(t_cmd));
+	cmd = my_malloc(sizeof(t_cmd));
 	if (!cmd)
 		exit_error("malloc failed");
 	cmd->args = NULL;
@@ -52,7 +52,7 @@ t_group	*create_group(t_cmd *cmds)
 
 	if (!cmds)
 		return (NULL);
-	group = malloc(sizeof(t_group));
+	group = my_malloc(sizeof(t_group));
 	if (!group)
 		exit_error("malloc group_commands");
 	group->cmds = cmds;

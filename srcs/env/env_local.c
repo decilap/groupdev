@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_local.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 16:12:32 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/15 02:58:02 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/16 22:22:38 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	create_local_var(t_shell *shell, const char *name,
 {
 	t_var	*var;
 
-	var = malloc(sizeof(t_var));
+	var = my_malloc(sizeof(t_var));
 	if (!var)
 	{
 		perror(RED "minishell: unset - malloc failed" RESET);

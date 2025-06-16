@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ddecilap <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 19:12:14 by ddecilap          #+#    #+#             */
-/*   Updated: 2024/11/20 19:15:34 by ddecilap         ###   ########.fr       */
+/*   Updated: 2025/06/16 22:22:38 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	*ft_itoa(int c)
 	len = count_numbers(c);
 	if (c == -2147483648)
 		return (ft_strdup("-2147483648"));
-	result = (char *)malloc(sizeof(char) * (len + 1));
+	result = (char *)my_malloc(sizeof(char) * (len + 1));
 	if (!result)
 		return (NULL);
 	if (c < 0)
