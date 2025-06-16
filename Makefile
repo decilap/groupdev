@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+         #
+#    By: ddecilap <ddecilap@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/27 20:46:26 by ryoussfi          #+#    #+#              #
-#    Updated: 2025/06/15 01:07:01 by decilapdeni      ###   ########.fr        #
+#    Updated: 2025/06/16 11:12:47 by ddecilap         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,21 +40,20 @@ CC			=	cc
 DFLAGS		=	-MMD -MP
 UNAME_S		=	${shell uname -s}
 #-Wall -Wextra -Werror
+
 ifeq ($(UNAME_S),Linux)
-	CFLAGS		= 
-	LDFLAGS		=	-lreadline
-else
-	CFLAGS =  -I/opt/homebrew/opt/readline/include #-Wall -Wextra -Werror
-	LDFLAGS = -L/opt/homebrew/opt/readline/lib -lreadline
+	CFLAGS  =
+	LDFLAGS = -lreadline
+else ifeq ($(UNAME_S),Darwin)
+	ifeq ($(shell test -d /opt/homebrew && echo yes),yes)
+		CFLAGS  = -I/opt/homebrew/opt/readline/include -Wextra -Wall -Werror
+		LDFLAGS = -L/opt/homebrew/opt/readline/lib -lreadline
+	else
+		# Sinon on suppose une installation classique (Intel mac)
+		CFLAGS  = -I/usr/local/opt/readline/include -Wextra -Wall -Werror
+		LDFLAGS = -L/usr/local/opt/readline/lib -lreadline
+	endif
 endif
-
-# 	POUR ridou MAC :
-# CFLAGS = -Wall -Werror -Wextra -I/usr/local/opt/readline/include
-# LDFLAGS = -L/usr/local/opt/readline/lib -lreadline
-
-#	POUR DENIS MAC :
-# CFLAGS =  -I/opt/homebrew/opt/readline/include #-Wall -Wextra -Werror
-# LDFLAGS = -L/opt/homebrew/opt/readline/lib -lreadline
 
 LIBFT_DIR	=	./libft/
 HEADERS		=	./includes/
@@ -64,10 +63,9 @@ BUILD_DIR	=	./build/
 SRCS		=	${SRCS_DIR}minishell.c \
 				${SRCS_DIR}brain/brain.c \
 				${SRCS_DIR}brain/tool_loop_heredoc.c \
-				${SRCS_DIR}brain/tool_2_loop_heredoc.c \
 				${SRCS_DIR}here_doc/here_doc.c \
 				${SRCS_DIR}here_doc/go_heredoc.c \
-				${SRCS_DIR}here_doc/here_doc_tool.c \
+				${SRCS_DIR}here_doc/here_doc_init.c \
 				$(SRCS_DIR)lexer/lexer_extract_word.c \
 				$(SRCS_DIR)lexer/lexer_redir.c \
 				$(SRCS_DIR)lexer/lexer_utils.c \
