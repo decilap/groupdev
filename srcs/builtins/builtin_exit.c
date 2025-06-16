@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: ddecilap <ddecilap@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 15:39:47 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/15 10:57:14 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/16 11:58:28 by ddecilap         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/includes.h" 
+#include "../includes/includes.h"
 
 /**
  * @brief Valide les arguments passés à la commande `exit`.
@@ -39,7 +39,7 @@ static int	validate_exit_args(char **args, t_shell *shell, long *exit_code)
 		ft_putstr_fd(RED "minishell: exit: ", STDERR_FILENO);
 		ft_putstr_fd(args[1], STDERR_FILENO);
 		ft_putendl_fd(": numeric argument required" RESET, STDERR_FILENO);
-		*exit_code = 255;
+		*exit_code = 2;
 		return (0);
 	}
 	if (args[2])
