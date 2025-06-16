@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: ddecilap <ddecilap@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 19:57:34 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/15 10:48:35 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/16 12:53:31 by ddecilap         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@
 # define MAX_SUBSHELLS 128
 # define MAX_PIPE_CMDS 4096
 # define MAX_CMD_ARGS 1024
+
+#define MINI_PATH_MAX        4096
 
 # define DEBUG_MODE 0
 
@@ -139,7 +141,7 @@ typedef struct s_shell
 /**
  * @brief Represents a token produced by lexical analysis.
  *
- * Contains the token type, quoting information, value, and links to the next 
+ * Contains the token type, quoting information, value, and links to the next
  * token.
  */
 typedef struct s_token

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wildcard.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: ddecilap <ddecilap@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 09:12:01 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/14 22:09:02 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/16 12:53:18 by ddecilap         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ static char	**wildcard_expand_dir(const char *dirpart, const char *pattern)
  */
 char	**wildcard_expand(const char *pattern)
 {
-	char	pat[PATH_MAX];
+	char	pat[MINI_PATH_MAX];
 	char	*slash;
 	char	*patternpart;
 	char	*dirpart;

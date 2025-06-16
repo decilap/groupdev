@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: san <san@student.42.fr>                    +#+  +:+       +#+         #
+#    By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/27 20:46:26 by ryoussfi          #+#    #+#              #
-#    Updated: 2025/06/16 13:57:34 by san              ###   ########.fr        #
+#    Updated: 2025/06/16 14:58:21 by ryoussfi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,6 @@ CC			=	gcc -g
 # CC			=	clang -fsanitize=address -g
 # CC			=	gcc -fsanitize=address -g
 
-# 	POUR LINUX :
 DFLAGS		=	-MMD -MP
 UNAME_S		=	${shell uname -s}
 
