@@ -6,7 +6,7 @@
 /*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 15:39:47 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/14 23:21:08 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/15 10:57:14 by decilapdeni      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,6 @@ int	builtin_exit(char **args, t_shell *shell)
 	if (err)
 		return (1);
 	shell->exit_status = (unsigned char)exit_code;
-	clean_exit(shell, 1);
+	clean_exit(shell);
 	return (0);
 }

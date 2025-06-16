@@ -6,136 +6,102 @@
 /*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:40:48 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/14 16:04:01 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/15 12:02:32 by decilapdeni      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/includes.h"
 
-static void	ft_init_signal_heredoc(struct sigaction *sa_old)
+static char	*line_expansion(char *line, t_shell *shell)
 {
-	struct sigaction	sa_new;
+	t_token	*tmp;
+	char	*str;
 
-	sa_new.sa_handler = sigint_here_doc_handler;
-	sa_new.sa_flags = 0;
-	sigemptyset(&sa_new.sa_mask);
-	sigaction(SIGINT, &sa_new, sa_old);
-	*get_heredoc_interrupt_flag() = 0;
-}
-
-static bool	ft_init_delimiter(t_shell *shell, const char *delimiter,
-	char **clean_delim, int quoted)
-{
-	char	*tmp;
-
-	*clean_delim = ft_strdup(delimiter);
-	if (!clean_delim)
-	{
-		shell->exit_status = 1;
-		return (-1);
-	}
-	if (quoted)
-		remove_quotes(clean_delim);
-	if (!*clean_delim)
-	{
-		shell->exit_status = 1;
-		return (-1);
-	}
-	tmp = ft_strjoin(*clean_delim, "\n");
+	tmp = expand_variables_heredoc(line, shell, 1, Q_HEREDOC);
 	if (!tmp)
+		return (NULL);
+	str = ft_strdup(tmp->value);
+	free_tokens(tmp);
+	free(line);
+	line = NULL;
+	return (str);
+}
+
+bool	ft_output_heredoc(t_shell *shell, char **line, int quoted, int fd)
+{
+	if (!quoted)
+		*line = line_expansion(*line, shell);
+	if (!*line)
 	{
-		free(*clean_delim);
+		perror(RED "minishell: ft_output_heredoc" RESET);
 		shell->exit_status = 1;
-		return (-1);
+		return (false);
 	}
-	free(*clean_delim);
-	*clean_delim = tmp;
-	return (0);
+	ft_putstr_fd(*line, fd);
+	return (true);
 }
 
-static int	ft_init_fd_heredoc(t_shell *shell, int *fd,
-	char *clean_delim, struct sigaction *sa_old)
+static int	ft_multi_data(t_shell *shell, t_token *scan, t_param param, int fd)
 {
-	int	fd_tmp;
+	char	*line;
+	int		ret;
 
-	fd_tmp = open(TMP_FILE, O_CREAT | O_WRONLY | O_TRUNC, 0600);
-	if (fd_tmp < 0)
+	ret = 0;
+	line = NULL;
+	while (scan && scan->value)
 	{
-		perror("heredoc: open temp");
-		free(clean_delim);
-		sigaction(SIGINT, sa_old, NULL);
-		shell->exit_status = 1;
-		return (-1);
-	}
-	*fd = fd_tmp;
-	return (fd_tmp);
-}
-
-static int	ft_end_heredoc(t_cmd *cmd, t_shell *shell)
-{
-	if (*get_heredoc_interrupt_flag())
-	{
-		cmd->fd_in = open(TMP_FILE, O_TRUNC | O_RDONLY);
-		unlink(TMP_FILE);
-		if (cmd->fd_in < 0)
-		{
-			perror("heredoc: reopen");
+		line = ft_strjoin(scan->value, "\n");
+		if (!line)
 			return (-1);
-		}
-		shell->exit_status = 130;
-	}
-	else
-	{
-		cmd->fd_in = open(TMP_FILE, O_RDONLY);
-		unlink(TMP_FILE);
-		if (cmd->fd_in < 0)
+		ft_manage_hist_here_doc(shell, line);		
+		if (ft_strcmp(line, param.ptrdelim) == 0)
 		{
-			perror("heredoc: reopen");
-			return (-1);
+			ret = 1;
+			break ;
 		}
-		shell->exit_status = 0;
+		if (!ft_output_heredoc(shell, &line, param.quoted, fd))
+			return (free(line), -1);
+		free(line);
+		line = NULL;
+		scan = scan->next;
 	}
-	return (0);
+	return (free(line), ret);
 }
 
-static t_param	ft_init_param(int *ret_multi, char *delim, int quoted, int fd_tmp)
+static int	ft_error_here_doc(t_shell *shell, t_param param, struct sigaction *sa_old, int fd)
 {
-	t_param	param;
-
-	*ret_multi = 0;
-	param.delim = delim;
-	param.quoted = quoted;
-	param.fd = fd_tmp;
-	return (param);
+	safe_close(fd);
+	free(param.ptrdelim);
+	sigaction(SIGINT, sa_old, NULL);
+	shell->exit_status = 1;
+	return (-1);
 }
 
 int	handle_here_doc(t_shell *shell, t_cmd *cmd, t_token *tok,
 		t_token *multi_data)
 {
 	struct sigaction	sa_old;
-	char				*delim;
-	int					fd_tmp;
 	int					ret_multi;
 	t_param				param;
+	int					fd;
 
-	ft_init_signal_heredoc(&sa_old);
-	if (ft_init_delimiter(shell, tok->next->value, &delim, tok->next->quoted))
+	ret_multi = 0;
+	fd = -1;
+	param = ft_init_param(shell, tok, &fd);
+	if (fd == -1)
 		return (-1);
-	if (ft_init_fd_heredoc(shell, &fd_tmp, delim, &sa_old) < 0)
-		return (-1);
-	param = ft_init_param(&ret_multi, delim, tok->next->quoted, fd_tmp);
+	ft_history_here_doc(shell, "\n");
 	if (multi_data)
 	{
-		ret_multi = ft_multi_data(shell, multi_data->next, param);
+		ret_multi = ft_multi_data(shell, multi_data->next, param, fd);
 		if (ret_multi == -1)
-			return (ft_error_here_doc(shell, delim, &sa_old, fd_tmp));
+			return (ft_error_here_doc(shell, param, &sa_old, fd));
 	}
-	if (!*get_heredoc_interrupt_flag() && ret_multi == 0
-		&& !go_heredoc(shell, delim, tok->next->quoted, fd_tmp))
-		return (ft_error_here_doc(shell, delim, &sa_old, fd_tmp));
-	free(delim);
-	safe_close(fd_tmp);
+	ft_init_signal_heredoc(&sa_old);
+	if (ret_multi == 0 && !*get_heredoc_interrupt_flag()
+			&& !go_heredoc(shell, param.ptrdelim, tok->next->quoted, fd))
+		return (ft_error_here_doc(shell, param, &sa_old, fd));
+	safe_close(fd);
 	sigaction(SIGINT, &sa_old, NULL);
-	return (ft_end_heredoc(cmd, shell));
+	return (ft_end_heredoc(cmd, shell)); //  free(param->ptrdelim), free(param), 
 }
-

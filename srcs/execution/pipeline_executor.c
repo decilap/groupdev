@@ -6,7 +6,7 @@
 /*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 15:39:47 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/15 00:33:56 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/15 12:12:11 by decilapdeni      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,28 +49,4 @@ int	execute_pipeline_group(t_cmd **cmd_ptr, t_shell *shell)
 	*cmd_ptr = NULL;
 	shell->exit_status = final_status;
 	return (final_status);
-}
-
-/**
- * @brief Expand arguments for all commands in all groups.
- *
- * @param groups The group list to expand.
- * @param shell The shell context.
- */
-static void	expand_all_groups(t_group *groups, t_shell *shell)
-{
-	t_group	*g;
-	t_cmd	*cmd;
-
-	g = groups;
-	while (g)
-	{
-		cmd = g->cmds;
-		while (cmd)
-		{
-			expand_cmd_args(cmd, shell);
-			cmd = cmd->next;
-		}
-		g = g->next;
-	}
 }

@@ -8,5 +8,4 @@ find srcs/subshell/ \( -name "*.c" -o -name "*.h" \) -exec cat {} + > all_code.c
 export VAR2=test2 && export VAR=test && export VAR3=test3 && echo '$VAR' && echo $VAR2 && echo $VAR3 | cat
 
 
-
-
+potential fuite => ft_herdoc_chr, ft_loop

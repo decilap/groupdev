@@ -6,7 +6,7 @@
 /*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 19:57:34 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/15 02:40:02 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/15 10:48:35 by decilapdeni      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,8 @@ typedef struct s_group
 	struct s_group	*next;
 }	t_group;
 
-void	clean_exit(t_shell *shell, int use_history);
-void	ry_an_exit(t_shell *shell, int exit_code, char *msg);
+void	clean_exit(t_shell *shell);
+bool	ft_brain_of_minishell(t_shell *shell, char *line);
+void	ft_parsing_and_execute(t_shell *shell, char *result, t_token *tok);
 
 #endif

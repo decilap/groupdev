@@ -6,7 +6,7 @@
 /*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 12:01:54 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/14 16:27:18 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/15 11:46:58 by decilapdeni      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,23 +38,25 @@ void	*safe_malloc(size_t size)
 		exit_error(RED "minishell: 00 unset" RESET);
 	return (ptr);
 }
-/* 
-void	ry_an_exit(t_shell *shell, int exit_code, char *msg)
+
+void	ft_error_brain(t_shell *shell)
 {
-	if (!shell)
-		exit(1);
-	if (!save_to_file(shell, &shell->history))
-		perror(RED "minishell: Error in save_to_file for history" RESET);
-	if (shell->history)
-		free_history(&shell->history);
-	rl_clear_history();
-	if (shell->cmds)
-		free_cmds(shell->cmds);
-	if (shell->env)
-		ft_free_arr(shell->env);
-	if (exit_code)
-		perror(msg);
-	// if (exit_code == 0)
-	// 	exit(shell->exit_status);
-	exit(exit_code);
-} */
+	perror(RED "minishell: Error in ft_brain_of." RESET);
+	shell->exit_status = 1;
+}
+
+void	ft_init_pending(t_pending *pen)
+{
+	pen->first = 1;
+	pen->write = 1;
+}
+
+// Renvoie le nombre d'octets prêts à être lus dans STDIN
+int	pending_input(void)
+{
+	int	count;
+
+	count = 0;
+	ioctl(STDIN_FILENO, FIONREAD, &count);
+	return (count);
+}

@@ -6,7 +6,7 @@
 /*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 15:39:47 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/15 02:41:49 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/15 12:07:03 by decilapdeni      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	builtin_echo(char **args)
  * @param oldpwd Previously stored working directory, freed on error.
  * @return 0 on success, 1 on failure.
  */
-static int	try_chdir(char *path, char *oldpwd)
+static int	try_chdir(char *path)
 {
 	if (chdir(path) != 0)
 	{
@@ -112,7 +112,7 @@ int	builtin_cd(char **args, t_shell *shell)
 	}
 	if (prepare_cd_paths(args, shell, &oldpwd, &path))
 		return (1);
-	if (try_chdir(path, oldpwd))
+	if (try_chdir(path))
 	{
 		free(oldpwd);
 		free(path);

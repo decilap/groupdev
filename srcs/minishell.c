@@ -6,13 +6,46 @@
 /*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 13:21:45 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/15 02:22:02 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/15 12:02:05 by decilapdeni      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/includes.h"
 
-void	clean_exit(t_shell *shell, int use_history)
+/**
+ * @brief Handles word tokens (command names, arguments) in the lexer.
+ *
+ * Extracts a word token (respecting quoted substrings), determines if it's a 
+ * subshell,
+ * creates the appropriate token, and sets the quoted flag.
+ *
+ * @param line   The input line being lexed.
+ * @param i      Pointer to the current position in the line (will be advanced).
+ * @param tokens The token list to append to.
+ */
+// static void	replace_nbsp_inplace(char *s)
+// {
+// 	int	i;
+// 	i = 0;
+// 	while (s[i])
+// 	{
+// 		if ((unsigned char)s[i] == 0xC2 && (unsigned char)s[i + 1] == 0xA0)
+// 		{
+// 			s[i] = ' ';
+// 			i++;
+// 			while (s[i])
+// 			{
+// 				s[i] = s[i + 1];
+// 				i++;
+// 			}
+// 			i = 0;
+// 		}
+// 		else
+// 			i++;
+// 	}
+// }
+
+void	clean_exit(t_shell *shell)
 {
 	if (!shell)
 		exit(1);
@@ -20,43 +53,54 @@ void	clean_exit(t_shell *shell, int use_history)
 		perror(RED "minishell: Error in save_to_file for history" RESET);
 	if (shell->history)
 		free_history(&shell->history);
+	rl_clear_history();
 	if (shell->cmds)
 		free_cmds(shell->cmds);
 	if (shell->env)
 		ft_free_arr(shell->env);
-	if (use_history)
-		rl_clear_history();
 	exit(shell->exit_status);
 }
 
-static bool	ft_brain_of_minishell(t_shell *shell, char *line)
+void	ft_parsing_and_execute(t_shell *shell, char *result, t_token *tok)
 {
-	int	ret_multi;
+	t_cmd	*cmd;
 
-	ret_multi = has_complete_multiline_heredoc(line);
-	if (ret_multi < 0)
-	{
-		shell->exit_status = 1;
-		perror(RED "minishell: Error in has_complete_multiline_heredoc" RESET);
-		return (free(line), false);
-	}
-	if (ret_multi > 0 && !ft_loop_with_herdoc(shell, line))
-	{
-		shell->exit_status = 1;
-		(RED "minishell: Error in ft_loop_with_herdoc" RESET);
-		return (free(line), false);
-	}
-	if (ret_multi == 0 && !ft_loop(shell, line))
-	{
-		shell->exit_status = 1;
-		perror(RED "minishell: Error in ft_loop" RESET);
-		return (free(line), false);
-	}
-	return (true);
+	cmd = parse_input(result, shell, tok);
+	if (!cmd)
+		return ;
+	execute_with_logical(cmd, shell);
+	clear_subshell_table();
 }
 
-//tester multi herdoc echo lol && cat << EOF && cat << EOF
-static bool	prompt_loop(t_shell *shell)
+bool	ft_brain_of_minishell(t_shell *shell, char *line)
+{
+	char	**lines;
+	char	*cmd_line;
+	int		i;
+	t_token	*tok;
+
+	i = 0;
+	tok = NULL;
+	lines = ft_split(line, '\n');
+	if (!lines)
+		return (ft_error_brain(shell), false);
+	while (lines[i])
+	{
+		cmd_line = lines[i];
+		if (!cmd_line[0] && i++)
+			continue ;
+		ft_history_loop(shell, lines[i]);
+		if (!ft_loop(shell, i + lines, &i, &tok))
+			return (ft_free_arr(lines), false);
+		i++;
+		while (*cmd_line && ft_isspace(*cmd_line))
+			cmd_line++;
+		ft_parsing_and_execute(shell, cmd_line, tok);
+	}
+	return (ft_free_arr(lines), true);
+}
+
+static void	prompt_loop(t_shell *shell)
 {
 	char	*line;
 
@@ -66,7 +110,7 @@ static bool	prompt_loop(t_shell *shell)
 	{
 		line = readline("minishell> ");
 		if (!line)
-			clean_exit(shell, 1);
+			return (clean_exit(shell));
 		if (g_signal == SIGINT)
 		{
 			shell->exit_status = 130;
@@ -78,10 +122,10 @@ static bool	prompt_loop(t_shell *shell)
 			continue ;
 		}
 		if (!ft_brain_of_minishell(shell, line))
-			return (false);
+			return (free(line));
 		free(line);
 	}
-	return (true);
+	return ;
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -95,6 +139,7 @@ int	main(int argc, char **argv, char **envp)
 	ft_init_history_env(&shell);
 	init_signals();
 	prompt_loop(&shell);
-	clean_exit(&shell, 1);
+	perror(RED "\nminishell: Error in prompt_loop" RESET);
+	clean_exit(&shell);
 	return (shell.exit_status);
 }

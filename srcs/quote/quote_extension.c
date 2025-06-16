@@ -6,7 +6,7 @@
 /*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 16:02:20 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/15 03:09:08 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/15 12:03:23 by decilapdeni      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,7 @@ static int	handle_merge_dollar_with_word(t_token **curr, t_token **new_tok)
  * 
  * @return 2 if consumed, -1 if error, 0 if not applicable.
  */
-static int	handle_lazy_expand_double_quote(t_token **curr, t_token **new_tok,
-	t_shell *shell)
+static int	handle_lazy_expand_double_quote(t_token **curr, t_shell *shell)
 {
 	char	*expanded;
 
@@ -172,7 +171,7 @@ t_token	*apply_quote_extension(t_token *tokens, t_shell *shell)
 	{
 		if (handle_merge_dollar_with_word(&curr, &new_tok))
 			continue ;
-		res = handle_lazy_expand_double_quote(&curr, &new_tok, shell);
+		res = handle_lazy_expand_double_quote(&curr, shell);
 		if (res == -1)
 			return (free_tokens(new_tok), NULL);
 		if (res == 2)

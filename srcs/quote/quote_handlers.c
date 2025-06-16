@@ -6,7 +6,7 @@
 /*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 16:02:20 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/15 03:08:30 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/15 12:05:06 by decilapdeni      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,7 @@ int	handle_dollar_in_double_quote(t_token **curr, t_token **new_tok)
  * - 0: error
  * - 2: expansion handled (skip current token)
  */
-int	handle_expansion_with_dollar(t_token **curr, t_token **new_tok,
-	t_shell *shell)
+int	handle_expansion_with_dollar(t_token **curr, t_shell *shell)
 {
 	char	*expanded;
 

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ddecilap <ddecilap@student.42.fr>          +#+  +:+       +#+         #
+#    By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/27 20:46:26 by ryoussfi          #+#    #+#              #
-#    Updated: 2025/06/16 11:12:47 by ddecilap         ###   ########.fr        #
+#    Updated: 2025/06/16 11:47:38 by decilapdeni      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,7 @@ UNAME_S		=	${shell uname -s}
 #-Wall -Wextra -Werror
 
 ifeq ($(UNAME_S),Linux)
-	CFLAGS  =
+	CFLAGS  = 
 	LDFLAGS = -lreadline
 else ifeq ($(UNAME_S),Darwin)
 	ifeq ($(shell test -d /opt/homebrew && echo yes),yes)

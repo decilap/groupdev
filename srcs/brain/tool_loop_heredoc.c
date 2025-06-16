@@ -6,133 +6,96 @@
 /*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 13:20:00 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/14 23:00:17 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/15 12:02:16 by decilapdeni      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/includes.h"
 
-static bool	ft_init_pipe_tok(int *pipefd, const char *str)
+static t_token	*tokenize_lines_from_str(char **str)
 {
-	if (pipe(pipefd) == -1)
-		return (false);
-	if (!safe_write(pipefd[1], (char *)str, ft_strlen(str)))
-		return (false);
-	if (!safe_close(pipefd[1]))
-		return (false);
-	return (true);
-}
-
-/**
- * @brief Adds a token to the list from a single input line.
- *
- * This function trims the newline from the line, creates the token,
- * and inserts it into the linked list.
- *
- * @param tokens Pointer to token list.
- * @param line Input line to process.
- * @return 1 on success, 0 on failure.
- */
-static int	add_token_from_line(t_token **tokens, char *line)
-{
-	char			*trim;
 	t_token_data	data;
+	t_token	*tokens;
+	t_token	*check;
+	char	*cmd;
 
-	trim = ft_strtrim(line, "\n");
-	if (!trim)
-		return (0);
-	data = (t_token_data){trim, TOKEN_WORD, 0, Q_NONE};
-	if (!add_token(tokens, data))
-	{
-		free(trim);
-		return (0);
-	}
-	return (1);
-}
-
-/**
- * @brief Tokenizes a string into a list of tokens line by line.
- *
- * This function takes a string, splits it into lines using a pipe trick,
- * trims the newline character from each line, and stores each trimmed line
- * as a TOKEN_WORD into a linked list of tokens.
- * 
- * All memory allocations and errors are properly handled.
- *
- * @param str The input string to tokenize.
- * @return A linked list of tokens, or NULL if any error occurs.
- */
-static t_token	*tokenize_lines_from_str(const char *str)
-{
-	int			pipefd[2];
-	char		*line;
-	t_token		*tokens;
-
-	line = NULL;
 	tokens = NULL;
-	if (!ft_init_pipe_tok(pipefd, str))
-		return (NULL);
-	while (1)
+	while (str && *str)
 	{
-		line = get_next_line(pipefd[0]);
-		if (!line)
-			break ;
-		if (!add_token_from_line(&tokens, line))
+		cmd = ft_strdup(*str);
+		if (!cmd)
 		{
-			free(line);
-			safe_close(pipefd[0]);
 			free_tokens(tokens);
 			return (NULL);
 		}
-		free(line);
+		data = (t_token_data){cmd, TOKEN_WORD, 0, Q_NONE};
+		check = add_token(&tokens, data);
+		if (!check)
+		{
+			free_tokens(tokens);
+			return (free(cmd), NULL);
+		}
+		str++;
 	}
-	safe_close(pipefd[0]);
 	return (tokens);
 }
 
-static char	*extract_heredoc_delim(const char *str)
+static int	ft_take_delim(char **scan, char *delim)
 {
-	const char	*ptr;
-	const char	*start;
+	int	i;
 
-	ptr = str;
-	while (*ptr)
+	i = 0;
+	while (scan && *scan)
 	{
-		if (*ptr == '<' && *(ptr + 1) == '<')
-		{
-			ptr += 2;
-			while (*ptr && (*ptr == ' ' || *ptr == '\t'))
-				ptr++;
-			start = ptr;
-			while (*ptr && !ft_isspace(*ptr))
-				ptr++;
-			return (ft_substr(start, 0, ptr - start));
-		}
-		ptr++;
+		if (ft_strcmp(*scan, delim) == 0)
+			return (i);
+		scan++;
+		i++;
 	}
-	return (NULL);
+	return (i - 1);
 }
 
-bool	ft_init_loop_heredoc(char *line, t_token **tok, char **delim,
-	char **result)
+bool	ft_init_loop_herdoc(char **line, t_token **tok, int *idx, char *delim)
 {
+	int		i;
+
 	*tok = tokenize_lines_from_str(line);
 	if (!*tok)
 	{
 		perror(RED "minishell: Error in tokenize_lines_from_str" RESET);
 		return (false);
 	}
-	*delim = extract_heredoc_delim((*tok)->value);
-	if (!*delim)
-	{
-		perror(RED "minishell: Error in extract_heredoc_delim" RESET);
-		return (free_tokens(*tok), false);
-	}
-	*result = ft_strdup((*tok)->value);
-	if (!*result)
-	{
-		perror(RED "minishell: (ftilh) ft_strdup" RESET);
-		return (free_tokens(*tok), free(delim), false);
-	}
+	i = ft_take_delim(1 + line, delim) + 1;
+	*idx += i;
 	return (true);
+}
+
+/**
+ * @brief Handles the parsing and expansion of a heredoc token.
+ *
+ * Processes a heredoc token, performs input capture until the delimiter,
+ * and updates the command's input FD accordingly.
+ *
+ * @param tok      Pointer to the current token (will be advanced).
+ * @param shell    Shell context (for status and env).
+ * @param curr     The command struct to set the heredoc FD on.
+ * @return 1 if heredoc processed, -1 on error, 0 if not a heredoc.
+ */
+int	handle_heredoc_token(t_token **tok, t_shell *shell, t_cmd *curr,
+		t_token *multi_data)
+{
+	if ((*tok)->type != TOKEN_HEREDOC)
+		return (0);
+	if (!(*tok)->next)
+	{
+		ft_putstr_fd(RED "minishell: syntax error near\
+			unexpected token `newline'\n" RESET, STDERR_FILENO);
+		shell->exit_status = 2;
+		return (-1);
+	}
+	if (handle_here_doc(shell, curr, *tok, multi_data))
+		return (-1);
+	*tok = (*tok)->next;
+	*tok = (*tok)->next;
+	return (1);
 }
