@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: san <san@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 13:20:26 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/15 01:26:41 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/16 12:23:28 by san              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ char		*ft_strtrim(char const *s1, char const *set);
 char		*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 char		*ft_strjoin_array(char **line, char *buff);
 int			ft_strequ(const char *s1, const char *s2);
-char		*get_next_line(int fd);
+char		*get_next_line_mod(int fd);
 int			ft_getline(int fd, char **buffer);
 char		*ft_strcpy(char *s1, const char *s2);
 char		*ft_strncpy(char *dst, const char *src, size_t n);

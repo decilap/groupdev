@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: san <san@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 14:52:59 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/14 22:32:41 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/16 12:46:42 by san              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ t_token	*add_token(t_token **head, t_token_data data)
 	t_token	*tmp;
 
 	new = safe_malloc(sizeof(t_token));
+	if (!new)
+		return (NULL);
 	new->type = data.type;
 	new->next = NULL;
 	new->quoted = data.quoted;

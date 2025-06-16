@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: san <san@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 15:39:47 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/15 10:57:14 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/16 13:16:38 by san              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,5 +75,5 @@ int	builtin_exit(char **args, t_shell *shell)
 		return (1);
 	shell->exit_status = (unsigned char)exit_code;
 	clean_exit(shell);
-	return (0);
+	return (404);
 }

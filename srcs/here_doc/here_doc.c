@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: san <san@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:40:48 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/15 12:02:32 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/16 13:58:00 by san              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,5 +103,5 @@ int	handle_here_doc(t_shell *shell, t_cmd *cmd, t_token *tok,
 		return (ft_error_here_doc(shell, param, &sa_old, fd));
 	safe_close(fd);
 	sigaction(SIGINT, &sa_old, NULL);
-	return (ft_end_heredoc(cmd, shell)); //  free(param->ptrdelim), free(param), 
+	return (free(param.ptrdelim), ft_end_heredoc(cmd, shell));
 }

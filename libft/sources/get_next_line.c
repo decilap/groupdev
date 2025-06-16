@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: san <san@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 11:02:01 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/05/25 12:32:15 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/16 12:23:08 by san              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,13 @@ static int	read_line(int fd, char **buffer, size_t *pos, size_t *size)
 	char	c;
 	ssize_t	bytes_read;
 
+	c = '\0';
 	while (1)
 	{
 		bytes_read = read(fd, &c, 1);
-		if (bytes_read <= 0)
+		if (bytes_read < 0 || (bytes_read == 0 && c == '\0'))
 			break ;
-		if (c == '\r')
+		if (c == '\r' || bytes_read == 0)
 			continue ;
 		if (*pos + 1 >= *size)
 		{
@@ -58,7 +59,7 @@ static int	read_line(int fd, char **buffer, size_t *pos, size_t *size)
 	return (bytes_read);
 }
 
-char	*get_next_line(int fd)
+char	*get_next_line_mod(int fd)
 {
 	char	*buf;
 	int		status;

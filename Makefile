@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+         #
+#    By: san <san@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/27 20:46:26 by ryoussfi          #+#    #+#              #
-#    Updated: 2025/06/16 11:47:38 by decilapdeni      ###   ########.fr        #
+#    Updated: 2025/06/16 13:57:34 by san              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,18 +31,17 @@ LIBFT		=	libft.a
 
 UNAME_S := $(shell uname -s)
 
+# CC			=	cc
+CC			=	gcc -g
 # CC			=	clang -fsanitize=address -g
-CC			=	cc
-# CC			=	gcc
-# CC			=	clang -fsanitize=address -g
+# CC			=	gcc -fsanitize=address -g
 
 # 	POUR LINUX :
 DFLAGS		=	-MMD -MP
 UNAME_S		=	${shell uname -s}
-#-Wall -Wextra -Werror
 
 ifeq ($(UNAME_S),Linux)
-	CFLAGS  = 
+	CFLAGS  = -Wall -Wextra -Werror
 	LDFLAGS = -lreadline
 else ifeq ($(UNAME_S),Darwin)
 	ifeq ($(shell test -d /opt/homebrew && echo yes),yes)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   go_heredoc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: san <san@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 15:07:49 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/15 12:07:36 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/16 12:23:18 by san              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ bool	go_heredoc(t_shell *shell, const char *delim, int quoted, int fd)
 	while (!*get_heredoc_interrupt_flag() && ++i >= 0)
 	{
 		ft_put_prompt(pen.first, pen.write);
-		line = get_next_line(STDIN_FILENO);
+		line = get_next_line_mod(STDIN_FILENO);
 		if (!line)
 		{
 			if (!*get_heredoc_interrupt_flag())

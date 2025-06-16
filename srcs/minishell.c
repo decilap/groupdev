@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: san <san@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 13:21:45 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/15 12:02:05 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/16 14:18:03 by san              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ bool	ft_brain_of_minishell(t_shell *shell, char *line)
 		while (*cmd_line && ft_isspace(*cmd_line))
 			cmd_line++;
 		ft_parsing_and_execute(shell, cmd_line, tok);
+		free_tokens(tok);
 	}
 	return (ft_free_arr(lines), true);
 }
@@ -141,5 +142,5 @@ int	main(int argc, char **argv, char **envp)
 	prompt_loop(&shell);
 	perror(RED "\nminishell: Error in prompt_loop" RESET);
 	clean_exit(&shell);
-	return (shell.exit_status);
+	return (404);
 }
