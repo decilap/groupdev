@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 14:35:24 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/16 11:40:24 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/16 19:34:43 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,15 +102,14 @@ static char	*replace_and_identifier(char *trimmed, char *line, t_shell *shell)
 		free(trimmed);
 		return (NULL);
 	}
-if (!is_valid_identifier(trimmed))
-{
-	first_word = extract_first_word(trimmed);
-	free(trimmed);
-	free(first_word);
-}
-else
-	free(trimmed);
-
+	if (!is_valid_identifier(trimmed))
+	{
+		first_word = extract_first_word(trimmed);
+		free(trimmed);
+		free(first_word);
+	}
+	else
+		free(trimmed);
 	return (replaced);
 }
 

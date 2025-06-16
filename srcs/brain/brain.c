@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   brain.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 13:20:05 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/15 11:33:14 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/16 19:27:55 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ static t_token	*ft_loop_with_herdoc(char **line, int *i, char *delim)
 	t_token	*tok;
 
 	tok = NULL;
-	
 	if (!ft_init_loop_herdoc(line, &tok, i, delim))
 	{
 		free(delim);

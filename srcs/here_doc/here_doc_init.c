@@ -6,7 +6,7 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 21:10:44 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/16 14:57:43 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/16 19:34:09 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ static bool	ft_init_delimiter(t_shell *shell, const char *delimiter,
 	return (0);
 }
 
-static int	ft_init_fd_heredoc(t_shell *shell, int *fd, char **ptrdelim, t_token *tok)
+static int	ft_init_fd_heredoc(t_shell *shell, int *fd, char **ptrdelim,
+				t_token *tok)
 {
 	int	fd_tmp;
 

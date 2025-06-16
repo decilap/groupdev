@@ -6,7 +6,7 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 15:07:49 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/16 14:56:59 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/16 19:35:49 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ static void	ft_output_ctrl_d(t_shell *shell, size_t i)
 		shell->exit_status = 1;
 		return ;
 	}
-	msg = ft_strjoin_3("\nbash: warning: here-document at line ", index, \
-				" delimited by end-of-file (wanted `EOF')\n");
+	msg = ft_strjoin_3("\nbash: warning: here-document at line ", index,
+			" delimited by end-of-file (wanted `EOF')\n");
 	free(index);
 	if (!msg)
 	{
@@ -89,7 +89,7 @@ void	ft_put_prompt(int first, int write)
 		if (write == 0)
 			write = 1;
 		else
-		ft_putstr_fd("> ", STDOUT_FILENO);
+			ft_putstr_fd("> ", STDOUT_FILENO);
 	}
 }
 
@@ -111,7 +111,7 @@ bool	go_heredoc(t_shell *shell, const char *delim, int quoted, int fd)
 				ft_output_ctrl_d(shell, i);
 			return (true);
 		}
-		ft_manage_hist_here_doc(shell, line); // on prend ou pas
+		ft_manage_hist_here_doc(shell, line);
 		if (ft_strcmp(line, delim) == 0)
 			break ;
 		if (!ft_output_heredoc(shell, &line, quoted, fd))

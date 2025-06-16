@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tool_loop_heredoc.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 13:20:00 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/15 12:02:16 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/16 19:28:20 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 static t_token	*tokenize_lines_from_str(char **str)
 {
 	t_token_data	data;
-	t_token	*tokens;
-	t_token	*check;
-	char	*cmd;
+	t_token			*tokens;
+	t_token			*check;
+	char			*cmd;
 
 	tokens = NULL;
 	while (str && *str)

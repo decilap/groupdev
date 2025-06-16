@@ -6,7 +6,7 @@
 #    By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/27 20:46:26 by ryoussfi          #+#    #+#              #
-#    Updated: 2025/06/16 14:58:21 by ryoussfi         ###   ########.fr        #
+#    Updated: 2025/06/16 19:38:43 by ryoussfi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -216,6 +216,8 @@ norminette:
 		echo "\n${RED}Norminette failed for files ($$ERROR_COUNT errors / ${SRC_NBR}):${PINK}"; \
 		cat .norm_failures; \
 		echo "${NC}"; \
+	else \
+		echo "\n${GREEN}Norminette passed successfully for all files! (${SRC_NBR} files checked)${NC}"; \
 	fi
 
 define entry_message

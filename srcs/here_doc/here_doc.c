@@ -6,7 +6,7 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:40:48 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/16 14:57:02 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/16 19:30:45 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static int	ft_multi_data(t_shell *shell, t_token *scan, t_param param, int fd)
 		line = ft_strjoin(scan->value, "\n");
 		if (!line)
 			return (-1);
-		ft_manage_hist_here_doc(shell, line);		
+		ft_manage_hist_here_doc(shell, line);
 		if (ft_strcmp(line, param.ptrdelim) == 0)
 		{
 			ret = 1;
@@ -68,7 +68,8 @@ static int	ft_multi_data(t_shell *shell, t_token *scan, t_param param, int fd)
 	return (free(line), ret);
 }
 
-static int	ft_error_here_doc(t_shell *shell, t_param param, struct sigaction *sa_old, int fd)
+static int	ft_error_here_doc(t_shell *shell, t_param param,
+				struct sigaction *sa_old, int fd)
 {
 	safe_close(fd);
 	free(param.ptrdelim);
@@ -99,7 +100,7 @@ int	handle_here_doc(t_shell *shell, t_cmd *cmd, t_token *tok,
 	}
 	ft_init_signal_heredoc(&sa_old);
 	if (ret_multi == 0 && !*get_heredoc_interrupt_flag()
-			&& !go_heredoc(shell, param.ptrdelim, tok->next->quoted, fd))
+		&& !go_heredoc(shell, param.ptrdelim, tok->next->quoted, fd))
 		return (ft_error_here_doc(shell, param, &sa_old, fd));
 	safe_close(fd);
 	sigaction(SIGINT, &sa_old, NULL);
