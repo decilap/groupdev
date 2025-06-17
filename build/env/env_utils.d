@@ -2,6 +2,7 @@ build/env/env_utils.o: srcs/env/env_utils.c \
   srcs/env/../../includes/includes.h \
   srcs/env/../../includes/../libft/includes/libft.h \
   srcs/env/../../includes/../libft/includes/color.h \
+  srcs/env/../../includes/../libft/includes/../../includes/includes.h \
   srcs/env/../../includes/minishell.h \
   /usr/local/opt/readline/include/readline/readline.h \
   /usr/local/opt/readline/include/readline/rlstdc.h \
@@ -22,6 +23,7 @@ build/env/env_utils.o: srcs/env/env_utils.c \
 srcs/env/../../includes/includes.h:
 srcs/env/../../includes/../libft/includes/libft.h:
 srcs/env/../../includes/../libft/includes/color.h:
+srcs/env/../../includes/../libft/includes/../../includes/includes.h:
 srcs/env/../../includes/minishell.h:
 /usr/local/opt/readline/include/readline/readline.h:
 /usr/local/opt/readline/include/readline/rlstdc.h:

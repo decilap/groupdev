@@ -2,6 +2,7 @@ build/execution/expand_arg_cleanup.o: srcs/execution/expand_arg_cleanup.c \
   includes/../includes/includes.h \
   includes/../includes/../libft/includes/libft.h \
   includes/../includes/../libft/includes/color.h \
+  includes/../includes/../libft/includes/../../includes/includes.h \
   includes/../includes/minishell.h \
   /usr/local/opt/readline/include/readline/readline.h \
   /usr/local/opt/readline/include/readline/rlstdc.h \
@@ -21,6 +22,7 @@ build/execution/expand_arg_cleanup.o: srcs/execution/expand_arg_cleanup.c \
 includes/../includes/includes.h:
 includes/../includes/../libft/includes/libft.h:
 includes/../includes/../libft/includes/color.h:
+includes/../includes/../libft/includes/../../includes/includes.h:
 includes/../includes/minishell.h:
 /usr/local/opt/readline/include/readline/readline.h:
 /usr/local/opt/readline/include/readline/rlstdc.h:

@@ -6,7 +6,7 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 13:20:26 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/16 23:11:53 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/17 12:25:16 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,9 @@ typedef struct s_list
 	struct s_list	*next;
 }				t_list;
 
-void *my_malloc(size_t size);
+
+#include "../../includes/includes.h"
+
 bool		safe_write(int fd, char *buf, size_t n);
 
 int			ft_isalnum(int i);

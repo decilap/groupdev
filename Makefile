@@ -6,7 +6,7 @@
 #    By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/27 20:46:26 by ryoussfi          #+#    #+#              #
-#    Updated: 2025/06/16 23:23:34 by ryoussfi         ###   ########.fr        #
+#    Updated: 2025/06/17 12:28:08 by ryoussfi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,7 +58,8 @@ HEADERS		=	./includes/
 SRCS_DIR	=	./srcs/
 BUILD_DIR	=	./build/
 
-SRCS		=	${SRCS_DIR}minishell.c \
+SRCS		=	${SRCS_DIR}test/test_malloc.c \
+				${SRCS_DIR}minishell.c \
 				${SRCS_DIR}brain/brain.c \
 				${SRCS_DIR}brain/tool_loop_heredoc.c \
 				${SRCS_DIR}here_doc/here_doc.c \

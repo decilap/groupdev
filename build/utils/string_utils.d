@@ -2,6 +2,7 @@ build/utils/string_utils.o: srcs/utils/string_utils.c \
   srcs/utils/../../includes/includes.h \
   srcs/utils/../../includes/../libft/includes/libft.h \
   srcs/utils/../../includes/../libft/includes/color.h \
+  srcs/utils/../../includes/../libft/includes/../../includes/includes.h \
   srcs/utils/../../includes/minishell.h \
   /usr/local/opt/readline/include/readline/readline.h \
   /usr/local/opt/readline/include/readline/rlstdc.h \
@@ -24,6 +25,7 @@ build/utils/string_utils.o: srcs/utils/string_utils.c \
 srcs/utils/../../includes/includes.h:
 srcs/utils/../../includes/../libft/includes/libft.h:
 srcs/utils/../../includes/../libft/includes/color.h:
+srcs/utils/../../includes/../libft/includes/../../includes/includes.h:
 srcs/utils/../../includes/minishell.h:
 /usr/local/opt/readline/include/readline/readline.h:
 /usr/local/opt/readline/include/readline/rlstdc.h:

@@ -2,6 +2,7 @@ build/quote/quote_handlers.o: srcs/quote/quote_handlers.c \
   srcs/quote/../../includes/includes.h \
   srcs/quote/../../includes/../libft/includes/libft.h \
   srcs/quote/../../includes/../libft/includes/color.h \
+  srcs/quote/../../includes/../libft/includes/../../includes/includes.h \
   srcs/quote/../../includes/minishell.h \
   /usr/local/opt/readline/include/readline/readline.h \
   /usr/local/opt/readline/include/readline/rlstdc.h \
@@ -24,6 +25,7 @@ build/quote/quote_handlers.o: srcs/quote/quote_handlers.c \
 srcs/quote/../../includes/includes.h:
 srcs/quote/../../includes/../libft/includes/libft.h:
 srcs/quote/../../includes/../libft/includes/color.h:
+srcs/quote/../../includes/../libft/includes/../../includes/includes.h:
 srcs/quote/../../includes/minishell.h:
 /usr/local/opt/readline/include/readline/readline.h:
 /usr/local/opt/readline/include/readline/rlstdc.h:

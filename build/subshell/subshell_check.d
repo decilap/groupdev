@@ -2,6 +2,7 @@ build/subshell/subshell_check.o: srcs/subshell/subshell_check.c \
   includes/../includes/includes.h \
   includes/../includes/../libft/includes/libft.h \
   includes/../includes/../libft/includes/color.h \
+  includes/../includes/../libft/includes/../../includes/includes.h \
   includes/../includes/minishell.h \
   /usr/local/opt/readline/include/readline/readline.h \
   /usr/local/opt/readline/include/readline/rlstdc.h \
@@ -21,6 +22,7 @@ build/subshell/subshell_check.o: srcs/subshell/subshell_check.c \
 includes/../includes/includes.h:
 includes/../includes/../libft/includes/libft.h:
 includes/../includes/../libft/includes/color.h:
+includes/../includes/../libft/includes/../../includes/includes.h:
 includes/../includes/minishell.h:
 /usr/local/opt/readline/include/readline/readline.h:
 /usr/local/opt/readline/include/readline/rlstdc.h:

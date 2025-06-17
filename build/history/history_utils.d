@@ -2,6 +2,7 @@ build/history/history_utils.o: srcs/history/history_utils.c \
   srcs/history/../../includes/includes.h \
   srcs/history/../../includes/../libft/includes/libft.h \
   srcs/history/../../includes/../libft/includes/color.h \
+  srcs/history/../../includes/../libft/includes/../../includes/includes.h \
   srcs/history/../../includes/minishell.h \
   /usr/local/opt/readline/include/readline/readline.h \
   /usr/local/opt/readline/include/readline/rlstdc.h \
@@ -29,6 +30,7 @@ build/history/history_utils.o: srcs/history/history_utils.c \
 srcs/history/../../includes/includes.h:
 srcs/history/../../includes/../libft/includes/libft.h:
 srcs/history/../../includes/../libft/includes/color.h:
+srcs/history/../../includes/../libft/includes/../../includes/includes.h:
 srcs/history/../../includes/minishell.h:
 /usr/local/opt/readline/include/readline/readline.h:
 /usr/local/opt/readline/include/readline/rlstdc.h:

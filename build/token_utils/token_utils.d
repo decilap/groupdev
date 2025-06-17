@@ -2,6 +2,7 @@ build/token_utils/token_utils.o: srcs/token_utils/token_utils.c \
   srcs/token_utils/../../includes/includes.h \
   srcs/token_utils/../../includes/../libft/includes/libft.h \
   srcs/token_utils/../../includes/../libft/includes/color.h \
+  srcs/token_utils/../../includes/../libft/includes/../../includes/includes.h \
   srcs/token_utils/../../includes/minishell.h \
   /usr/local/opt/readline/include/readline/readline.h \
   /usr/local/opt/readline/include/readline/rlstdc.h \
@@ -29,6 +30,7 @@ build/token_utils/token_utils.o: srcs/token_utils/token_utils.c \
 srcs/token_utils/../../includes/includes.h:
 srcs/token_utils/../../includes/../libft/includes/libft.h:
 srcs/token_utils/../../includes/../libft/includes/color.h:
+srcs/token_utils/../../includes/../libft/includes/../../includes/includes.h:
 srcs/token_utils/../../includes/minishell.h:
 /usr/local/opt/readline/include/readline/readline.h:
 /usr/local/opt/readline/include/readline/rlstdc.h:

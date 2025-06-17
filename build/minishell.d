@@ -1,6 +1,7 @@
 build/minishell.o: srcs/minishell.c srcs/../includes/includes.h \
   srcs/../includes/../libft/includes/libft.h \
   srcs/../includes/../libft/includes/color.h \
+  srcs/../includes/../libft/includes/../../includes/includes.h \
   srcs/../includes/minishell.h \
   /usr/local/opt/readline/include/readline/readline.h \
   /usr/local/opt/readline/include/readline/rlstdc.h \
@@ -20,6 +21,7 @@ build/minishell.o: srcs/minishell.c srcs/../includes/includes.h \
 srcs/../includes/includes.h:
 srcs/../includes/../libft/includes/libft.h:
 srcs/../includes/../libft/includes/color.h:
+srcs/../includes/../libft/includes/../../includes/includes.h:
 srcs/../includes/minishell.h:
 /usr/local/opt/readline/include/readline/readline.h:
 /usr/local/opt/readline/include/readline/rlstdc.h:

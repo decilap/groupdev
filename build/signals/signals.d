@@ -2,6 +2,7 @@ build/signals/signals.o: srcs/signals/signals.c \
   srcs/signals/../../includes/includes.h \
   srcs/signals/../../includes/../libft/includes/libft.h \
   srcs/signals/../../includes/../libft/includes/color.h \
+  srcs/signals/../../includes/../libft/includes/../../includes/includes.h \
   srcs/signals/../../includes/minishell.h \
   /usr/local/opt/readline/include/readline/readline.h \
   /usr/local/opt/readline/include/readline/rlstdc.h \
@@ -29,6 +30,7 @@ build/signals/signals.o: srcs/signals/signals.c \
 srcs/signals/../../includes/includes.h:
 srcs/signals/../../includes/../libft/includes/libft.h:
 srcs/signals/../../includes/../libft/includes/color.h:
+srcs/signals/../../includes/../libft/includes/../../includes/includes.h:
 srcs/signals/../../includes/minishell.h:
 /usr/local/opt/readline/include/readline/readline.h:
 /usr/local/opt/readline/include/readline/rlstdc.h:

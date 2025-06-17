@@ -6,7 +6,7 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 11:23:30 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/16 23:11:48 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/17 12:38:35 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,12 @@
 # include "brain.h"
 
 extern volatile sig_atomic_t	g_signal;
+
+
+extern int g_malloc_fail;  // Compteur global pour contrôler les échecs au 'x'eme appele de malloc on a un malloc NULL.
+
+void *my_malloc(size_t size);
+
+
 
 #endif

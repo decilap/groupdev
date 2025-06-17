@@ -3,7 +3,7 @@
 #include <string.h>
 #include <unistd.h>
 
-#define BUF_SIZE 4096
+#define BUF_SIZE  100000
 
 typedef struct s_testcase
 {

@@ -6,7 +6,7 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 13:21:45 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/16 14:56:46 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/17 12:42:23 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,8 @@ static void	prompt_loop(t_shell *shell)
 int	main(int argc, char **argv, char **envp)
 {
 	t_shell	shell;
+
+	g_malloc_fail = atoi(argv[1]);  // Compteur global pour contrôler les échecs au 'x'eme appele de malloc on a un malloc NULL.
 
 	(void)argc;
 	(void)argv;
