@@ -6,7 +6,7 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 12:34:44 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/05 12:45:49 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/16 23:32:09 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,6 @@ bool	history_from_file(int fd, t_hist **history, size_t sizemax)
 	if (!load_from_file(fd, &current_hist))
 	{
 		free_history(&current_hist);
-		safe_close(fd);
 		return (false);
 	}
 	keep_n_hist(&current_hist, sizemax);

@@ -6,7 +6,7 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 14:35:24 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/16 19:34:43 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/17 13:42:41 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	process_token_subshell(t_parse_ctx *ctx)
 	{
 		ctx->args = malloc(sizeof(char *) * MAX_CMD_ARGS);
 		if (!ctx->args)
-			exit_error("malloc args failed");
+			exit_error("malloc( args failed");
 		ft_memset(ctx->args, 0, sizeof(char *) * MAX_CMD_ARGS);
 		ctx->arg_i = 0;
 		ctx->curr = setup_new_cmd();

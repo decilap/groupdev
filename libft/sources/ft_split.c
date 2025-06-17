@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ddecilap <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 19:33:57 by ddecilap          #+#    #+#             */
-/*   Updated: 2024/11/27 17:31:44 by ddecilap         ###   ########.fr       */
+/*   Updated: 2025/06/17 13:42:59 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ char	**ft_split(const char *str, char c)
 	if (!str)
 		return (NULL);
 	word_count = ft_count_word(str, c);
-	result = malloc((word_count + 1) * sizeof(char *));
+	result = malloc(word_count + 1) * sizeof(char *));
 	if (!result)
 		return (NULL);
 	if (!ft_split_string(str, c, result))

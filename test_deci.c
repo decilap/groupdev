@@ -14,7 +14,7 @@ typedef struct s_testcase
 } t_testcase;
 
 t_testcase tests[] = {
-    {"echo $\"HOME\"", "HOME"},
+  /*   {"echo $\"HOME\"", "HOME"},
 	{"echo $\"\"", "$"},
 	{"echo \"$\"\"\"", "$"},
 	{"echo '$'''", "$"},
@@ -209,7 +209,7 @@ t_testcase tests[] = {
 	{"unset cd", ""},
 	{"unset unset", ""},
 	{"unset sudo", ""},
-	/* {"/bin/echo | grep USER", ""},
+	{"/bin/echo | grep USER", ""},
 	{"export hola | unset hola | echo $?", "0"},
 	{"/bin/echo Hola Que Tal", "Hola Que Tal"},
 	{"/bin/env | grep LANGUAGE", "", 1},
@@ -305,16 +305,16 @@ t_testcase tests[] = {
 	{"ls -la | grep \".\"", "minishell: hola: command not found", 1},
 	{"ls -la | grep \"'.'\"", "", 0},
 	{"echo test.c | cat -e| cat -e| cat -e| cat -e| cat -e| cat -e| cat -e| cat -e|cat -e|cat -e|cat -e", "test.c$$$$$$$$$$$", 0},
-	{"ls -la | grep \"'.'\"", "", 0},
-	{"ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls", "", 1}, */
-/* 	{"echo hola | cat | cat | cat | cat | cat | grep hola", "hola", 0},
+	{"ls -la | grep \"'.'\"", "", 0}, */
+	{"ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls", "", 1},
+ 	{"echo hola | cat | cat | cat | cat | cat | grep hola", "hola", 0},
 	{"echo hola| cat", "hola", 0},
 	{"echo hola |cat", "hola", 0},
 	{"echo hola|cat", "hola", 0},
 	{"echo hola ||| cat", "minishell: syntax error near unexpected token!! `||", 0},
 	{"echo hola | cat", "hola", 0},
 	{"ech|o hola | cat", "", 1},
-	{"cat Makefile | cat -e | cat -e", "", 1},
+/* 	{"cat Makefile | cat -e | cat -e", "", 1},
 	{"cat Makefile | grep srcs | cat -e", "SRCS_DIR	=	./srcs/$", 0},
 	{"ls *", "", 1},
 	{"ls *.*", "", 1},
@@ -330,7 +330,7 @@ void trim_newline(char *s)
 	if (p)
 		*p = '\0';
 }
-
+/* 
 int main(void)
 {
 	char buf[BUF_SIZE];
@@ -407,8 +407,8 @@ int main(void)
 			//printf("     Bash     : [%s]\n", bash_out);
 			//printf("     Minishell: [%s]\n", mini_out);
 			//printf("     Expected : [%s]\n", expected);
-			printf("     Mini exit : [%d]\n", mini_exit_code);
-			printf("     Bash exit : [%d]\n", bash_exit_code);
+			//printf("     Mini exit : [%d]\n", mini_exit_code);
+			//printf("     Bash exit : [%d]\n", bash_exit_code);
 		}
 		else
 		{
@@ -421,5 +421,21 @@ int main(void)
 		}
 	}
 
+	return 0;
+} */
+
+int main(void)
+{
+	char buf[BUF_SIZE];
+
+	for (int i = 0; tests[i].input != NULL; i++)
+	{
+		const char *cmd = tests[i].input;
+		const char *expected = tests[i].expected_output;
+		char bash_out[BUF_SIZE] = {0};
+		char mini_out[BUF_SIZE] = {0};
+
+		printf("%s\n", cmd);
+	}
 	return 0;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wildcard_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 12:12:01 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/15 01:25:58 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/17 13:42:41 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ static int	insert_wildcard_matches(char **matches, t_token *cur,
  *
  * @param tokens Pointer to the full token list head.
  * @param cur The current token being processed.
- * @return 1 if expanded, 0 if no expansion, -1 on malloc failure.
+ * @return 1 if expanded, 0 if no expansion, -1 on malloc( failure.
  */
 int	expand_wildcard_for_token(t_token **tokens, t_token *cur)
 {
