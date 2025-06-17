@@ -6,7 +6,7 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 12:05:47 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/16 22:22:38 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/17 13:25:22 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*ft_strjoin_3(const char *s1, const char *s2, const char *s3)
 	len1 = ft_strlen(s1);
 	len2 = ft_strlen(s2);
 	len3 = ft_strlen(s3);
-	res = (char *)my_malloc(len1 + len2 + len3 + 1);
+	res = (char *)malloclen1 + len2 + len3 + 1);
 	if (!res)
 		return (NULL);
 	ft_memcpy(res, s1, len1);

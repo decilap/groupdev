@@ -6,7 +6,7 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 16:10:51 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/16 22:22:38 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/17 13:25:22 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	*ft_strjoin_array(char **line, char *buff)
 		return (NULL);
 	len_line = ft_strlen(*line);
 	len_buff = ft_strlen(buff);
-	tmp = my_malloc(len_line + len_buff + 1);
+	tmp = malloclen_line + len_buff + 1);
 	if (!tmp)
 		return (NULL);
 	copy_strings(tmp, *line, buff);

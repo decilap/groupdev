@@ -6,7 +6,7 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 11:02:01 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/16 23:30:13 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/17 13:25:22 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static char	*resize_buffer(char *buf, size_t *current_size)
 
 	i = 0;
 	new_size = (*current_size) * 2;
-	new_buf = my_malloc(new_size);
+	new_buf = mallocnew_size);
 	if (!new_buf)
 	{
 		free(buf);
@@ -73,7 +73,7 @@ char	*get_next_line_mod(int fd)
 	size = BUFFER_SIZE;
 	if (fd < 0)
 		return (NULL);
-	buf = my_malloc(size);
+	buf = mallocsize);
 	if (!buf)
 		return (NULL);
 	status = read_line(fd, &buf, &pos, &size);

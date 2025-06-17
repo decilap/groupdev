@@ -6,7 +6,7 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 12:01:54 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/16 22:22:38 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/17 13:25:22 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	*safe_malloc(size_t size)
 {
 	void	*ptr;
 
-	ptr = my_malloc(size);
+	ptr = mallocsize);
 	if (!ptr)
 		exit_error(RED "minishell: 00 unset" RESET);
 	return (ptr);

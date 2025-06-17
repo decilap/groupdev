@@ -6,7 +6,7 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 19:09:21 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/16 22:22:38 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/17 13:25:22 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 	if (!s || !f)
 		return (NULL);
 	s_len = ft_strlen(s);
-	res = (char *)my_malloc(s_len + 1);
+	res = (char *)mallocs_len + 1);
 	if (!res)
 		return (NULL);
 	i = 0;

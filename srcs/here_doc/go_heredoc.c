@@ -6,7 +6,7 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 15:07:49 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/16 19:35:49 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/17 13:21:42 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,15 +99,15 @@ bool	go_heredoc(t_shell *shell, const char *delim, int quoted, int fd)
 	size_t		i;
 	t_pending	pen;
 
-	i = -1;
+	i = 0;
 	ft_init_pending(&pen);
-	while (!*get_heredoc_interrupt_flag() && ++i >= 0)
+	while (!*get_heredoc_interrupt_flag() && i++)
 	{
 		ft_put_prompt(pen.first, pen.write);
 		line = get_next_line_mod(STDIN_FILENO);
 		if (!line)
 		{
-			if (!*get_heredoc_interrupt_flag())
+			if (i-- && !*get_heredoc_interrupt_flag())
 				ft_output_ctrl_d(shell, i);
 			return (true);
 		}

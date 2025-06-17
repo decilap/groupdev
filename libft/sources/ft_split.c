@@ -6,7 +6,7 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 19:33:57 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/16 22:22:38 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/17 13:25:22 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static char	*ft_copy_word(const char *start, size_t len)
 {
 	char	*word;
 
-	word = my_malloc(len + 1);
+	word = malloclen + 1);
 	if (!word)
 		return (NULL);
 	ft_memcpy(word, start, len);
@@ -92,7 +92,7 @@ char	**ft_split(const char *str, char c)
 	if (!str)
 		return (NULL);
 	word_count = ft_count_word(str, c);
-	result = my_malloc((word_count + 1) * sizeof(char *));
+	result = malloc(word_count + 1) * sizeof(char *));
 	if (!result)
 		return (NULL);
 	if (!ft_split_string(str, c, result))

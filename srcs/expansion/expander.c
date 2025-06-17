@@ -6,7 +6,7 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 18:20:18 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/16 22:22:38 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/17 13:25:22 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static t_token	*expand_token(char *result, int quoted,
 {
 	t_token	*tok;
 
-	tok = my_malloc(sizeof(t_token));
+	tok = mallocsizeof(t_token));
 	if (!tok)
 		return (expand_free_ret(result));
 	tok->value = result;

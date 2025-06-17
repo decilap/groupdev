@@ -6,7 +6,7 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 19:04:54 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/16 22:22:38 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/17 13:25:22 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t size)
 		return (ft_calloc(1, sizeof(char)));
 	if (size > len - start)
 		size = len - start;
-	pstr = (char *)my_malloc(size + 1);
+	pstr = (char *)mallocsize + 1);
 	if (!pstr)
 		return (NULL);
 	pstart = s + start;

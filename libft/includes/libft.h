@@ -6,7 +6,7 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 13:20:26 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/17 12:25:16 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/17 13:29:37 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,6 @@ typedef struct s_list
 	void			*content;
 	struct s_list	*next;
 }				t_list;
-
-
-#include "../../includes/includes.h"
 
 bool		safe_write(int fd, char *buf, size_t n);
 

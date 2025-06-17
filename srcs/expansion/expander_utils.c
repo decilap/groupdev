@@ -6,7 +6,7 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 15:39:47 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/16 22:22:38 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/17 13:25:22 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*str_append(char *base, const char *to_append)
 	else
 		len_base = 0;
 	len_append = ft_strlen(to_append);
-	new_str = my_malloc(len_base + len_append + 1);
+	new_str = malloclen_base + len_append + 1);
 	if (!new_str)
 		return (NULL);
 	if (base)

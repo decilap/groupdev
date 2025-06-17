@@ -6,7 +6,7 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 12:33:52 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/16 22:22:38 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/17 13:25:22 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ bool	add_to_history(t_hist **history, char *cmd)
 {
 	t_hist	*new_node;
 
-	new_node = my_malloc(sizeof(t_hist));
+	new_node = mallocsizeof(t_hist));
 	if (!new_node)
 	{
 		perror(RED "minishell: 6 unset" RESET);

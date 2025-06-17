@@ -6,7 +6,7 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 14:35:24 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/16 22:22:38 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/17 13:25:22 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ static void	handle_operator_token(t_token *tok, t_parse_ctx *ctx)
 		ctx->curr = new;
 		free(ctx->args);
 		free(ctx->quote_chars);
-		ctx->args = my_malloc(sizeof(char *) * MAX_CMD_ARGS);
-		ctx->quote_chars = my_malloc(sizeof(t_quote_state) * MAX_CMD_ARGS);
+		ctx->args = mallocsizeof(char *) * MAX_CMD_ARGS);
+		ctx->quote_chars = mallocsizeof(t_quote_state) * MAX_CMD_ARGS);
 		if (!ctx->args || !ctx->quote_chars)
 			exit_error("malloc failed");
 		ft_memset(ctx->args, 0, sizeof(char *) * MAX_CMD_ARGS);
@@ -125,8 +125,8 @@ static void	init_parse_context(t_parse_ctx *ctx, t_token *tok, t_shell *shell)
 	ctx->shell = shell;
 	ctx->arg_i = 0;
 	ctx->quote_i = 0;
-	ctx->args = my_malloc(sizeof(char *) * MAX_CMD_ARGS);
-	ctx->quote_chars = my_malloc(sizeof(t_quote_state) * MAX_CMD_ARGS);
+	ctx->args = mallocsizeof(char *) * MAX_CMD_ARGS);
+	ctx->quote_chars = mallocsizeof(t_quote_state) * MAX_CMD_ARGS);
 	if (!ctx->args || !ctx->quote_chars)
 		exit_error("malloc args or quote_chars failed");
 	ft_memset(ctx->args, 0, sizeof(char *) * MAX_CMD_ARGS);

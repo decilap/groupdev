@@ -1,4 +1,0 @@
-minishell> cat << END 
-Mix tabs and spaces
-minishell> exit
-exit
