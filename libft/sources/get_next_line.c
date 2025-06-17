@@ -6,7 +6,7 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 11:02:01 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/17 18:41:10 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/17 18:43:38 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static char	*resize_buffer(char *buf, size_t *current_size)
 	new_buf = malloc(new_size);
 	if (!new_buf)
 	{
-		free(str);
+		free(buf);
 		return (NULL);
 	}
 	while (i < *current_size)
