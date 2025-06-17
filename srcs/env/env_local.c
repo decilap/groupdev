@@ -6,7 +6,7 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 16:12:32 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/17 13:25:22 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/17 13:42:41 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,10 @@ static void	create_local_var(t_shell *shell, const char *name,
 {
 	t_var	*var;
 
-	var = mallocsizeof(t_var));
+	var = malloc(sizeof(t_var));
 	if (!var)
 	{
-		perror(RED "minishell: unset - malloc failed" RESET);
+		perror(RED "minishell: unset - malloc( failed" RESET);
 		return ;
 	}
 	var->key = ft_strdup(name);

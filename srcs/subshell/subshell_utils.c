@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   subshell_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 16:14:01 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/14 17:09:44 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/17 13:42:41 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
  *
  * @param line  The input line containing the subshell.
  * @param ctx   The parsing context (indices, depth, etc.).
- * @param sub   Pointer to store the extracted subshell content (malloc'ed).
+ * @param sub   Pointer to store the extracted subshell content (malloc('ed).
  * @return 1 on success, 0 on unbalanced parentheses (syntax error).
  */
 static int	extract_subshell_content(const char *line, t_sub_ctx *ctx,
@@ -56,7 +56,7 @@ char **sub)
  * and appends the tag to the result.
  *
  * @param ctx The parsing context (result string, subshell table, etc.).
- * @param sub The extracted subshell command string (malloc'ed).
+ * @param sub The extracted subshell command string (malloc('ed).
  * @return 1 on success, 0 if maximum subshells are reached.
  */
 static int	subshell_store_and_replace(t_sub_ctx *ctx, char *sub)

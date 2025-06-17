@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_assignment.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 15:39:47 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/14 22:51:28 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/17 13:42:41 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
  * Sets the local variable if the name is valid and not "_".
  * Updates the shell exit status. Frees input memory.
  *
- * @param name   Name of the variable (must be malloc'ed).
- * @param value  Value to assign (must be malloc'ed).
+ * @param name   Name of the variable (must be malloc('ed).
+ * @param value  Value to assign (must be malloc('ed).
  * @param shell  Shell context for variable assignment.
  * @return Always NULL.
  */

@@ -6,7 +6,7 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 15:40:19 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/17 13:25:22 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/17 13:42:59 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ char	**copy_env(char **envp)
  *
  * @param dir Le dossier courant dans PATH.
  * @param cmd La commande recherchée.
- * @return Le chemin complet (à free), ou NULL si erreur malloc.
+ * @return Le chemin complet (à free), ou NULL si erreur malloc(.
  */
 static char	*build_full_path(char *dir, char *cmd)
 {
@@ -92,13 +92,13 @@ static char	*build_full_path(char *dir, char *cmd)
 	tmp = ft_strjoin(dir, "/");
 	if (!tmp)
 	{
-		perror(RED "minishell: malloc failed (tmp)" RESET);
+		perror(RED "minishell: malloc( failed (tmp)" RESET);
 		return (NULL);
 	}
 	full = ft_strjoin(tmp, cmd);
 	free(tmp);
 	if (!full)
-		perror(RED "minishell: malloc failed (full)" RESET);
+		perror(RED "minishell: malloc( failed (full)" RESET);
 	return (full);
 }
 
@@ -148,7 +148,7 @@ void	remove_env_var(const char *name, t_shell *sh)
 	len = ft_strlen(name);
 	while (sh->env[i])
 		i++;
-	new_env = mallocsizeof(char *) * (i + 1));
+	new_env = malloc(sizeof(char *) * (i + 1));
 	if (!new_env)
 		return (perror("minishell: 5 unset"));
 	i = -1;

@@ -6,7 +6,7 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 14:47:00 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/17 13:25:22 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/17 13:42:41 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@
  */
 static void	allocate_cmd_args(t_cmd *cmd, int count)
 {
-	cmd->args = mallocsizeof(char *) * (count + 1));
+	cmd->args = malloc(sizeof(char *) * (count + 1));
 	if (!cmd->args)
-		exit_error("malloc failed (args)");
-	cmd->quote_chars = mallocsizeof(t_quote_state) * (count + 1));
+		exit_error("malloc( failed (args)");
+	cmd->quote_chars = malloc(sizeof(t_quote_state) * (count + 1));
 	if (!cmd->quote_chars)
 	{
 		free(cmd->args);
-		exit_error("malloc failed (quote_chars)");
+		exit_error("malloc( failed (quote_chars)");
 	}
 }
 
@@ -39,7 +39,7 @@ static void	allocate_cmd_args(t_cmd *cmd, int count)
  *
  * Copies all arguments and their quote information safely into
  * the command structure.
- * Handles malloc failure safely with partial cleanup.
+ * Handles malloc( failure safely with partial cleanup.
  *
  * @param cmd The command structure being filled.
  * @param args Input arguments to copy.

@@ -6,7 +6,7 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 09:12:01 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/17 13:25:22 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/17 13:42:41 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ static void	init_wildcard_ctx(t_wildcard_ctx *ctx)
 {
 	ctx->capacity = WILDCARD_CAPACITY;
 	ctx->count = 0;
-	ctx->results = mallocsizeof(char *) * ctx->capacity);
+	ctx->results = malloc(sizeof(char *) * ctx->capacity);
 	if (!ctx->results)
-		exit_error("malloc failed in wildcard");
+		exit_error("malloc( failed in wildcard");
 }
 
 /**
@@ -45,7 +45,7 @@ static void	wildcard_grow_results(t_wildcard_ctx *ctx)
 
 	i = 0;
 	new_cap = ctx->capacity * 2;
-	new_results = mallocsizeof(char *) * new_cap);
+	new_results = malloc(sizeof(char *) * new_cap);
 	if (!new_results)
 	{
 		free_wildcard_ctx(ctx);
@@ -94,7 +94,7 @@ static void	process_entry(struct dirent *entry,
  *
  * @param dirpart  The directory path to search.
  * @param pattern  The wildcard pattern to match.
- * @return NULL-terminated array of matching filenames (malloc'ed),
+ * @return NULL-terminated array of matching filenames (malloc('ed),
  * or NULL on error.
  */
 static char	**wildcard_expand_dir(const char *dirpart, const char *pattern)

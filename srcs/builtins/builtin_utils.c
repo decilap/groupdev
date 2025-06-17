@@ -6,7 +6,7 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 15:39:47 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/17 13:25:22 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/17 13:42:41 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ char	**prepare_sorted_env(char **env)
 	count = 0;
 	while (env[count])
 		count++;
-	sorted_env = mallocsizeof(char *) * (count + 1));
+	sorted_env = malloc(sizeof(char *) * (count + 1));
 	if (!sorted_env)
 		return (NULL);
 	i = 0;

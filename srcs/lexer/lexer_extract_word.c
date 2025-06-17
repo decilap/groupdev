@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_extract_word.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 14:12:01 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/14 17:15:33 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/17 13:42:41 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
  * @param i Pointer to current index.
  * @param result Current result string (will be updated).
  * @param quote The active quote character.
- * @return 1 on success, 0 on malloc failure.
+ * @return 1 on success, 0 on malloc( failure.
  */
 static int	append_quoted_char(const char *line, int *i, char **result,
 	char quote)
@@ -95,7 +95,7 @@ static char	*extract_quoted_word(const char *line, int *i, int *quoted_out,
  *
  * @param line The input line.
  * @param i Pointer to current index (modified inside).
- * @return Newly allocated string of size 1, or NULL on malloc failure.
+ * @return Newly allocated string of size 1, or NULL on malloc( failure.
  */
 static char	*extract_unquoted_char(const char *line, int *i)
 {
