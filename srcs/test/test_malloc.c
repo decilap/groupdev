@@ -12,8 +12,11 @@ void *my_malloc(size_t size)
 {
 
     static int count = 1;
+    
+    printf(".");
     if (g_malloc_fail && count++ >= g_malloc_fail) 
 	{
+        printf("%d\n", count);
         fprintf(stderr, "Simulated malloc failure!\n");
         return NULL;
     }

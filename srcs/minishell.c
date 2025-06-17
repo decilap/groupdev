@@ -6,7 +6,7 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 13:21:45 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/17 12:42:23 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/17 13:04:33 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,13 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_shell	shell;
 
+
+	printf("%sPour utiliser le mode debuge de malloc il faut mettre un int en argument\n%sAvec 0 et nég aucune erreur :\nex:\n./minishell 100\n", RED, RESET);
+	if (argc != 2)
+		return (1);
 	g_malloc_fail = atoi(argv[1]);  // Compteur global pour contrôler les échecs au 'x'eme appele de malloc on a un malloc NULL.
+	printf("tu as mis :%d\n", atoi(argv[1]));
+
 
 	(void)argc;
 	(void)argv;
