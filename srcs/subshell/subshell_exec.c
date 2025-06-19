@@ -115,21 +115,32 @@ t_cmd	*group_add_subshell(t_cmd *cmds, t_group **head,
  * @param shell The main shell context.
  * @param ctx   The subshell context (fds, pipe info, line, depth).
  */
-void	subshell_child(t_cmd *cmd, t_shell *shell, t_subsh_ctx *ctx)
+void subshell_child(t_cmd *cmd, t_shell *shell, t_subsh_ctx *ctx)
 {
 	int		sub_status;
 	char	**env_backup;
 	t_cmd	*sub_cmds;
 
+	if (DEBUG_MODE)
+		fprintf(stderr, "[LOG] Entering subshell_child\n");
+
 	subshell_prepare_and_check(cmd, shell, ctx, &env_backup);
 	redir_prev_fd(ctx->prev_fd);
 	redir_pipe(ctx->pipefd, ctx->pipe_needed);
+
 	sub_cmds = parse_input(ctx->sub_line, shell, 0);
 	if (!sub_cmds)
+	{
+		if (DEBUG_MODE)
+			fprintf(stderr, "[LOG] parse_input returned NULL in subshell_child\n");
 		subshell_clean_exit(shell, env_backup, SYNTAX_ERROR_EXIT_CODE);
+	}
+	if (DEBUG_MODE)
+		fprintf(stderr, "[LOG] Successfully parsed subshell command\n");
 	sub_status = execute_with_logical(sub_cmds, shell);
 	subshell_clean_exit(shell, env_backup, sub_status);
 }
+
 
 /**
  * @brief Handles a pipeline step involving a subshell command.

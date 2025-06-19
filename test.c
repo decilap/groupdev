@@ -209,10 +209,10 @@ t_testcase tests[] = {
 	{"unset cd", ""},
 	{"unset unset", ""},
 	{"unset sudo", ""},
-	/* {"/bin/echo | grep USER", ""},
+	{"/bin/echo", ""},
 	{"export hola | unset hola | echo $?", "0"},
 	{"/bin/echo Hola Que Tal", "Hola Que Tal"},
-	{"/bin/env | grep LANGUAGE", "", 1},
+	{"/bin/env", "", 1},
 	{"/bin/cd Desktop", "minishell: /bin/cd: No such file or directory"},
 	{"pwd", "/Users/decilapdenis/Documents/minishell", 0},
 	{"pwd hola", "minishell: pwd: too many arguments", 1},
@@ -306,8 +306,8 @@ t_testcase tests[] = {
 	{"ls -la | grep \"'.'\"", "", 0},
 	{"echo test.c | cat -e| cat -e| cat -e| cat -e| cat -e| cat -e| cat -e| cat -e|cat -e|cat -e|cat -e", "test.c$$$$$$$$$$$", 0},
 	{"ls -la | grep \"'.'\"", "", 0},
-	{"ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls", "", 1}, */
-/* 	{"echo hola | cat | cat | cat | cat | cat | grep hola", "hola", 0},
+	{"ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls|ls", "", 1},
+	{"echo hola | cat | cat | cat | cat | cat | grep hola", "hola", 0},
 	{"echo hola| cat", "hola", 0},
 	{"echo hola |cat", "hola", 0},
 	{"echo hola|cat", "hola", 0},
@@ -321,7 +321,7 @@ t_testcase tests[] = {
 	{"ls *.hola", "ls: *.hola: No such file or directory", 1},
 	{"cat M*le", "", 1},
 	{"cat M*ee", "", 1},
-	{"cat Make*file", "", 1}, */
+	{"cat Make*file", "", 1},
 	{NULL, NULL}};
 
 void trim_newline(char *s)
@@ -398,8 +398,8 @@ int main(void)
 		int mini_status = pclose(mini_fp);
 		int mini_exit_code = WEXITSTATUS(mini_status);
 		printf("[%02d] %-30s ... ", i + 1, cmd);
-		if ((strcmp(bash_out, mini_out) == 0
-		|| strcmp(mini_out, expected) == 0
+		if ((strcmp(bash_out, mini_out) == 0 
+		|| strcmp(mini_out, expected) == 0 
 		&& bash_exit_code == mini_exit_code)
 		|| tests[i].manual_mode)
 		{

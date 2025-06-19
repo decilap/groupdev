@@ -31,6 +31,8 @@ LIBFT		=	libft.a
 
 UNAME_S := $(shell uname -s)
 
+#-Wextra -Wall -Werror
+
 # CC			=	cc
 CC			=	gcc -g
 # CC			=	clang -fsanitize=address -g
@@ -44,11 +46,11 @@ ifeq ($(UNAME_S),Linux)
 	LDFLAGS = -lreadline
 else ifeq ($(UNAME_S),Darwin)
 	ifeq ($(shell test -d /opt/homebrew && echo yes),yes)
-		CFLAGS  = -I/opt/homebrew/opt/readline/include -Wextra -Wall -Werror
+		CFLAGS  = -I/opt/homebrew/opt/readline/include
 		LDFLAGS = -L/opt/homebrew/opt/readline/lib -lreadline
 	else
 		# Sinon on suppose une installation classique (Intel mac)
-		CFLAGS  = -I/usr/local/opt/readline/include -Wextra -Wall -Werror
+		CFLAGS  = -I/usr/local/opt/readline/include
 		LDFLAGS = -L/usr/local/opt/readline/lib -lreadline
 	endif
 endif

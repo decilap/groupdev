@@ -119,10 +119,16 @@ int	builtin_export(char **args, t_shell *shell)
 	ret = 0;
 	if (!args[1])
 	{
+		if (DEBUG_MODE)
+			fprintf(stderr, "[LOG][export] No args — printing env\n");
 		export_print_env(shell->env);
 		return (ret);
 	}
 	while (*++args)
+	{
+		if (DEBUG_MODE)
+			fprintf(stderr, "[LOG][export] Handling arg: \"%s\"\n", *args);
 		ret |= handle_export_arg(*args, shell);
+	}
 	return (ret);
 }

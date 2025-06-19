@@ -17,7 +17,7 @@
  * 
  * @param env The array of environment variables.
  */
-/* void	print_env(char **env)
+void	print_env(char **env)
 {
 	int		i;
 	char	*index_str;
@@ -35,7 +35,7 @@
 		i++;
 	}
 }
- */
+
 
 /**
  * @brief Prints the list of tokens.
@@ -71,7 +71,7 @@
  * 
  * @param cmd The list of commands to print.
  */
-/* void	print_cmd(t_cmd *cmd)
+void	print_cmd(t_cmd *cmd)
 {
 	int	i;
 
@@ -106,7 +106,7 @@
 	}
 	fprintf(stderr, "--- Fin de l'affichage des commandes ---\n");
 }
- */
+
 
 /**
  * @brief Prints the list of groups and their commands.

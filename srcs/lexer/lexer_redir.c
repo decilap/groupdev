@@ -52,24 +52,19 @@ void	lexer_handle_redir(t_lexer_ctx *ctx)
 {
 	int				type;
 	char			*op;
-	char			*value;
 	t_token_data	data;
+	t_token			*tok;
 
 	op = extract_redir_op(ctx->line, &ctx->i);
 	if (!op)
 		return ;
 	type = get_token_type(op);
-	value = ft_strdup(op);
-	free(op);
-	if (!value)
-	{
-		perror("lexer: ft_strdup failed");
-		return ;
-	}
-	data = (t_token_data){value, type, 0, Q_NONE};
-	if (!add_token(&ctx->tokens, data))
-	{
-		free(value);
+	data = (t_token_data){op, type, 0, Q_NONE};
+	tok = add_token(&ctx->tokens, data);
+	free(op); // libération systématique, même si add_token réussit
+
+	if (!tok)
 		perror("lexer: add_token failed");
-	}
 }
+
+

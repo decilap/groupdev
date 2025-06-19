@@ -53,12 +53,25 @@ static t_token	*add_word_token(t_token **tokens, char *trimmed,
 	int quoted, t_quote_state quote_char)
 {
 	t_token_data	data;
+	t_token			*tok;
+	char			*dup;
 
-	if (ft_strncmp(trimmed, "__SUBSHELL_", 11) == 0)
-		data = (t_token_data){trimmed, TOKEN_SUBSHELL, quoted, quote_char};
+	dup = ft_strdup(trimmed);
+	free(trimmed);
+	if (!dup)
+		return (NULL);
+	if (ft_strncmp(dup, "__SUBSHELL_", 11) == 0)
+		data = (t_token_data){dup, TOKEN_SUBSHELL, quoted, quote_char};
 	else
-		data = (t_token_data){trimmed, TOKEN_WORD, quoted, quote_char};
-	return (add_token(tokens, data));
+		data = (t_token_data){dup, TOKEN_WORD, quoted, quote_char};
+	tok = add_token(tokens, data);
+	if (!tok)
+	{
+		free(dup);
+		return (NULL);
+	}
+	free(dup);
+	return (tok);
 }
 
 /**
@@ -120,6 +133,8 @@ int	add_trimmed_dollar_token(t_lexer_ctx *ctx, char *quoted_word)
 		return (1);
 	data = (t_token_data){trimmed, TOKEN_WORD, 1, Q_DOUBLE_QUOTE};
 	tok = add_token(&ctx->tokens, data);
+	free(trimmed);
+
 	if (!tok)
 		return (1);
 	if (tok && ctx->tokens && ctx->tokens->next)
@@ -132,6 +147,7 @@ int	add_trimmed_dollar_token(t_lexer_ctx *ctx, char *quoted_word)
 	}
 	return (0);
 }
+
 
 /**
  * @brief Handles word tokens in the lexer.

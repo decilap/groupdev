@@ -104,24 +104,21 @@ static int	insert_wildcard_matches(char **matches, t_token *cur,
 	t_token **inserted)
 {
 	int				i;
-	char			*copy_val;
 	t_token			*new_tok;
 	t_token_data	data;
 
 	i = 0;
 	while (matches[i])
 	{
-		copy_val = ft_strdup(matches[i]);
-		if (!copy_val)
-			return (0);
-		data = (t_token_data){copy_val, cur->type, cur->quoted,
-			cur->quote_char};
+		data = (t_token_data){
+			matches[i],      // ⬅️ Pas besoin de ft_strdup
+			cur->type,
+			cur->quoted,
+			cur->quote_char
+		};
 		new_tok = add_token(inserted, data);
 		if (!new_tok)
-		{
-			free(copy_val);
 			return (0);
-		}
 		new_tok->joined = cur->joined;
 		i++;
 	}

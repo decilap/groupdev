@@ -19,10 +19,10 @@
  * @param merged Pointeur vers la chaîne mergée à initialiser.
  * @param quote Pointeur vers le quote_state.
  */
-static void	handle_merge_word_start(t_token *cur, char **merged,
-	t_quote_state *quote)
+static void handle_merge_word_start(t_token *cur, char **merged,
+									t_quote_state *quote)
 {
-	char	*curr_value;
+	char *curr_value;
 
 	if (cur->value)
 		curr_value = cur->value;
@@ -31,6 +31,9 @@ static void	handle_merge_word_start(t_token *cur, char **merged,
 	*merged = ft_strdup(curr_value);
 	if (!*merged)
 		exit_error("ft_strdup failed in handle_merge_word_start");
+
+	if (DEBUG_MODE)
+		fprintf(stderr, "[LOG] Allocated merged word: \"%s\" at %p\n", *merged, *merged);
 	*quote = cur->quote_char;
 }
 
@@ -41,17 +44,15 @@ static void	handle_merge_word_start(t_token *cur, char **merged,
  * @param merged Pointeur vers la chaîne mergée (modifié à chaque ajout).
  * @param quote Pointeur vers le quote_state (mis à jour selon les tokens).
  */
-static void	handle_merge_word_continue(t_token **cur, char **merged,
-	t_quote_state *quote)
+static void handle_merge_word_continue(t_token **cur, char **merged,
+									   t_quote_state *quote)
 {
-	char	*tmp;
+	char *tmp;
 
-	while ((*cur)->joined && (*cur)->next && ((*cur)->next->type == TOKEN_WORD
-			|| (*cur)->next->type == TOKEN_SUBSHELL))
+	while ((*cur)->joined && (*cur)->next && ((*cur)->next->type == TOKEN_WORD || (*cur)->next->type == TOKEN_SUBSHELL))
 	{
-		if (ft_strchr((*cur)->value, '$')
-			&& (*cur)->quote_char == Q_DOUBLE_QUOTE)
-			break ;
+		if (ft_strchr((*cur)->value, '$') && (*cur)->quote_char == Q_DOUBLE_QUOTE)
+			break;
 		*cur = (*cur)->next;
 		if ((*cur)->value)
 			tmp = ft_strjoin(*merged, (*cur)->value);
@@ -72,11 +73,11 @@ static void	handle_merge_word_continue(t_token **cur, char **merged,
 /**
  * @brief Gère un bloc de token WORD avec fusions et quotes.
  */
-t_token	*handle_word_token_block(t_parse_ctx *ctx)
+t_token *handle_word_token_block(t_parse_ctx *ctx)
 {
-	char			*merged;
-	t_token			*cur;
-	t_quote_state	quote;
+	char *merged;
+	t_token *cur;
+	t_quote_state quote;
 
 	cur = ctx->tok;
 	handle_merge_word_start(cur, &merged, &quote);
@@ -97,9 +98,9 @@ t_token	*handle_word_token_block(t_parse_ctx *ctx)
  * @param line  The string to check.
  * @return 1 if valid assignment, 0 otherwise.
  */
-int	is_valid_assignment(const char *line)
+int is_valid_assignment(const char *line)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	if (!line || !ft_strchr(line, '='))
@@ -135,11 +136,11 @@ int	is_valid_assignment(const char *line)
  * @param multi_data Pointer to heredoc data (if any).
  * @return The linked list of parsed commands or NULL if error occurred.
  */
-t_cmd	*parse_tokens_flow(char *replaced, t_shell *shell, t_token *multi_data)
+t_cmd *parse_tokens_flow(char *replaced, t_shell *shell, t_token *multi_data)
 {
-	t_token	*tokens;
-	t_token	*tmp;
-	t_cmd	*cmds;
+	t_token *tokens;
+	t_token *tmp;
+	t_cmd *cmds;
 
 	tokens = lexer(replaced);
 	if (!tokens)

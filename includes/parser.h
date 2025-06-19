@@ -48,12 +48,14 @@ char	*extract_first_word(const char *line);
 t_token	*handle_word_token_block(t_parse_ctx *ctx);
 t_token	*expand_and_resolve_path(t_cmd *cmd, t_shell *shell, int *err_code);
 t_token	*apply_quote_extension(t_token *tokens, t_shell *shell);
+void	free_tmp_args(char **args, int count);
 void	handle_redirection_token(t_token **tok, t_cmd *curr, t_shell *shell);
 void	free_partial_args(char **args, int count);
 void	handle_path_errors(t_cmd *cmd, t_token *expanded, int err_code,
 			t_shell *shell);
 void	finalize_cmd_args(t_parse_ctx *ctx);
 void	resolve_cmd_path(t_cmd *cmd, t_shell *shell);
+void	cleanup_tmp_args(t_parse_ctx *ctx);
 int		check_line_errors(char *line, t_shell *shell);
 int		handle_heredoc_token(t_token **tok, t_shell *shell, t_cmd *curr,
 			t_token *tok_multi_data);

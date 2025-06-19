@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 13:21:45 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/17 13:29:27 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/19 13:28:49 by decilapdeni      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /**
  * @brief Handles word tokens (command names, arguments) in the lexer.
  *
- * Extracts a word token (respecting quoted substrings), determines if it's a 
+ * Extracts a word token (respecting quoted substrings), determines if it's a
  * subshell,
  * creates the appropriate token, and sets the quoted flag.
  *
@@ -96,7 +96,6 @@ bool	ft_brain_of_minishell(t_shell *shell, char *line)
 		while (*cmd_line && ft_isspace(*cmd_line))
 			cmd_line++;
 		ft_parsing_and_execute(shell, cmd_line, tok);
-		free_tokens(tok);
 	}
 	return (ft_free_arr(lines), true);
 }
@@ -142,5 +141,5 @@ int	main(int argc, char **argv, char **envp)
 	prompt_loop(&shell);
 	perror(RED "\nminishell: Error in prompt_loop" RESET);
 	clean_exit(&shell);
-	return (404);
+	return (shell.exit_status);
 }

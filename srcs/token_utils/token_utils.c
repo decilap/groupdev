@@ -33,12 +33,23 @@ t_token	*add_token(t_token **head, t_token_data data)
 	new = safe_malloc(sizeof(t_token));
 	if (!new)
 		return (NULL);
+
+	new->value = ft_strdup(data.value);
+	if (!new->value)
+	{
+		if (DEBUG_MODE)
+			fprintf(stderr, "[LOG][LEAK] strdup failed for value: %s\n", data.value);
+		free(new);
+		return (NULL);
+	}
+	if (DEBUG_MODE)
+		fprintf(stderr, "[LOG] add_token: value duplicated at %p -> \"%s\"\n", (void *)new->value, new->value);
 	new->type = data.type;
-	new->next = NULL;
 	new->quoted = data.quoted;
 	new->quote_char = data.quote_char;
-	new->value = data.value;
 	new->joined = 0;
+	new->next = NULL;
+
 	if (!*head)
 		*head = new;
 	else
@@ -50,6 +61,7 @@ t_token	*add_token(t_token **head, t_token_data data)
 	}
 	return (new);
 }
+
 
 /**
  * @brief Processes the input string character by character for expansion.
