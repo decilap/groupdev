@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wildcard_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 12:12:01 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/17 13:42:41 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/19 15:10:57 by decilapdeni      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,28 +126,38 @@ static int	insert_wildcard_matches(char **matches, t_token *cur,
 }
 
 /**
- * @brief Expands wildcard for a single token if needed.
+ * @brief Expands a wildcard in the given token and replaces it with a list of matched tokens.
  *
- * @param tokens Pointer to the full token list head.
- * @param cur The current token being processed.
- * @return 1 if expanded, 0 if no expansion, -1 on malloc( failure.
+ * If the token contains a wildcard (e.g., '*') and matches are found, it replaces the token
+ * with a list of tokens generated from the matching filenames. It ensures memory safety and 
+ * returns the next token to continue iteration safely after the replacement.
+ *
+ * @param tokens Pointer to the head of the full token list.
+ * @param cur The current token being processed (and potentially replaced).
+ * @return Pointer to the next token after the inserted matches, or NULL on error.
  */
-int	expand_wildcard_for_token(t_token **tokens, t_token *cur)
+
+t_token *expand_wildcard_for_token(t_token **tokens, t_token *cur)
 {
 	char	**matches;
 	t_token	*inserted;
+	t_token	*last;
 
 	inserted = NULL;
 	matches = wildcard_expand(cur->value);
 	if (!matches)
-		return (0);
+		return (NULL);
 	if (!insert_wildcard_matches(matches, cur, &inserted))
 	{
 		ft_free_arr(matches);
 		free_tokens(inserted);
-		return (-1);
+		return (NULL);
 	}
 	replace_token_with_list(tokens, cur, inserted);
 	ft_free_arr(matches);
-	return (1);
+	last = inserted;
+	while (last && last->next)
+		last = last->next;
+	return (last ? last->next : NULL);
 }
+

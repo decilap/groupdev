@@ -6,7 +6,7 @@
 /*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 16:30:01 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/15 02:12:38 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/19 15:13:29 by decilapdeni      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,22 +121,12 @@ void subshell_child(t_cmd *cmd, t_shell *shell, t_subsh_ctx *ctx)
 	char	**env_backup;
 	t_cmd	*sub_cmds;
 
-	if (DEBUG_MODE)
-		fprintf(stderr, "[LOG] Entering subshell_child\n");
-
 	subshell_prepare_and_check(cmd, shell, ctx, &env_backup);
 	redir_prev_fd(ctx->prev_fd);
 	redir_pipe(ctx->pipefd, ctx->pipe_needed);
-
 	sub_cmds = parse_input(ctx->sub_line, shell, 0);
 	if (!sub_cmds)
-	{
-		if (DEBUG_MODE)
-			fprintf(stderr, "[LOG] parse_input returned NULL in subshell_child\n");
 		subshell_clean_exit(shell, env_backup, SYNTAX_ERROR_EXIT_CODE);
-	}
-	if (DEBUG_MODE)
-		fprintf(stderr, "[LOG] Successfully parsed subshell command\n");
 	sub_status = execute_with_logical(sub_cmds, shell);
 	subshell_clean_exit(shell, env_backup, sub_status);
 }

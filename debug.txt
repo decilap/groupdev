@@ -1,0 +1,4 @@
+find /lib /usr/lib -name "libreadline.so*" 2>/dev/null
+find /lib /usr/lib -name "libhistory.so*" 2>/dev/null
+
+valgrind --tool=memcheck --leak-check=full --suppressions=realine.supp ./minishell

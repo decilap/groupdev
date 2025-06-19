@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 14:52:59 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/17 13:42:59 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/19 15:13:06 by decilapdeni      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,9 @@ t_token	*add_token(t_token **head, t_token_data data)
 	new->value = ft_strdup(data.value);
 	if (!new->value)
 	{
-		if (DEBUG_MODE)
-			fprintf(stderr, "[LOG][LEAK] strdup failed for value: %s\n", data.value);
 		free(new);
 		return (NULL);
 	}
-	if (DEBUG_MODE)
-		fprintf(stderr, "[LOG] add_token: value duplicated at %p -> \"%s\"\n", (void *)new->value, new->value);
 	new->type = data.type;
 	new->quoted = data.quoted;
 	new->quote_char = data.quote_char;

@@ -365,6 +365,7 @@ int main(void)
 
 		char mini_cmd[1024];
 		char exit_icmd[1024];
+		//snprintf(mini_cmd, sizeof(mini_cmd), "echo '%s' | valgrind --tool=memcheck --leak-check=full ./minishell", cmd);
 		snprintf(mini_cmd, sizeof(mini_cmd), "echo '%s' | ./minishell", cmd);
 		FILE *mini_fp = popen(mini_cmd, "r");
 		if (!mini_fp)

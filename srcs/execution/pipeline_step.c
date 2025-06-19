@@ -6,7 +6,7 @@
 /*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 15:39:47 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/15 00:50:02 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/19 15:12:05 by decilapdeni      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,53 +54,26 @@ static int	handle_pipeline_prechecks(t_cmd *cmd, t_shell *shell,
 	bool	is_export;
 	bool	export_display;
 
-	if (DEBUG_MODE)
-	{
-		fprintf(stderr, "[LOG] handle_pipeline_prechecks(): ENTRY\n");
-		fprintf(stderr, "[LOG] cmd = %p, cmd->args[0] = \"%s\"\n", 
-			(void *)cmd, cmd->args ? cmd->args[0] : "(null)");
-	}
 	if (is_subshell(cmd))
-	{
-		if (DEBUG_MODE)
-			fprintf(stderr, "[LOG] Detected subshell — calling step_subshell()\n");
 		return (step_subshell(cmd, shell, ctx));
-	}
 	if (cmd->fd_in == -1 || cmd->fd_out == -1)
-	{
-		if (DEBUG_MODE)
-			fprintf(stderr, "[LOG] Invalid fd_in (%d) or fd_out (%d), skipping command\n",
-			cmd->fd_in, cmd->fd_out);
 		return (shell->exit_status);
-	}
-
 	in_pipeline = (cmd->next_type == TOKEN_PIPE
 		|| (cmd->prev && cmd->prev_type == TOKEN_PIPE));
 	is_export = is_export_builtin(cmd);
 	export_display = is_export_display_only(cmd);
-
-	if (DEBUG_MODE)
-		fprintf(stderr, "[LOG] in_pipeline = %d, is_export = %d, export_display = %d\n",
-		in_pipeline, is_export, export_display);
-
 	if (is_export && !export_display && !in_pipeline)
 	{
-		if (DEBUG_MODE)
-			fprintf(stderr, "[LOG] Executing export with args (no display mode)\n");
 		shell->exit_status = execute_builtin(cmd, shell);
 		update_ctx_after_cmd(ctx->pipe_ctx);
 		return (shell->exit_status);
 	}
 	if (is_builtin(cmd) && !should_fork_builtin(cmd, in_pipeline))
 	{
-		if (DEBUG_MODE)
-			fprintf(stderr, "[LOG] Executing builtin outside of fork\n");
 		shell->exit_status = execute_builtin(cmd, shell);
 		update_ctx_after_cmd(ctx->pipe_ctx);
 		return (shell->exit_status);
 	}
-	if (DEBUG_MODE)
-		fprintf(stderr, "[LOG] handle_pipeline_prechecks(): END — need fork\n");
 	return (-1);
 }
 
@@ -131,35 +104,12 @@ int	handle_pipeline_step(t_cmd *cmd, t_shell *shell, t_pipeline_ctx *ctx)
 {
 	int	precheck;
 
-	if (DEBUG_MODE)
-	{
-		if (cmd && cmd->args && cmd->args[0])
-			fprintf(stderr, "[LOG] Command = \"%s\"\n", cmd->args[0]);
-		else
-			fprintf(stderr, "[LOG] Command is NULL or missing args\n");
-		fprintf(stderr, "[LOG] handle_pipeline_step(): ENTRY — cmd = %p\n", (void *)cmd);
-	}
-/* ==> */pipe_prepare(ctx->pipe_ctx, cmd);
+	pipe_prepare(ctx->pipe_ctx, cmd);
 	precheck = handle_pipeline_prechecks(cmd, shell, ctx);
-	if (DEBUG_MODE)
-		fprintf(stderr, "[LOG] handle_pipeline_step(): precheck = %d\n", precheck);
-
 	if (precheck != -1)
-	{
-		if (DEBUG_MODE)
-			fprintf(stderr, "[LOG] handle_pipeline_step(): skipping fork — handled by precheck\n");
 		return (precheck);
-	}
-	if (DEBUG_MODE)
-		fprintf(stderr, "[LOG] handle_pipeline_step(): calling handle_pipeline_fork()\n");
 	handle_pipeline_fork(cmd, shell, ctx);
-
 	(*(ctx->i))++;
-	if (DEBUG_MODE)
-		fprintf(stderr, "[LOG] handle_pipeline_step(): incremented ctx->i to %d\n", *(ctx->i));
-
 	update_ctx_after_cmd(ctx->pipe_ctx);
-	if (DEBUG_MODE)
-		fprintf(stderr, "[LOG] handle_pipeline_step(): EXIT\n");
 	return (0);
 }

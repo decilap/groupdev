@@ -6,7 +6,7 @@
 /*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 15:39:47 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/15 00:39:04 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/19 14:37:52 by decilapdeni      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,6 @@ void	redir_in(t_cmd *cmd)
  */
 void	redir_out(t_cmd *cmd)
 {
-	if (DEBUG_MODE)
-		fprintf(stderr, "[DEBUG] redirecting out to fd=%d\n", cmd->fd_out);
 	if (cmd->fd_out != STDOUT_FILENO)
 	{
 		dup2(cmd->fd_out, STDOUT_FILENO);

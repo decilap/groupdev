@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_tokens.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 14:47:00 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/17 13:42:41 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/19 15:15:52 by decilapdeni      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,8 @@
  * @param cmd The command structure where allocations are stored.
  * @param count Number of arguments to allocate for.
  */
-/* static ==> */void	allocate_cmd_args(t_cmd *cmd, int count)
+void allocate_cmd_args(t_cmd *cmd, int count)
 {
-	if (DEBUG_MODE)
-		fprintf(stderr, "[LOG] allocate_cmd_args(): cmd = %p, count = %d\n", (void *)cmd, count);
-
-	if (!cmd)
-	{
-		if (DEBUG_MODE)
-			fprintf(stderr, "[FATAL] allocate_cmd_args(): cmd is NULL !\n");
-		abort();
-	}
-
 	cmd->args = malloc(sizeof(char *) * (count + 1));
 	if (!cmd->args)
 		exit_error("malloc( failed (args)");
@@ -42,14 +32,7 @@
 		free(cmd->args);
 		exit_error("malloc( failed (quote_chars)");
 	}
-
-	
-
-	if (DEBUG_MODE)
-		fprintf(stderr, "[LOG] allocate_cmd_args(): allocations OK -> args=%p, quote_chars=%p\n",
-		(void *)cmd->args, (void *)cmd->quote_chars);
 }
-
 
 /**
  * @brief Fills the command argument and quote arrays by duplicating input.
@@ -63,40 +46,30 @@
  * @param quote_chars Input quote state to copy.
  * @param count Total number of arguments.
  */
-/* static => */void	fill_cmd_args(t_cmd *cmd, char **args,
-	t_quote_state *quote_chars, int count)
+void fill_cmd_args(t_cmd *cmd, char **args,
+				   t_quote_state *quote_chars, int count)
 {
-	int	i;
+	int i;
 
-	if (DEBUG_MODE)
-		fprintf(stderr, "[LOG] fill_cmd_args(): ENTRY — count = %d\n", count);
 	i = 0;
 	while (i < count)
 	{
-		if (DEBUG_MODE)
-			fprintf(stderr, "[LOG] fill_cmd_args(): duplicating args[%d] = \"%s\"\n", i, args[i]);
 		cmd->args[i] = ft_strdup(args[i]);
 		if (!cmd->args[i])
 		{
-			if (DEBUG_MODE)
-				fprintf(stderr, "[ERROR] fill_cmd_args(): ft_strdup failed at i = %d\n", i);
 			free_partial_args(cmd->args, i);
 			free(cmd->args);
 			free(cmd->quote_chars);
 			exit_error("strdup failed in fill_cmd_args");
 		}
 		cmd->quote_chars[i] = quote_chars[i];
-		if (DEBUG_MODE)
-			fprintf(stderr, "[LOG] fill_cmd_args(): quote_chars[%d] = %d\n", i, quote_chars[i]);
 		i++;
 	}
 	cmd->args[i] = NULL;
 	cmd->quote_chars[i] = '\0';
-	if (DEBUG_MODE)
-		fprintf(stderr, "[LOG] fill_cmd_args(): EXIT\n");
 }
 
-bool	is_subshell_marker(const char *s)
+bool is_subshell_marker(const char *s)
 {
 	return (s && ft_strncmp(s, "__SUBSHELL_", 11) == 0);
 }
@@ -112,62 +85,26 @@ bool	is_subshell_marker(const char *s)
  * @param err_code Error code pointer to store resolution status.
  * @return The expanded token (must be freed after use).
  */
-t_token	*expand_and_resolve_path(t_cmd *cmd, t_shell *shell, int *err_code)
+t_token *expand_and_resolve_path(t_cmd *cmd, t_shell *shell, int *err_code)
 {
-	t_token	*expanded;
+	t_token *expanded;
 
-	if (DEBUG_MODE)
-		fprintf(stderr, "[LOG] expand_and_resolve_path(): ENTRY — cmd = %p\n", (void *)cmd);
 	*err_code = 0;
-
 	if (!cmd->args[0])
 	{
-		if (DEBUG_MODE)
-			fprintf(stderr, "[LOG] expand_and_resolve_path(): cmd->args[0] is NULL — skipping\n");
 		cmd->cmd_path = NULL;
 		return (NULL);
 	}
-
-if (is_subshell_marker(cmd->args[0]))
-{
-	if (DEBUG_MODE)
-		fprintf(stderr, "[LOG] expand_and_resolve_path(): Detected subshell marker \"%s\" — skipping path resolution\n", cmd->args[0]);
-
-	// ⛔️ Supprime ça :
-	// cmd->cmd_path = ft_strdup(cmd->args[0]);
-
-	cmd->cmd_path = NULL; // ✅ Très important : on n'exécute pas, on passe au step_subshell()
-	return (NULL);
-}
-
-	if (DEBUG_MODE)
-		fprintf(stderr, "[LOG] expand_and_resolve_path(): expanding cmd->args[0] = \"%s\"\n", cmd->args[0]);
-	expanded = expand_variables(cmd->args[0], shell, 1, Q_NONE);
-
-	if (DEBUG_MODE)
-	{
-		if (expanded)
-			fprintf(stderr, "[LOG] expand_and_resolve_path(): expanded->value = \"%s\"\n", expanded->value);
-		else
-			fprintf(stderr, "[LOG] expand_and_resolve_path(): expanded is NULL\n");
-	}
-
-	if (expanded && expanded->value && expanded->value[0] != '\0')
-	{
-		cmd->cmd_path = get_cmd_path(expanded->value, shell->env, err_code);
-		if (DEBUG_MODE)
-			fprintf(stderr, "[LOG] expand_and_resolve_path(): get_cmd_path() returned: %s, err_code = %d\n",
-				cmd->cmd_path ? cmd->cmd_path : "NULL", *err_code);
-	}
-	else
+	if (is_subshell_marker(cmd->args[0]))
 	{
 		cmd->cmd_path = NULL;
-		if (DEBUG_MODE)
-			fprintf(stderr, "[LOG] expand_and_resolve_path(): expanded is empty — cmd_path set to NULL\n");
+		return (NULL);
 	}
-
-	if (DEBUG_MODE)
-		fprintf(stderr, "[LOG] expand_and_resolve_path(): END — returning expanded = %p\n", (void *)expanded);
+	expanded = expand_variables(cmd->args[0], shell, 1, Q_NONE);
+	if (expanded && expanded->value && expanded->value[0] != '\0')
+		cmd->cmd_path = get_cmd_path(expanded->value, shell->env, err_code);
+	else
+		cmd->cmd_path = NULL;
 	return (expanded);
 }
 
@@ -179,12 +116,10 @@ if (is_subshell_marker(cmd->args[0]))
  * @param err_code The error code returned by path resolution.
  * @param shell The shell structure to update exit_status.
  */
-void	handle_path_errors(t_cmd *cmd, t_token *expanded, int err_code,
-	t_shell *shell)
+void handle_path_errors(t_cmd *cmd, t_token *expanded, int err_code,
+						t_shell *shell)
 {
-	if (!cmd->cmd_path
-		&& (!expanded || ft_strncmp(expanded->value, "__SUBSHELL_", 11) != 0)
-		&& !is_builtin(cmd))
+	if (!cmd->cmd_path && (!expanded || ft_strncmp(expanded->value, "__SUBSHELL_", 11) != 0) && !is_builtin(cmd))
 	{
 		if (err_code == 1)
 		{
@@ -216,31 +151,17 @@ void	handle_path_errors(t_cmd *cmd, t_token *expanded, int err_code,
  *
  * @param ctx The parsing context containing temporary argument data.
  */
-void	finalize_cmd_args(t_parse_ctx *ctx)
+void finalize_cmd_args(t_parse_ctx *ctx)
 {
 	if (!ctx->curr)
 	{
-		if (DEBUG_MODE)
-			fprintf(stderr, "[LOG][FATAL] finalize_cmd_args(): ctx->curr is NULL — calling setup_new_cmd()\n");
 		ctx->curr = setup_new_cmd();
 		ctx->head = ctx->curr;
 	}
-	else if (DEBUG_MODE)
-		fprintf(stderr, "[LOG] finalize_cmd_args(): ctx->curr is valid at %p\n", (void *)ctx->curr);
-
-	// ❌ Si on n'a rien à traiter, on ne fait rien
 	if (ctx->arg_i == 0)
-	{
-		if (DEBUG_MODE)
-			fprintf(stderr, "[LOG] finalize_cmd_args(): no args to finalize, skipping\n");
-		return ;
-	}
-
-	// 🔥 libère anciens contenus
+		return;
 	if (ctx->curr->args)
 	{
-		if (DEBUG_MODE)
-			fprintf(stderr, "[LOG] Freeing args at %p\n", (void *)ctx->curr->args);
 		free_tmp_args(ctx->curr->args, -1);
 		free(ctx->curr->args);
 		ctx->curr->args = NULL;
@@ -255,13 +176,9 @@ void	finalize_cmd_args(t_parse_ctx *ctx)
 		free(ctx->curr->cmd_path);
 		ctx->curr->cmd_path = NULL;
 	}
-
-	// ✅ Remplissage
 	allocate_cmd_args(ctx->curr, ctx->arg_i);
 	fill_cmd_args(ctx->curr, ctx->args, ctx->quote_chars, ctx->arg_i);
 	resolve_cmd_path(ctx->curr, ctx->shell);
-
-	// 🧹 Libération temporaire
 	if (ctx->args)
 	{
 		free_tmp_args(ctx->args, ctx->arg_i);
@@ -273,7 +190,6 @@ void	finalize_cmd_args(t_parse_ctx *ctx)
 		free(ctx->quote_chars);
 		ctx->quote_chars = NULL;
 	}
-
 	ctx->arg_i = 0;
 	ctx->quote_i = 0;
 }

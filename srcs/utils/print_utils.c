@@ -6,7 +6,7 @@
 /*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 12:09:31 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/15 02:12:26 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/19 15:00:58 by decilapdeni      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
  * 
  * @param env The array of environment variables.
  */
-void	print_env(char **env)
+/* void	print_env(char **env)
 {
 	int		i;
 	char	*index_str;
@@ -34,7 +34,7 @@ void	print_env(char **env)
 		free(index_str);
 		i++;
 	}
-}
+} */
 
 
 /**
@@ -71,7 +71,7 @@ void	print_env(char **env)
  * 
  * @param cmd The list of commands to print.
  */
-void	print_cmd(t_cmd *cmd)
+/* void	print_cmd(t_cmd *cmd)
 {
 	int	i;
 
@@ -105,7 +105,7 @@ void	print_cmd(t_cmd *cmd)
 			fprintf(stderr, "--------------------------------------\n");
 	}
 	fprintf(stderr, "--- Fin de l'affichage des commandes ---\n");
-}
+} */
 
 
 /**

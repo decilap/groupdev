@@ -6,7 +6,7 @@
 /*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 15:39:47 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/15 02:40:40 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/19 15:12:47 by decilapdeni      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,16 +119,10 @@ int	builtin_export(char **args, t_shell *shell)
 	ret = 0;
 	if (!args[1])
 	{
-		if (DEBUG_MODE)
-			fprintf(stderr, "[LOG][export] No args — printing env\n");
 		export_print_env(shell->env);
 		return (ret);
 	}
 	while (*++args)
-	{
-		if (DEBUG_MODE)
-			fprintf(stderr, "[LOG][export] Handling arg: \"%s\"\n", *args);
 		ret |= handle_export_arg(*args, shell);
-	}
 	return (ret);
 }

@@ -41,6 +41,7 @@ static int	handle_merge_dollar_with_word(t_token **curr, t_token **new_tok)
 		added = add_token(new_tok, data);
 		if (!added)
 			return (free(merged), 0);
+		free(merged);
 		added->joined = 0;
 		*curr = (*curr)->next->next;
 		return (1);

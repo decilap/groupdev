@@ -6,7 +6,7 @@
 /*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 14:35:24 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/19 13:29:11 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/19 15:16:13 by decilapdeni      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,42 +27,20 @@ int	process_token_subshell(t_parse_ctx *ctx)
 {
 	if (ctx->tok->type != TOKEN_SUBSHELL)
 		return (0);
-
-	if (DEBUG_MODE)
-		fprintf(stderr, "[LOG] process_token_subshell(): token = %s\n", ctx->tok->value);
-
 	ctx->args[ctx->arg_i] = ft_strdup(ctx->tok->value);
-	if (DEBUG_MODE)
-		fprintf(stderr, "[LOG] ft_strdup -> ctx->args[%d] = \"%s\" (%p)\n", ctx->arg_i, ctx->args[ctx->arg_i], (void *)ctx->args[ctx->arg_i]);
 	ctx->arg_i++;
 	ctx->args[ctx->arg_i] = NULL;
-	if (DEBUG_MODE)
-		fprintf(stderr, "[LOG] Freeing ctx.args content\n");
 	finalize_cmd_args(ctx);
-	if (DEBUG_MODE)
-	{
-		for (int i = 0; i < ctx->arg_i; i++)
-			if (ctx->args[i])
-				fprintf(stderr, "[LOG] Freeing ctx->args[%d]: \"%s\" at %p\n", i, ctx->args[i], (void *)ctx->args[i]);
-	
-	}
-	if (DEBUG_MODE)
-	{
-		fprintf(stderr, "[LOG] Setting cmd_path on ctx->curr = %p\n", (void *)ctx->curr);
-		fprintf(stderr, "[LOG] ft_strdup -> cmd_path = \"%s\" (%p)\n", ctx->curr->cmd_path, (void *)ctx->curr->cmd_path);
-	}
 	ctx->tok = ctx->tok->next;
 	if (ctx->tok && (ctx->tok->type == TOKEN_WORD || ctx->tok->type == TOKEN_SUBSHELL))
 	{
-		if (DEBUG_MODE)
-			fprintf(stderr, "[LOG] Next token is WORD or SUBSHELL, preparing new cmd\n");
 		free_tmp_args(ctx->args, ctx->arg_i);
 		free(ctx->args);
 		free(ctx->quote_chars);
-
 		ctx->args = malloc(sizeof(char *) * MAX_CMD_ARGS);
-		if (!ctx->args)
-			exit_error("malloc( args failed");
+		ctx->quote_chars = malloc(sizeof(t_quote_state) * MAX_CMD_ARGS);
+		if (!ctx->args || !ctx->quote_chars)
+			exit_error("malloc failed in subshell");
 		ft_memset(ctx->args, 0, sizeof(char *) * MAX_CMD_ARGS);
 		ft_memset(ctx->quote_chars, 0, sizeof(t_quote_state) * MAX_CMD_ARGS);
 		ctx->arg_i = 0;
@@ -70,8 +48,6 @@ int	process_token_subshell(t_parse_ctx *ctx)
 		ctx->curr = setup_new_cmd();
 		if (!ctx->head)
 			ctx->head = ctx->curr;
-		if (DEBUG_MODE)
-			fprintf(stderr, "[LOG] setup_new_cmd() returned %p\n", (void *)ctx->curr);
 	}
 	return (1);
 }
@@ -83,33 +59,30 @@ int	process_token_subshell(t_parse_ctx *ctx)
  * @param shell The shell state.
  * @return Updated token list or NULL on failure.
  */
-t_token	*validate_and_expand_wildcards(t_token *tokens, t_shell *shell)
+t_token *validate_and_expand_wildcards(t_token *tokens, t_shell *shell)
 {
-	int		res;
 	t_token	*cur;
 
 	cur = tokens;
 	if (!validate_pipe_logic(tokens, shell)
 		|| !validate_redirections(tokens, shell))
 		return (NULL);
+
 	while (cur)
 	{
 		if (cur->type == TOKEN_WORD && cur->quoted == 0
 			&& ft_strchr(cur->value, '*') && !ft_strchr(cur->value, '='))
 		{
-			res = expand_wildcard_for_token(&tokens, cur);
-			if (res == -1)
-				return (NULL);
-			if (res == 1)
-			{
-				cur = cur->next;
-				continue ;
-			}
+			cur = expand_wildcard_for_token(&tokens, cur);
+			if (!cur)
+				break;
+			continue;
 		}
 		cur = cur->next;
 	}
 	return (tokens);
 }
+
 
 /**
  * @brief Replace subshells and handle identifier correction.

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ddecilap <ddecilap@student.42.fr>          +#+  +:+       +#+        */
+/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 19:57:34 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/16 12:53:31 by ddecilap         ###   ########.fr       */
+/*   Updated: 2025/06/19 14:46:50 by decilapdeni      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,6 @@
 # define MAX_CMD_ARGS 1024
 
 #define MINI_PATH_MAX        4096
-
-# define DEBUG_MODE 0
 
 # define ERR_OPEN "minishell: Unable To Open Or Create History File And Retriev\
 e Data"

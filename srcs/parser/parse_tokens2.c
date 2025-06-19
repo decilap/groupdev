@@ -6,7 +6,7 @@
 /*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 14:53:04 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/14 22:21:28 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/19 15:14:38 by decilapdeni      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,6 @@ static void handle_merge_word_start(t_token *cur, char **merged,
 	*merged = ft_strdup(curr_value);
 	if (!*merged)
 		exit_error("ft_strdup failed in handle_merge_word_start");
-
-	if (DEBUG_MODE)
-		fprintf(stderr, "[LOG] Allocated merged word: \"%s\" at %p\n", *merged, *merged);
 	*quote = cur->quote_char;
 }
 
