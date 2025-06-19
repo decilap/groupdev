@@ -116,27 +116,53 @@ static int	process_current_token(t_parse_ctx *ctx, t_shell *shell,
  * @param shell The shell context.
  * @param multi_data Multi-line heredoc data.
  */
-static void	process_token_loop(t_parse_ctx *ctx, t_shell *shell,
-	t_token *multi_data)
+static void process_token_loop(t_parse_ctx *ctx, t_shell *shell, t_token *multi_data)
 {
-	int	result;
+	int result;
 
 	while (ctx->tok)
 	{
+		// Création d'une nouvelle commande si besoin
 		if (!ctx->curr)
 		{
 			ctx->curr = setup_new_cmd();
+			if (!ctx->curr)
+				return; // malloc fail (rare), rien à faire ici
 			if (!ctx->head)
 				ctx->head = ctx->curr;
 		}
+
 		result = process_current_token(ctx, shell, multi_data);
+
+		// 💥 Erreur critique → nettoyage mémoire partiel
 		if (result == -1)
-			return ;
+		{
+			if (!ctx->head && ctx->curr)
+				free_cmds(ctx->curr);
+			if (ctx->args)
+			{
+				free_tmp_args(ctx->args, ctx->arg_i);
+				free(ctx->args);
+				ctx->args = NULL;
+			}
+			if (ctx->quote_chars)
+			{
+				free(ctx->quote_chars);
+				ctx->quote_chars = NULL;
+			}
+			ctx->arg_i = 0;
+			ctx->quote_i = 0;
+			return;
+		}
+
 		if (result == 1)
-			continue ;
+			continue;
+
 		ctx->tok = ctx->tok->next;
 	}
 }
+
+
 
 /**
  * @brief Initializes the parsing context (allocations + initial state).
@@ -178,7 +204,6 @@ t_cmd	*parse_tokens(t_token *tok, t_shell *shell, t_token *multi_data)
 
 	init_parse_context(&ctx, tok, shell);
 	process_token_loop(&ctx, shell, multi_data);
-
 	if (ctx.curr && ctx.arg_i > 0)
 		finalize_cmd_args(&ctx);
 	if (ctx.args)
@@ -194,6 +219,12 @@ t_cmd	*parse_tokens(t_token *tok, t_shell *shell, t_token *multi_data)
 	}
 	ctx.arg_i = 0;
 	ctx.quote_i = 0;
+	if (!ctx.head && ctx.curr)
+	{
+		free_cmds(ctx.curr);
+		ctx.curr = NULL;
+	}
 	return (ctx.head);
 }
+
 
