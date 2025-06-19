@@ -6,7 +6,7 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 15:39:47 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/19 20:40:27 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/19 22:17:06 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ bool	redir_pipe(int *pipefd, int pipe_needed)
 		{
 			perror(RED "minishell: execution: redir_pipe" RESET);
 			ret = false;
-			ret = true;
+			ret = true; // jai mis ca pour simulais le comportement de l'ancien code 
 		}
 		safe_close(pipefd[0]);
 		safe_close(pipefd[1]);
