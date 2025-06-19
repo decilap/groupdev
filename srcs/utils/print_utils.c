@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 12:09:31 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/15 02:12:26 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/19 21:15:22 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
  * 
  * @param env The array of environment variables.
  */
-/* void	print_env(char **env)
+void	print_env(char **env)
 {
 	int		i;
 	char	*index_str;
@@ -35,14 +35,13 @@
 		i++;
 	}
 }
- */
 
 /**
  * @brief Prints the list of tokens.
  * 
  * @param tok The list of tokens to print.
  */
-/* void print_tokens(t_token *tok)
+void print_tokens(t_token *tok)
 {
 	const char *qtype;
 	while (tok)
@@ -54,8 +53,7 @@
 		else
 			qtype = "NONE";
 
-		fprintf(stderr, "token: value='%s' | quoted=%d
-			| quote_char=%s | joined=%d | type=%d\n",
+		fprintf(stderr, "token: value='%s' | quoted=%d | quote_char=%s | joined=%d | type=%d\n",
 				tok->value ? tok->value : "(null)",
 				tok->quoted,
 				qtype,
@@ -64,14 +62,14 @@
 		tok = tok->next;
 	}
 }
- */
+
 
 /**
  * @brief Prints the list of commands.
  * 
  * @param cmd The list of commands to print.
  */
-/* void	print_cmd(t_cmd *cmd)
+void	print_cmd(t_cmd *cmd)
 {
 	int	i;
 
@@ -106,57 +104,57 @@
 	}
 	fprintf(stderr, "--- Fin de l'affichage des commandes ---\n");
 }
- */
+
 
 /**
  * @brief Prints the list of groups and their commands.
  * 
  * @param g The list of groups to print.
  */
-/* void	print_groups(t_group *g)
+void	print_groups(t_group *g)
 {
 	int		i;
 	t_cmd	*c;
 
-    // Use fprintf(stderr, ...) for debug output
-    fprintf(stderr, "--- DEBUG: Entering print_groups ---\n");
-    i = 1;
-    while (g)
-    {
-        fprintf(stderr, "Group %d (Address: %p):\n", i++, (void *)g);
-        c = g->cmds;
-        if (c) // Check if there are commands in the group
-        {
-            while (c)
-            {
-                fprintf(stderr, "  Command: '%s' (Args: %s, Next Cmd: %p)\n",
-                        c->args ? c->args[0] : "(null)",
-                        c->args && c->args[0] ? c->args[1] ? c->args[1]
+	// Use fprintf(stderr, ...) for debug output
+	fprintf(stderr, "--- DEBUG: Entering print_groups ---\n");
+	i = 1;
+	while (g)
+	{
+		fprintf(stderr, "Group %d (Address: %p):\n", i++, (void *)g);
+		c = g->cmds;
+		if (c) // Check if there are commands in the group
+		{
+			while (c)
+			{
+				fprintf(stderr, "  Command: '%s' (Args: %s, Next Cmd: %p)\n",
+						c->args ? c->args[0] : "(null)",
+						c->args && c->args[0] ? c->args[1] ? c->args[1]
 						: "(no further args)" : "(no args)",
-                        (void *)c->next);
-                c = c->next;
-            }
-        }
-        else
-        {
-            fprintf(stderr, "  (No commands in this group)\n");
-        }
-        
-        // Map next_op to a readable string
-        const char *op_str = "UNKNOWN";
-        if (g->next_op == 0) op_str = "NONE / END_OF_LINE";
-        else if (g->next_op == 1) op_str = "PIPE";
-        else if (g->next_op == 2) op_str = "AND";
-        else if (g->next_op == 3) op_str = "OR";
-        // Add more if you have other operators
+						(void *)c->next);
+				c = c->next;
+			}
+		}
+		else
+		{
+			fprintf(stderr, "  (No commands in this group)\n");
+		}
+		
+		// Map next_op to a readable string
+		const char *op_str = "UNKNOWN";
+		if (g->next_op == 0) op_str = "NONE / END_OF_LINE";
+		else if (g->next_op == 1) op_str = "PIPE";
+		else if (g->next_op == 2) op_str = "AND";
+		else if (g->next_op == 3) op_str = "OR";
+		// Add more if you have other operators
 
-        fprintf(stderr, "  Next operator (logical): %d (%s), Next Group: %p\n",
-                g->next_op, op_str, (void *)g->next);
-        
-        g = g->next;
-        if (g) // Add a separator if there are more groups
-            fprintf(stderr, "----------------------------------------\n");
-    }
-    fprintf(stderr, "--- DEBUG: Exiting print_groups ---\n");
+		fprintf(stderr, "  Next operator (logical): %d (%s), Next Group: %p\n",
+				g->next_op, op_str, (void *)g->next);
+		
+		g = g->next;
+		if (g) // Add a separator if there are more groups
+			fprintf(stderr, "----------------------------------------\n");
+	}
+	fprintf(stderr, "--- DEBUG: Exiting print_groups ---\n");
 }
- */
+ 

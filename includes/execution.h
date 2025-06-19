@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 19:57:45 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/15 01:37:01 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/19 22:01:44 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ typedef struct s_pipeline_ctx
 }	t_pipeline_ctx;
 
 int		execute_pipeline_group(t_cmd **cmd_ptr, t_shell *shell);
-int		handle_pipeline_step(t_cmd *cmd, t_shell *shell, t_pipeline_ctx *ctx);
 int		execute_logical_groups(t_group *groups, t_shell *shell);
 int		handle_pipeline_step(t_cmd *cmd, t_shell *shell, t_pipeline_ctx *ctx);
 int		exec_pipeline_loop(t_cmd *cmd, t_shell *shell, pid_t *pids);
@@ -95,20 +94,20 @@ int		handle_subshell(t_cmd *cmd, t_shell *shell, t_subsh_ctx *ctx);
 int		waitpids(pid_t *pids, int count, int final_status);
 void	child_process(t_cmd *cmd, t_shell *shell, t_pipe_ctx *ctx,
 			struct stat *sb);
-void	redir_all(t_cmd *cmd, t_pipe_ctx *ctx);
-void	pipe_prepare(t_pipe_ctx *ctx, t_cmd *cmd);
+bool	redir_all(t_cmd *cmd, t_pipe_ctx *ctx);
+bool	pipe_prepare(t_pipe_ctx *ctx, t_cmd *cmd);
 void	print_subshell_syntax_error(const char *line);
 void	update_ctx_after_cmd(t_pipe_ctx *ctx);
 void	child_process(t_cmd *cmd, t_shell *shell, t_pipe_ctx *ct,
 			struct stat *sb);
-void	expand_single_arg(t_cmd *cmd, t_shell *shell, int i);
-void	expand_cmd_args(t_cmd *cmd, t_shell *shell);
+bool	expand_single_arg(t_cmd *cmd, t_shell *shell, int i);
+bool	expand_cmd_args(t_cmd *cmd, t_shell *shell);
 void	init_pipe_ctx(t_pipe_ctx *ctx);
 void	clear_subshell_table(void);
-void	redir_prev_fd(int prev_fd);
-void	redir_pipe(int *pipefd, int pipe_needed);
-void	redir_in(t_cmd *cmd);
-void	redir_out(t_cmd *cmd);
+bool	redir_prev_fd(int prev_fd);
+bool	redir_pipe(int *pipefd, int pipe_needed);
+bool	redir_in(t_cmd *cmd);
+bool	redir_out(t_cmd *cmd);
 void	subshell_child(t_cmd *cmd, t_shell *shell, t_subsh_ctx *ctx);
 
 #endif

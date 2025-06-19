@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   logic_executor.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 15:39:47 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/15 00:35:04 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/19 21:13:32 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,15 @@
  * @param g The group to expand.
  * @param shell The shell context.
  */
-static void	expand_one_group(t_group *g, t_shell *shell)
+static void	expand_one_group(t_cmd *cmds, t_shell *shell)
 {
 	t_cmd	*cmd;
 
-	cmd = g->cmds;
+	cmd = cmds;
 	while (cmd)
 	{
-		expand_cmd_args(cmd, shell);
+		if (!expand_cmd_args(cmd, shell))
+			return (perror(RED "minishell: execution: expand_cmd_args" RESET));
 		cmd = cmd->next;
 	}
 }
@@ -71,7 +72,7 @@ int	execute_logical_groups(t_group *groups, t_shell *shell)
 	g = groups;
 	while (g)
 	{
-		expand_one_group(g, shell);
+		expand_one_group(g->cmds, shell);
 		pipeline = g->cmds;
 		status = execute_pipeline_group(&pipeline, shell);
 		if ((g->next_op == TOKEN_AND && status != 0)

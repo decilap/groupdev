@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_single_arg.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 15:39:47 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/15 00:43:29 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/19 21:13:18 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,16 @@
 static t_token	*expand_variables_for_arg(char *arg, t_shell *shell,
 	int is_quoted, t_quote_state quote_char)
 {
-	return (expand_variables(arg, shell, is_quoted, quote_char));
+	t_token	*tok;
+
+	tok = expand_variables(arg, shell, is_quoted, quote_char);
+	if (!tok)
+	{
+		shell->exit_status = 2;
+		perror(RED "minishell: execution: expand_vaiables" RESET);
+		return (NULL);
+	}
+	return (tok);
 }
 
 /**
@@ -72,7 +81,7 @@ static char	*concatenate_expanded_tokens(t_token *expanded)
  * @param shell The shell context.
  * @param i The argument index to expand.
  */
-void	expand_single_arg(t_cmd *cmd, t_shell *shell, int i)
+bool	expand_single_arg(t_cmd *cmd, t_shell *shell, int i)
 {
 	int		is_quoted;
 	char	*res;
@@ -82,11 +91,16 @@ void	expand_single_arg(t_cmd *cmd, t_shell *shell, int i)
 	expanded = expand_variables_for_arg(cmd->args[i], shell, is_quoted,
 			cmd->quote_chars[i]);
 	if (!expanded)
-		return ;
+		return (false);
 	res = concatenate_expanded_tokens(expanded);
 	free_tokens(expanded);
 	if (!res)
-		return ;
+	{
+		shell->exit_status = 2;
+		perror(RED "minishell: execution: concatenate_expanded_tokens" RESET);
+		return (false);
+	}
 	free(cmd->args[i]);
 	cmd->args[i] = res;
+	return (true);
 }

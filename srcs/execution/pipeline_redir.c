@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline_redir.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 15:39:47 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/15 00:39:04 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/19 20:40:27 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,21 @@
  * @param prev_fd File descriptor to duplicate (typically the previous
  * pipe's read end).
  */
-void	redir_prev_fd(int prev_fd)
+bool	redir_prev_fd(int prev_fd)
 {
+	bool	ret;
+
+	ret = true;
 	if (prev_fd != -1)
 	{
-		dup2(prev_fd, STDIN_FILENO);
-		close(prev_fd);
+		if (dup2(prev_fd, STDIN_FILENO) < 0)
+		{
+			perror(RED "minishell: execution: redir_prev_fd" RESET);
+			ret = false;
+		}
+		safe_close(prev_fd);
 	}
+	return (ret);
 }
 
 /**
@@ -40,13 +48,21 @@ void	redir_prev_fd(int prev_fd)
  *
  * @param cmd The command containing the input file descriptor.
  */
-void	redir_in(t_cmd *cmd)
+bool	redir_in(t_cmd *cmd)
 {
+	bool	ret;
+
+	ret = true;
 	if (cmd->fd_in != STDIN_FILENO)
 	{
-		dup2(cmd->fd_in, STDIN_FILENO);
-		close(cmd->fd_in);
+		if (dup2(cmd->fd_in, STDIN_FILENO) < 0)
+		{
+			perror(RED "minishell: execution: redir_in" RESET);
+			ret = false;
+		}
+		safe_close(cmd->fd_in);
 	}
+	return (ret);
 }
 
 /**
@@ -58,15 +74,27 @@ void	redir_in(t_cmd *cmd)
  *
  * @param cmd The command containing the output file descriptor.
  */
-void	redir_out(t_cmd *cmd)
+bool	redir_out(t_cmd *cmd)
 {
+	bool	ret;
+
+	ret = true;
 	if (DEBUG_MODE)
-		fprintf(stderr, "[DEBUG] redirecting out to fd=%d\n", cmd->fd_out);
+	{
+		ft_putstr_fd(RED "[DEBUG] redirecting out to fd=", 2);
+		ft_putnbr_fd(cmd->fd_out, 2);
+		ft_putstr_fd(";\n" RESET, 2);
+	}
 	if (cmd->fd_out != STDOUT_FILENO)
 	{
-		dup2(cmd->fd_out, STDOUT_FILENO);
-		close(cmd->fd_out);
+		if (dup2(cmd->fd_out, STDOUT_FILENO) < 0)
+		{
+			perror(RED "minishell: execution: redir_out" RESET);
+			ret = false;
+		}
+		safe_close(cmd->fd_out);
 	}
+	return (ret);
 }
 
 /**
@@ -78,12 +106,17 @@ void	redir_out(t_cmd *cmd)
  * @param cmd The command to set up redirections for.
  * @param ctx The pipeline context (provides previous and current pipe FDs).
  */
-void	redir_all(t_cmd *cmd, t_pipe_ctx *ctx)
+bool	redir_all(t_cmd *cmd, t_pipe_ctx *ctx)
 {
-	redir_prev_fd(ctx->prev_fd);
-	redir_pipe(ctx->pipefd, ctx->pipe_needed);
-	redir_in(cmd);
-	redir_out(cmd);
+	if (!redir_prev_fd(ctx->prev_fd))
+		return (false);
+	if (!redir_pipe(ctx->pipefd, ctx->pipe_needed))
+		return (false);
+	if (!redir_in(cmd))
+		return (false);
+	if (!redir_out(cmd))
+		return (false);
+	return (true);
 }
 
 /**
@@ -97,12 +130,21 @@ void	redir_all(t_cmd *cmd, t_pipe_ctx *ctx)
  * @param pipefd      The array containing the pipe file descriptors.
  * @param pipe_needed Flag indicating if a pipe is required.
  */
-void	redir_pipe(int *pipefd, int pipe_needed)
+bool	redir_pipe(int *pipefd, int pipe_needed)
 {
+	bool	ret;
+
+	ret = true;
 	if (pipe_needed)
 	{
-		dup2(pipefd[1], STDOUT_FILENO);
-		close(pipefd[0]);
-		close(pipefd[1]);
+		if (dup2(pipefd[1], STDOUT_FILENO) < 0)
+		{
+			perror(RED "minishell: execution: redir_pipe" RESET);
+			ret = false;
+			ret = true;
+		}
+		safe_close(pipefd[0]);
+		safe_close(pipefd[1]);
 	}
+	return (ret);
 }

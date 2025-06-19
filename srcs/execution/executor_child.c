@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor_child.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 15:39:47 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/15 00:37:37 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/19 20:40:27 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,8 @@ void	child_process(t_cmd *cmd, t_shell *shell, t_pipe_ctx *ctx,
 	int	status;
 
 	signal(SIGQUIT, NULL);
-	redir_all(cmd, ctx);
+	if (!redir_all(cmd, ctx))
+		exit(1);
 	if (!cmd->args || !cmd->args[0])
 		exit(127);
 	if (is_builtin(cmd))

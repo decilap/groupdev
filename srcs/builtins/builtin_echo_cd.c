@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_echo_cd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 15:39:47 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/15 12:07:03 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/19 20:18:45 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@ int	builtin_echo(char **args)
 	{
 		ft_putstr_fd(args[i], STDOUT_FILENO);
 		if (args[i + 1] && args[i + 1][0] != '\0')
-			write(STDOUT_FILENO, " ", 1);
+			safe_write(STDOUT_FILENO, " ", 1);
 		i++;
 	}
 	if (newline)
-		write(STDOUT_FILENO, "\n", 1);
+		safe_write(STDOUT_FILENO, "\n", 1);
 	return (0);
 }
 

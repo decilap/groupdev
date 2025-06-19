@@ -6,7 +6,7 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 16:14:01 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/17 13:42:41 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/19 20:40:27 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ char **sub)
 		return (0);
 	ctx->len = ctx->i - ctx->start;
 	*sub = ft_strndup(line + ctx->start + 1, ctx->len - 2);
+	if (!*sub)
+		return (-1);
 	return (1);
 }
 
@@ -69,10 +71,16 @@ static int	subshell_store_and_replace(t_sub_ctx *ctx, char *sub)
 		return (0);
 	ctx->table->commands[ctx->table->count] = sub;
 	index_str = ft_itoa(ctx->table->count);
+	if (!index_str)
+		return (-1);
 	tag = ft_strjoin_3("__SUBSHELL_", index_str, "__");
+	if (!tag)
+		return (-1);
 	free(index_str);
 	ctx->table->count++;
 	tmp_str = ft_strjoin(ctx->result, tag);
+	if (!tmp_str)
+		return (-1);
 	free(tag);
 	free(ctx->result);
 	ctx->result = tmp_str;
@@ -117,19 +125,27 @@ int	append_char_to_result(t_sub_ctx *ctx, char c)
 int	handle_subshell_chunk(const char *line, t_sub_ctx *ctx)
 {
 	char	*sub;
+	int		ret_ext;
+	int		ret_sub;
 
 	sub = NULL;
-	if (!extract_subshell_content(line, ctx, &sub))
+	ret_ext = extract_subshell_content(line, ctx, &sub);
+	if (ret_ext <= 0)
 	{
 		print_subshell_syntax_error(line);
 		free(ctx->result);
+		if (ret_ext < 0)
+			return (-1);
 		return (0);
 	}
-	if (!subshell_store_and_replace(ctx, sub))
+	ret_sub = subshell_store_and_replace(ctx, sub);
+	if (ret_sub <= 0)
 	{
-		fprintf(stderr, "minishell: trop de sous-shells imbriqués\n");
+		ft_putstr_fd(RED "minishell: trop de sous-shells imbriqués\n" RESET, 2);
 		free(sub);
 		free(ctx->result);
+		if (ret_sub < 0)
+			return (-1);
 		return (0);
 	}
 	return (1);

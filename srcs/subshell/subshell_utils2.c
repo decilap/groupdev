@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   subshell_utils2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 15:44:01 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/14 17:07:47 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/19 21:14:57 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

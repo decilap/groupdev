@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   subshell_error.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 17:10:01 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/14 17:08:08 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/19 20:40:27 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

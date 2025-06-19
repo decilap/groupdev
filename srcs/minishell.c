@@ -6,7 +6,7 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 13:21:45 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/17 13:29:27 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/19 21:59:46 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,22 @@ void	clean_exit(t_shell *shell)
 void	ft_parsing_and_execute(t_shell *shell, char *result, t_token *tok)
 {
 	t_cmd	*cmd;
+	int		status;
 
-	cmd = parse_input(result, shell, tok);
+	cmd = parse_input(result, shell, tok); // a revoir avec denis
 	if (!cmd)
+	{
+		perror(RED "minishell: parse_input" RESET);
 		return ;
-	execute_with_logical(cmd, shell);
+	}
+	status = execute_with_logical(cmd, shell);
+	shell->exit_status = status;
 	clear_subshell_table();
+	if (shell->exit_status == 2)
+		perror(RED "minishell: execute_with_logical" RESET);
+	if (status == 2)
+		shell->exit_status = 1;
+	return ;
 }
 
 bool	ft_brain_of_minishell(t_shell *shell, char *line)
@@ -135,7 +145,8 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
-	ft_init_shell_struct(&shell, envp);
+	if (!ft_init_shell_struct(&shell, envp))
+		return (shell.exit_status);
 	ft_init_shlvl_env(&shell);
 	ft_init_history_env(&shell);
 	init_signals();

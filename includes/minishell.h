@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ddecilap <ddecilap@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 19:57:34 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/16 12:53:31 by ddecilap         ###   ########.fr       */
+/*   Updated: 2025/06/19 21:59:59 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,6 +169,6 @@ typedef struct s_group
 
 void	clean_exit(t_shell *shell);
 bool	ft_brain_of_minishell(t_shell *shell, char *line);
-void	ft_parsing_and_execute(t_shell *shell, char *result, t_token *tok);
+void		ft_parsing_and_execute(t_shell *shell, char *result, t_token *tok);
 
 #endif

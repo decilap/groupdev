@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline_child.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 15:39:47 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/15 00:35:56 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/19 20:40:27 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,10 @@ int	exec_pipeline_loop(t_cmd *cmd, t_shell *shell, pid_t *pids)
 	{
 		final_status = handle_pipeline_step(cmd, shell, &pipeline_ctx);
 		if (final_status == 2)
+		{
+			perror(RED "minishell: execution: handle_pipeline_step" RESET);
 			break ;
+		}
 		cmd = cmd->next;
 	}
 	return (waitpids(pids, i, final_status));
@@ -62,10 +65,11 @@ int	execute_with_logical(t_cmd *cmd, t_shell *shell)
 	t_group	*groups;
 
 	groups = group_commands(cmd);
+	if (!groups)
+		return (2);
 	status = 0;
 	if (groups)
 		status = execute_logical_groups(groups, shell);
-	shell->exit_status = status;
 	free_groups(groups);
 	return (status);
 }

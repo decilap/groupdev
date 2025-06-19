@@ -3,14 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline_executor.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 15:39:47 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/15 12:12:11 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/19 21:30:43 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/includes.h"
+
+static bool	ft_max_pipe(int count, t_shell *shell)
+{
+	if (count > MAX_PIPE_CMDS)
+	{
+		shell->exit_status = 2;
+		ft_putstr_fd("minishell: too many processes in pipeline\
+			\n", STDERR_FILENO);
+		return (false);
+	}
+	return (true);
+}
 
 /**
  * @brief Loops over commands in a pipeline, forking and executing each.
@@ -39,14 +51,13 @@ int	execute_pipeline_group(t_cmd **cmd_ptr, t_shell *shell)
 			count++;
 		cur = cur->next;
 	}
-	if (count > MAX_PIPE_CMDS)
-	{
-		ft_putstr_fd("minishell: too many processes in pipeline\
-			\n", STDERR_FILENO);
+	if (!ft_max_pipe(count, shell))
 		return (1);
-	}
 	final_status = exec_pipeline_loop(cmd, shell, pids);
 	*cmd_ptr = NULL;
-	shell->exit_status = final_status;
+	if (shell->exit_status != 130)
+		shell->exit_status = final_status;
+	else
+		final_status = 1;
 	return (final_status);
 }

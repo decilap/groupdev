@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline_step.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 15:39:47 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/15 00:50:02 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/19 21:51:43 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,20 +80,26 @@ static int	handle_pipeline_prechecks(t_cmd *cmd, t_shell *shell,
 /**
  * @brief Fork and execute command inside child process.
  */
-static void	handle_pipeline_fork(t_cmd *cmd, t_shell *shell,
+static int	handle_pipeline_fork(t_cmd *cmd, t_shell *shell,
 	t_pipeline_ctx *ctx)
 {
 	struct stat	sb;
 
-	pipe_prepare(ctx->pipe_ctx, cmd);
+	if (!pipe_prepare(ctx->pipe_ctx, cmd))
+	{
+		shell->exit_status = 1;
+		perror(RED "minishell: execution: step_subshell" RESET);
+		return (-1);
+	}
 	ctx->pids[*(ctx->i)] = fork();
 	if (ctx->pids[*(ctx->i)] == -1)
 	{
 		perror("fork failed");
-		exit(1);
+		return (-1);
 	}
 	if (ctx->pids[*(ctx->i)] == 0)
 		child_process(cmd, shell, ctx->pipe_ctx, &sb);
+	return (0);
 }
 
 /**
@@ -102,12 +108,15 @@ static void	handle_pipeline_fork(t_cmd *cmd, t_shell *shell,
 int	handle_pipeline_step(t_cmd *cmd, t_shell *shell, t_pipeline_ctx *ctx)
 {
 	int	precheck;
+	int	ret;
 
+	ret = 0;
 	precheck = handle_pipeline_prechecks(cmd, shell, ctx);
 	if (precheck != -1)
 		return (precheck);
-	handle_pipeline_fork(cmd, shell, ctx);
+	if (handle_pipeline_fork(cmd, shell, ctx) < 0)
+		ret = 2;
 	(*(ctx->i))++;
 	update_ctx_after_cmd(ctx->pipe_ctx);
-	return (0);
+	return (ret);
 }

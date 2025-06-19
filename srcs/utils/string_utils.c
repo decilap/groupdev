@@ -6,7 +6,7 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 12:05:47 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/17 13:42:41 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/19 20:10:50 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,10 @@ bool	safe_close(int fd)
 {
 	if (close(fd) < 0)
 	{
-		dprintf(STDERR_FILENO,
-			RED "minishell: failed to close fd=%d: %s" RESET "\n",
-			fd, strerror(errno));
+		ft_putstr_fd(RED "minishell: failed to close fd=", STDIN_FILENO);
+		ft_putnbr_fd(fd, STDIN_FILENO);
+		ft_putstr_fd(": " RESET, STDIN_FILENO);
+		perror(NULL);
 		return (false);
 	}
 	return (true);
@@ -89,7 +90,10 @@ bool	safe_write(int fd, char *buf, size_t n)
 {
 	if (write(fd, buf, n) < 0)
 	{
-		printf("%sminishell: %d: %s%s\n", RED, fd, strerror(errno), RESET);
+		ft_putstr_fd(RED "minishell: failed to write fd=", STDIN_FILENO);
+		ft_putnbr_fd(fd, STDIN_FILENO);
+		ft_putstr_fd(": " RESET, STDIN_FILENO);
+		perror(NULL);
 		return (false);
 	}
 	return (true);

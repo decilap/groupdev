@@ -6,7 +6,7 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 15:40:19 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/17 13:42:59 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/18 11:41:07 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ char	**copy_env(char **envp)
 	while (envp[env_count])
 		env_count++;
 	new_env = safe_malloc(sizeof(char *) * (env_count + 1));
+	if (!new_env)
+		return (NULL);
 	i = 0;
 	while (i < env_count)
 	{
@@ -68,7 +70,6 @@ char	**copy_env(char **envp)
 			while (i > 0)
 				free(new_env[--i]);
 			free(new_env);
-			exit_error(RED "minishell: unset" RESET);
 			return (NULL);
 		}
 		i++;

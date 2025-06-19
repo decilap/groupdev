@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 19:57:34 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/15 01:34:22 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/19 10:46:17 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_cmd	*setup_new_cmd(void);
 t_cmd	*handle_assignment(char *trimmed, t_shell *shell);
 t_cmd	*parse_tokens(t_token *tok, t_shell *shell, t_token *multi_data);
 t_cmd	*parse_tokens_flow(char *replaced, t_shell *shell, t_token *multi_data);
-t_cmd	*group_add_subshell(t_cmd *cmds, t_group **head,
+t_group	*group_add_subshell(t_cmd **cmds, t_group **head,
 			t_group **curr_group);
 char	*validate_and_trim(char *line, t_shell *shell);
 char	*get_arithmetic_expr(const char *line, int *triple);

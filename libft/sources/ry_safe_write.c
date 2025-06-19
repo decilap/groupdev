@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ry_safe_write.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 10:15:09 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/15 01:27:32 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/19 20:19:06 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,10 @@ bool	safe_write(int fd, char *buf, size_t n)
 {
 	if (write(fd, buf, n) < 0)
 	{
-		printf("%sminishell: %d: %s%s\n", RED, fd, strerror(errno), RESET);
+		ft_putstr_fd(RED "minishell: failed to write fd=", STDIN_FILENO);
+		ft_putnbr_fd(fd, STDIN_FILENO);
+		ft_putstr_fd(": " RESET, STDIN_FILENO);
+		perror(NULL);
 		return (false);
 	}
 	return (true);

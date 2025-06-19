@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   subshell.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 15:24:01 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/10 23:49:42 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/19 20:40:27 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ char	*replace_subshells(const char *line)
 	{
 		if (line[ctx.i] == '(')
 		{
-			if (!handle_subshell_chunk(line, &ctx))
+			if (handle_subshell_chunk(line, &ctx) <= 0)
 				return (NULL);
 		}
 		else

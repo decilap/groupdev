@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 15:39:47 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/14 23:21:31 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/19 21:25:04 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,17 @@ int	run_builtin(t_cmd *cmd, t_shell *shell)
 	return (1);
 }
 
+static bool	ft_init_saved(int *saved_in, int *saved_out)
+{
+	*saved_in = dup(STDIN_FILENO);
+	if (*saved_in < 0)
+		return (false);
+	*saved_out = dup(STDOUT_FILENO);
+	if (*saved_out < 0)
+		return (false);
+	return (true);
+}
+
 /**
  * @brief Gère la redirection de l'entrée/sortie pour une commande built-in
  * et l’exécute.
@@ -85,22 +96,24 @@ int	execute_builtin(t_cmd *cmd, t_shell *shell)
 	int	saved_out;
 	int	ret;
 
-	saved_in = dup(STDIN_FILENO);
-	saved_out = dup(STDOUT_FILENO);
+	if (!ft_init_saved(&saved_in, &saved_out))
+		return (2);
 	if (cmd->fd_in != STDIN_FILENO)
 	{
-		dup2(cmd->fd_in, STDIN_FILENO);
-		close(cmd->fd_in);
+		if (dup2(cmd->fd_in, STDIN_FILENO) < 0)
+			return (safe_close(cmd->fd_in), 2);
+		safe_close(cmd->fd_in);
 	}
 	if (cmd->fd_out != STDOUT_FILENO)
 	{
-		dup2(cmd->fd_out, STDOUT_FILENO);
-		close(cmd->fd_out);
+		if (dup2(cmd->fd_out, STDOUT_FILENO) < 0)
+			return (safe_close(cmd->fd_out), 2);
+		safe_close(cmd->fd_out);
 	}
 	ret = run_builtin(cmd, shell);
-	dup2(saved_in, STDIN_FILENO);
-	dup2(saved_out, STDOUT_FILENO);
-	close(saved_in);
-	close(saved_out);
-	return (ret);
+	if (dup2(saved_in, STDIN_FILENO) < 0)
+		return (2);
+	if (dup2(saved_out, STDOUT_FILENO) < 0)
+		return (2);
+	return (safe_close(saved_in), safe_close(saved_out), ret);
 }

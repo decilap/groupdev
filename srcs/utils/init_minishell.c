@@ -6,15 +6,21 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 13:50:50 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/11 14:11:51 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/19 15:13:33 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/includes.h"
 
-void	ft_init_shell_struct(t_shell *shell, char **envp)
+bool	ft_init_shell_struct(t_shell *shell, char **envp)
 {
 	shell->env = copy_env(envp);
+	if (!shell->env)
+	{
+		shell->exit_status = 2;
+		perror(RED "minishell: copy_env" RESET);
+		return (false);
+	}
 	shell->cmds = NULL;
 	shell->locals = NULL;
 	shell->history = NULL;
@@ -22,6 +28,7 @@ void	ft_init_shell_struct(t_shell *shell, char **envp)
 	shell->histfile_len = 0;
 	shell->exit_status = 0;
 	shell->syntax_error_printed = 0;
+	return (true);
 }
 
 void	ft_init_shlvl_env(t_shell *shell)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_arg_cleanup.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 15:39:47 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/15 00:51:21 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/19 21:12:48 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ static int	merge_empty_unquoted(t_cmd *cmd, int i)
 		&& cmd->args[i + 1])
 	{
 		tmp = ft_strjoin(cmd->args[i], cmd->args[i + 1]);
+		if (!tmp)
+			return (-1);
 		free(cmd->args[i]);
 		free(cmd->args[i + 1]);
 		cmd->args[i] = tmp;
@@ -94,25 +96,30 @@ static int	remove_empty_unquoted(t_cmd *cmd, int i)
  * @param cmd The command structure.
  * @param shell The shell context.
  */
-void	expand_cmd_args(t_cmd *cmd, t_shell *shell)
+bool	expand_cmd_args(t_cmd *cmd, t_shell *shell)
 {
 	int	i;
+	int	ret_m_e_uq;
 
 	if (!cmd || !cmd->args)
-		return ;
+		return (false);
 	i = 0;
 	while (cmd->args[i])
 	{
-		expand_single_arg(cmd, shell, i);
-		if (handle_empty_quoted(cmd, i))
-		{
-			i++;
+		if (!expand_single_arg(cmd, shell, i))
+			return (false);
+		if (handle_empty_quoted(cmd, i) && i++)
 			continue ;
-		}
-		if (merge_empty_unquoted(cmd, i))
+		ret_m_e_uq = merge_empty_unquoted(cmd, i);
+		if (ret_m_e_uq < 0)
+			return (shell->exit_status = 2,
+				perror(RED "minishell: execution: merge_empty_unquoted" RESET),
+				false);
+		if (ret_m_e_uq)
 			continue ;
 		if (remove_empty_unquoted(cmd, i))
 			continue ;
 		i++;
 	}
+	return (true);
 }

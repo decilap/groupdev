@@ -6,7 +6,7 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 14:33:30 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/17 13:42:41 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/19 21:57:13 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_cmd	*setup_new_cmd(void)
 
 	cmd = malloc(sizeof(t_cmd));
 	if (!cmd)
-		exit_error("malloc( failed");
+		exit_error("malloc failed");
 	cmd->args = NULL;
 	cmd->cmd_path = NULL;
 	cmd->next = NULL;
@@ -54,7 +54,7 @@ t_group	*create_group(t_cmd *cmds)
 		return (NULL);
 	group = malloc(sizeof(t_group));
 	if (!group)
-		exit_error("malloc( group_commands");
+		return (NULL);
 	group->cmds = cmds;
 	group->next = NULL;
 	return (group);
@@ -71,26 +71,30 @@ t_group	*create_group(t_cmd *cmds)
  * @param curr_group Pointer to the current group in the list (will be updated).
  * @return Pointer to the next command after the pipeline (may be NULL).
  */
-static t_cmd	*group_add_pipeline(t_cmd *cmds, t_group **head,
+static t_group	*group_add_pipeline(t_cmd **cmds, t_group **head,
 	t_group **curr_group)
 {
 	t_group	*new_group;
 	t_cmd	*next;
 
-	new_group = create_group(cmds);
+	new_group = create_group(*cmds);
 	if (!new_group)
+	{
+		free_groups(*head);
 		return (NULL);
-	while (cmds->next && cmds->next_type == TOKEN_PIPE)
-		cmds = cmds->next;
-	new_group->next_op = cmds->next_type;
-	next = cmds->next;
-	cmds->next = NULL;
+	}
+	while ((*cmds)->next && (*cmds)->next_type == TOKEN_PIPE)
+		*cmds = (*cmds)->next;
+	new_group->next_op = (*cmds)->next_type;
+	next = (*cmds)->next;
+	(*cmds)->next = NULL;
 	if (!*head)
 		*head = new_group;
 	else
 		(*curr_group)->next = new_group;
 	*curr_group = new_group;
-	return (next);
+	*cmds = next;
+	return (*head);
 }
 
 /**
@@ -113,9 +117,15 @@ t_group	*group_commands(t_cmd *cmds)
 	{
 		if (cmds->cmd_path && ft_strncmp(cmds->cmd_path,
 				"__SUBSHELL_", 11) == 0)
-			cmds = group_add_subshell(cmds, &head, &curr_group);
+		{
+			if (!group_add_subshell(&cmds, &head, &curr_group))
+				return (NULL);
+		}
 		else
-			cmds = group_add_pipeline(cmds, &head, &curr_group);
+		{
+			if (!group_add_pipeline(&cmds, &head, &curr_group))
+				return (NULL);
+		}
 	}
 	return (head);
 }
