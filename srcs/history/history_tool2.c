@@ -6,7 +6,7 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 12:15:10 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/17 18:58:10 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/11 15:44:49 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
  * @brief Appends a character to a dynamically allocated string.
  * @param str The original string to append to (can be NULL).
  * @param buff The character to append.
- * @return A new string with the appended character, or NULL on malloc( fail.
+ * @return A new string with the appended character, or NULL on malloc fail.
  */
 static char	*ft_stradd(char *str, char buff)
 {
@@ -35,10 +35,7 @@ static char	*ft_stradd(char *str, char buff)
 	len = ft_strlen(str);
 	ret = (char *)malloc(sizeof(char) * (len + 2));
 	if (ret == NULL)
-	{
-		free(str);
 		return (NULL);
-	}
 	while (str && str[i])
 	{
 		ret[i] = str[i];

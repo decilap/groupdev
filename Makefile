@@ -6,7 +6,7 @@
 #    By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/27 20:46:26 by ryoussfi          #+#    #+#              #
-#    Updated: 2025/06/17 13:28:50 by ryoussfi         ###   ########.fr        #
+#    Updated: 2025/06/16 19:38:43 by ryoussfi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,12 +31,8 @@ LIBFT		=	libft.a
 
 UNAME_S := $(shell uname -s)
 
-#-Wextra -Wall -Werror
-
 # CC			=	cc
 CC			=	gcc -g
-# CC			=	clang -fsanitize=address -g
-# CC			=	gcc -fsanitize=address -g
 
 DFLAGS		=	-MMD -MP
 UNAME_S		=	${shell uname -s}
@@ -46,11 +42,11 @@ ifeq ($(UNAME_S),Linux)
 	LDFLAGS = -lreadline
 else ifeq ($(UNAME_S),Darwin)
 	ifeq ($(shell test -d /opt/homebrew && echo yes),yes)
-		CFLAGS  = -I/opt/homebrew/opt/readline/include
+		CFLAGS  = -I/opt/homebrew/opt/readline/include -Wextra -Wall -Werror
 		LDFLAGS = -L/opt/homebrew/opt/readline/lib -lreadline
 	else
 		# Sinon on suppose une installation classique (Intel mac)
-		CFLAGS  = -I/usr/local/opt/readline/include
+		CFLAGS  = -I/usr/local/opt/readline/include -Wextra -Wall -Werror
 		LDFLAGS = -L/usr/local/opt/readline/lib -lreadline
 	endif
 endif
@@ -73,6 +69,7 @@ SRCS		=	${SRCS_DIR}minishell.c \
 				$(SRCS_DIR)lexer/lexer.c \
 				${SRCS_DIR}quote/quote_extension.c \
 				${SRCS_DIR}quote/quote_handlers.c \
+				${SRCS_DIR}quote/quote_utils.c \
 				${SRCS_DIR}parser/group_commands.c \
 				${SRCS_DIR}parser/parse_error.c \
 				${SRCS_DIR}parser/parse_input.c \

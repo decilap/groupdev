@@ -6,7 +6,7 @@
 /*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 12:06:52 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/19 15:10:44 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/14 17:01:51 by decilapdeni      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,32 +25,32 @@
  *
  * @param cmd The command whose internal resources should be freed.
  */
-static void free_cmd_resources(t_cmd *cmd)
+static void	free_cmd_resources(t_cmd *cmd)
 {
-    int i = 0;
+	int	i;
 
-    if (cmd->args)
-    {
-        while (cmd->args[i])
-        {
+	i = 0;
+	if (cmd->args)
+	{
+		while (cmd->args[i])
+		{
 			free(cmd->args[i]);
-            i++;
-        }
-        free(cmd->args);
-        cmd->args = NULL;
-    }
-    if (cmd->cmd_path)
-    {
-        free(cmd->cmd_path);
-        cmd->cmd_path = NULL;
-    }
-    if (cmd->quote_chars)
-    {
-        free(cmd->quote_chars);
-        cmd->quote_chars = NULL;
-    }
+			i++;
+		}
+		free(cmd->args);
+		cmd->args = NULL;
+	}
+	if (cmd->cmd_path)
+	{
+		free(cmd->cmd_path);
+		cmd->cmd_path = NULL;
+	}
+	if (cmd->quote_chars)
+	{
+		free(cmd->quote_chars);
+		cmd->quote_chars = NULL;
+	}
 }
-
 
 /**
  * @brief Completely frees the entire linked list of command nodes (t_cmd).
@@ -82,7 +82,6 @@ void	free_cmds(t_cmd *cmd)
 	}
 }
 
-
 /**
  * @brief Frees the entire linked list of command groups (t_group).
  *
@@ -110,4 +109,55 @@ void	free_groups(t_group *group)
 		free(group);
 		group = tmp;
 	}
+}
+
+/**
+ * @brief Libère les chaînes individuelles d'un tableau temporaire de chaînes.
+ *
+ * Cette fonction libère jusqu'à `count` éléments dans un tableau de chaînes
+ * `char **args`, sans libérer le tableau lui-même. Elle est utile pour
+ * nettoyer un tableau partiellement rempli (ex: parsing échoué),
+ * où le tableau est encore utilisé ailleurs.
+ *
+ * @param args  Tableau de chaînes à libérer partiellement.
+ * @param count Nombre maximum d'éléments à libérer.
+ */
+void	free_tmp_args(char **args, int count)
+{
+	int	i;
+
+	i = 0;
+	while (i < count)
+	{
+		if (args[i])
+		{
+			free(args[i]);
+			args[i] = NULL;
+		}
+		i++;
+	}
+}
+
+/**
+ * @brief Cleanly frees all resources and exits the shell.
+ *
+ * Frees the command list, environment, and history, saves history to file,
+ * and exits with the current shell's exit status.
+ *
+ * @param shell Pointer to the main shell structure.
+ */
+void	clean_exit(t_shell *shell)
+{
+	if (!shell)
+		exit(1);
+	if (!save_to_file(shell, &shell->history))
+		perror(RED "minishell: Error in save_to_file for history" RESET);
+	if (shell->history)
+		free_history(&shell->history);
+	rl_clear_history();
+	if (shell->cmds)
+		free_cmds(shell->cmds);
+	if (shell->env)
+		ft_free_arr(shell->env);
+	exit(shell->exit_status);
 }

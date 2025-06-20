@@ -6,7 +6,7 @@
 /*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 12:09:31 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/19 15:00:58 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/15 02:12:26 by decilapdeni      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@
 		free(index_str);
 		i++;
 	}
-} */
-
+}
+ */
 
 /**
  * @brief Prints the list of tokens.
@@ -105,8 +105,8 @@
 			fprintf(stderr, "--------------------------------------\n");
 	}
 	fprintf(stderr, "--- Fin de l'affichage des commandes ---\n");
-} */
-
+}
+ */
 
 /**
  * @brief Prints the list of groups and their commands.

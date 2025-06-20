@@ -74,20 +74,19 @@ int	get_token_type(char *s)
 static int	copy_token_content(t_token **curr, t_token **new_tok,
 	t_token **copied)
 {
+	char			*copy_val;
 	t_token_data	data;
 
-	data = (t_token_data){
-		(*curr)->value,
-		(*curr)->type,
-		(*curr)->quoted,
-		(*curr)->quote_char
-	};
+	copy_val = ft_strdup((*curr)->value);
+	if (!copy_val)
+		return (0);
+	data = (t_token_data){copy_val, (*curr)->type, (*curr)->quoted,
+		(*curr)->quote_char};
 	*copied = add_token(new_tok, data);
 	if (!(*copied))
-		return (0);
+		return (free(copy_val), 0);
 	return (1);
 }
-
 
 /**
  * @brief Copies a simple token to the new token list.

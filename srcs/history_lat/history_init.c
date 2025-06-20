@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   history_init.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 12:33:52 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/17 13:42:41 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/06 20:38:32 by decilapdeni      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

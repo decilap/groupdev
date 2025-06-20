@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 19:57:55 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/17 13:42:59 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/15 10:58:32 by decilapdeni      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	ft_init_pending(t_pending *pen);
 void	ft_error_brain(t_shell *shell);
 int		pending_input(void);
 int		parse_echo_flags(char **args, int *newline);
+void	free_tmp_args(char **args, int count);
 void	exit_error(char *msg);
 void	*safe_malloc(size_t size);
 void	free_tokens(t_token *tokens);

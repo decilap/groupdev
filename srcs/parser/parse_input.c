@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 14:35:24 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/19 15:16:13 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/16 19:34:43 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ int	process_token_subshell(t_parse_ctx *ctx)
 	ctx->args[ctx->arg_i] = ft_strdup(ctx->tok->value);
 	ctx->arg_i++;
 	ctx->args[ctx->arg_i] = NULL;
-	finalize_cmd_args(ctx);
 	ctx->tok = ctx->tok->next;
-	if (ctx->tok && (ctx->tok->type == TOKEN_WORD || ctx->tok->type == TOKEN_SUBSHELL))
+	if (ctx->tok && (ctx->tok->type == TOKEN_WORD
+			|| ctx->tok->type == TOKEN_SUBSHELL))
 	{
 		free_tmp_args(ctx->args, ctx->arg_i);
 		free(ctx->args);
@@ -59,30 +59,33 @@ int	process_token_subshell(t_parse_ctx *ctx)
  * @param shell The shell state.
  * @return Updated token list or NULL on failure.
  */
-t_token *validate_and_expand_wildcards(t_token *tokens, t_shell *shell)
+t_token	*validate_and_expand_wildcards(t_token *tokens, t_shell *shell)
 {
+	int		res;
 	t_token	*cur;
 
 	cur = tokens;
 	if (!validate_pipe_logic(tokens, shell)
 		|| !validate_redirections(tokens, shell))
 		return (NULL);
-
 	while (cur)
 	{
 		if (cur->type == TOKEN_WORD && cur->quoted == 0
 			&& ft_strchr(cur->value, '*') && !ft_strchr(cur->value, '='))
 		{
-			cur = expand_wildcard_for_token(&tokens, cur);
-			if (!cur)
-				break;
-			continue;
+			res = expand_wildcard_for_token(&tokens, cur);
+			if (res == -1)
+				return (NULL);
+			if (res == 1)
+			{
+				cur = cur->next;
+				continue ;
+			}
 		}
 		cur = cur->next;
 	}
 	return (tokens);
 }
-
 
 /**
  * @brief Replace subshells and handle identifier correction.

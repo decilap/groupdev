@@ -36,10 +36,8 @@ static int	create_logical_token(t_token **tokens, const char *str, int type)
 		free(op);
 		return (0);
 	}
-	free(op); // ✅ Corrige la fuite
 	return (1);
 }
-
 
 /**
  * @brief Handles logical operators (&&, ||, |) during lexing.

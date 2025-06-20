@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: ddecilap <ddecilap@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 19:57:34 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/19 14:46:50 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/16 12:53:31 by ddecilap         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,11 @@
 # define TOKEN_POINT_VIRGULE   8
 # define TOKEN_NONE   9
 # define TOKEN_SUBSHELL  10
-# define MAX_SUBSHELLS 128
-# define MAX_PIPE_CMDS 4096
-# define MAX_CMD_ARGS 1024
+# define MAX_SUBSHELLS 4096
+# define MAX_PIPE_CMDS 1024
+# define MAX_CMD_ARGS 4096
 
-#define MINI_PATH_MAX        4096
+# define MINI_PATH_MAX        4096
 
 # define ERR_OPEN "minishell: Unable To Open Or Create History File And Retriev\
 e Data"

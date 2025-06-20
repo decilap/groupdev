@@ -87,7 +87,6 @@ typedef struct s_pipeline_ctx
 int		execute_pipeline_group(t_cmd **cmd_ptr, t_shell *shell);
 int		handle_pipeline_step(t_cmd *cmd, t_shell *shell, t_pipeline_ctx *ctx);
 int		execute_logical_groups(t_group *groups, t_shell *shell);
-int		handle_pipeline_step(t_cmd *cmd, t_shell *shell, t_pipeline_ctx *ctx);
 int		exec_pipeline_loop(t_cmd *cmd, t_shell *shell, pid_t *pids);
 int		execute_with_logical(t_cmd *cmd, t_shell *shell);
 int		is_subshell(t_cmd *cmd);

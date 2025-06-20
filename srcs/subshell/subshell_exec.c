@@ -6,7 +6,7 @@
 /*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 16:30:01 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/19 15:13:29 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/15 02:12:38 by decilapdeni      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ t_cmd	*group_add_subshell(t_cmd *cmds, t_group **head,
  * @param shell The main shell context.
  * @param ctx   The subshell context (fds, pipe info, line, depth).
  */
-void subshell_child(t_cmd *cmd, t_shell *shell, t_subsh_ctx *ctx)
+void	subshell_child(t_cmd *cmd, t_shell *shell, t_subsh_ctx *ctx)
 {
 	int		sub_status;
 	char	**env_backup;
@@ -130,7 +130,6 @@ void subshell_child(t_cmd *cmd, t_shell *shell, t_subsh_ctx *ctx)
 	sub_status = execute_with_logical(sub_cmds, shell);
 	subshell_clean_exit(shell, env_backup, sub_status);
 }
-
 
 /**
  * @brief Handles a pipeline step involving a subshell command.

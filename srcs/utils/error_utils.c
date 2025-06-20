@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 12:01:54 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/17 13:42:59 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/15 11:46:58 by decilapdeni      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

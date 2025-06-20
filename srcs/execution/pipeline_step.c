@@ -6,7 +6,7 @@
 /*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 15:39:47 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/19 15:12:05 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/15 00:50:02 by decilapdeni      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static int	handle_pipeline_prechecks(t_cmd *cmd, t_shell *shell,
 	if (cmd->fd_in == -1 || cmd->fd_out == -1)
 		return (shell->exit_status);
 	in_pipeline = (cmd->next_type == TOKEN_PIPE
-		|| (cmd->prev && cmd->prev_type == TOKEN_PIPE));
+			|| (cmd->prev && cmd->prev_type == TOKEN_PIPE));
 	is_export = is_export_builtin(cmd);
 	export_display = is_export_display_only(cmd);
 	if (is_export && !export_display && !in_pipeline)
@@ -76,7 +76,6 @@ static int	handle_pipeline_prechecks(t_cmd *cmd, t_shell *shell,
 	}
 	return (-1);
 }
-
 
 /**
  * @brief Fork and execute command inside child process.

@@ -6,7 +6,7 @@
 /*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 14:23:55 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/19 15:03:49 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/14 18:16:01 by decilapdeni      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,9 @@ char	*get_cmd_path(char *cmd, char **env, int *err_code)
 	char	**paths;
 	char	*result;
 
-	*err_code = 0;
 	result = check_direct_path(cmd, err_code);
-	if (result)
+	if (result || *err_code != 0)
 		return (result);
-	if (*err_code != 0)
-		return (NULL);
 	path_env = get_env_value("PATH", env);
 	if (!path_env)
 	{
@@ -71,7 +68,6 @@ char	*get_cmd_path(char *cmd, char **env, int *err_code)
 	return (result);
 }
 
-
 /**
  * @brief Resolves the full command path and handles resolution errors.
  *
@@ -88,16 +84,5 @@ void	resolve_cmd_path(t_cmd *cmd, t_shell *shell)
 
 	expanded = expand_and_resolve_path(cmd, shell, &err_code);
 	handle_path_errors(cmd, expanded, err_code, shell);
-	if (expanded)
-	{
-		if (expanded->value)
-		{
-			free(expanded->value);
-			expanded->value = NULL;
-		}
-		free(expanded);
-		expanded = NULL;
-	}
 	free_tokens(expanded);
 }
-

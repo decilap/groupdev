@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_setters.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 16:20:54 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/17 13:42:41 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/14 23:35:17 by decilapdeni      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

@@ -28,12 +28,12 @@ typedef struct s_wildcard_ctx
 }	t_wildcard_ctx;
 
 t_token	*validate_and_expand_wildcards(t_token *tokens, t_shell *shell);
-t_token *expand_wildcard_for_token(t_token **tokens, t_token *cur);
 char	**wildcard_expand(const char *pattern);
 int		match_pattern(const char *pattern, const char *str);
 int		validate_pipe_logic(t_token *tokens, t_shell *shell);
 int		validate_redirections(t_token *tokens, t_shell *shell);
 int		expand_current_wildcard(t_token **tokens, t_token **cur);
+int		expand_wildcard_for_token(t_token **tokens, t_token *cur);
 void	sort_ascii(char **array, int n);
 void	free_wildcard_ctx(t_wildcard_ctx *ctx);
 void	replace_token_with_list(t_token **head, t_token *target,

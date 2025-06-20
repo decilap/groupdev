@@ -6,77 +6,31 @@
 /*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 14:35:24 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/19 15:14:25 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/14 22:54:51 by decilapdeni      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/includes.h"
 
-void	free_tmp_args(char **args, int count)
+static void	handle_operator_token(t_token *tok, t_parse_ctx *ctx)
 {
-	int	i = 0;
+	t_cmd	*new;
+	t_cmd	*current;
 
-	if (!args)
-		return ;
-
-	if (count == -1)
+	if (tok->type == TOKEN_PIPE || tok->type == TOKEN_AND
+		|| tok->type == TOKEN_OR)
 	{
-		while (args[i])
-		{
-			free(args[i]);
-			args[i] = NULL;
-			i++;
-		}
-	}
-	else
-	{
-		while (i < count)
-		{
-			if (args[i])
-			{
-				free(args[i]);
-				args[i] = NULL;
-			}
-			i++;
-		}
-	}
-}
-
-
-
-/**
- * @brief Main parsing loop for token list to command chain.
- *
- * Iterates through all tokens, handles heredoc, subshells, words, redirections,
- * and operators, building a chain of command structs.
- *
- * @param ctx    The parsing context (tokens, args, command head, etc).
- * @param shell  The shell context for environment, status, etc.
- */
-static void handle_operator_token(t_token *tok, t_parse_ctx *ctx)
-{
-    t_cmd   *new;
-    t_cmd   *current;
-
-    if (tok->type == TOKEN_PIPE || tok->type == TOKEN_AND || tok->type == TOKEN_OR)
-    {
-        current = ctx->curr;
+		ctx->args[ctx->arg_i] = NULL;
+		current = ctx->curr;
 		finalize_cmd_args(ctx);
-        current->next_type = tok->type;
-        new = setup_new_cmd();
-        current->next = new;
-        new->prev = current;
-        new->prev_type = tok->type;
-        ctx->curr = new;
-        ctx->args = malloc(sizeof(char *) * MAX_CMD_ARGS);
-        ctx->quote_chars = malloc(sizeof(t_quote_state) * MAX_CMD_ARGS);
-        if (!ctx->args || !ctx->quote_chars)
-            exit_error("malloc failed");
-        ft_memset(ctx->args, 0, sizeof(char *) * MAX_CMD_ARGS);
-        ft_memset(ctx->quote_chars, 0, sizeof(t_quote_state) * MAX_CMD_ARGS);
-        ctx->arg_i = 0;
-        ctx->quote_i = 0;
-    }
+		current->next_type = tok->type;
+		new = setup_new_cmd();
+		current->next = new;
+		new->prev = current;
+		new->prev_type = tok->type;
+		ctx->curr = new;
+		reset_args_and_quotes(ctx);
+	}
 }
 
 /**
@@ -116,53 +70,27 @@ static int	process_current_token(t_parse_ctx *ctx, t_shell *shell,
  * @param shell The shell context.
  * @param multi_data Multi-line heredoc data.
  */
-static void process_token_loop(t_parse_ctx *ctx, t_shell *shell, t_token *multi_data)
+static void	process_token_loop(t_parse_ctx *ctx, t_shell *shell,
+	t_token *multi_data)
 {
-	int result;
+	int	result;
 
 	while (ctx->tok)
 	{
-		// Création d'une nouvelle commande si besoin
 		if (!ctx->curr)
 		{
 			ctx->curr = setup_new_cmd();
-			if (!ctx->curr)
-				return; // malloc fail (rare), rien à faire ici
 			if (!ctx->head)
 				ctx->head = ctx->curr;
 		}
-
 		result = process_current_token(ctx, shell, multi_data);
-
-		// 💥 Erreur critique → nettoyage mémoire partiel
 		if (result == -1)
-		{
-			if (!ctx->head && ctx->curr)
-				free_cmds(ctx->curr);
-			if (ctx->args)
-			{
-				free_tmp_args(ctx->args, ctx->arg_i);
-				free(ctx->args);
-				ctx->args = NULL;
-			}
-			if (ctx->quote_chars)
-			{
-				free(ctx->quote_chars);
-				ctx->quote_chars = NULL;
-			}
-			ctx->arg_i = 0;
-			ctx->quote_i = 0;
-			return;
-		}
-
+			return ;
 		if (result == 1)
-			continue;
-
+			continue ;
 		ctx->tok = ctx->tok->next;
 	}
 }
-
-
 
 /**
  * @brief Initializes the parsing context (allocations + initial state).
@@ -188,7 +116,6 @@ static void	init_parse_context(t_parse_ctx *ctx, t_token *tok, t_shell *shell)
 	ft_memset(ctx->args, 0, sizeof(char *) * MAX_CMD_ARGS);
 	ft_memset(ctx->quote_chars, 0, sizeof(t_quote_state) * MAX_CMD_ARGS);
 }
-
 
 /**
  * @brief Parses tokenized input into a linked list of commands.
@@ -219,12 +146,5 @@ t_cmd	*parse_tokens(t_token *tok, t_shell *shell, t_token *multi_data)
 	}
 	ctx.arg_i = 0;
 	ctx.quote_i = 0;
-	if (!ctx.head && ctx.curr)
-	{
-		free_cmds(ctx.curr);
-		ctx.curr = NULL;
-	}
 	return (ctx.head);
 }
-
-

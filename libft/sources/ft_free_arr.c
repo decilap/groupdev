@@ -17,7 +17,7 @@ void	ft_free_arr(char **str)
 	size_t	i;
 
 	if (!str)
-		return;
+		return ;
 	i = 0;
 	while (str[i])
 		free(str[i++]);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_local.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 16:12:32 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/17 13:42:41 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/15 02:58:02 by decilapdeni      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void	create_local_var(t_shell *shell, const char *name,
 	var = malloc(sizeof(t_var));
 	if (!var)
 	{
-		perror(RED "minishell: unset - malloc( failed" RESET);
+		perror(RED "minishell: unset - malloc failed" RESET);
 		return ;
 	}
 	var->key = ft_strdup(name);

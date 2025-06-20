@@ -3,7 +3,7 @@
 #include <string.h>
 #include <unistd.h>
 
-#define BUF_SIZE  100000
+#define BUF_SIZE 10000
 
 typedef struct s_testcase
 {
@@ -14,7 +14,7 @@ typedef struct s_testcase
 } t_testcase;
 
 t_testcase tests[] = {
-/*     {"echo $\"HOME\"", "HOME"},
+    {"echo $\"HOME\"", "HOME"},
 	{"echo $\"\"", "$"},
 	{"echo \"$\"\"\"", "$"},
 	{"echo '$'''", "$"},
@@ -64,7 +64,7 @@ t_testcase tests[] = {
 	{"$HOMEdskjhfkdshfsd", ""},
 	{"\"$HOMEdskjhfkdshfsd\"", "minishell: $HOMEdskjhfkdshfsd: command not found"},
 	{"'$HOMEdskjhfkdshfsd'", "minishell: $HOMEdskjhfkdshfsd: command not found"},
-	{"$DONTEXIST", ""},*/
+	{"$DONTEXIST", ""},
 	{"$LESS$VAR", ""},
 	{"env | grep SHLVL=3", "SHLVL=3"},
 	{"env hola", "env: hola: No such file or directory"},
@@ -90,7 +90,7 @@ t_testcase tests[] = {
 	{"(false && (false || (false && echo ko))) || echo yes", "yes"},
 	{"(echo test | grep test) && echo ok", "test ok"},
 	{"(echo foo | grep bar) || echo notfound", "notfound"},
-	/*{"export HOLA=bonjour && env | grep HOLA", "HOLA=bonjour"},
+	{"export HOLA=bonjour && env | grep HOLA", "HOLA=bonjour"},
 	{"export        HOLA=bonjour && env | grep HOLA", "HOLA=bonjour"},
 	{"export HOLA2 && export | grep HOLA2", "declare -x HOLA2"},
 	{"export \"\"" ,  "minishell: export: `': not a valid identifier"},
@@ -121,7 +121,7 @@ t_testcase tests[] = {
 	{"export HOL+A=bonjour", "minishell: export: `': not a valid identifier"},
 	{"export HOLA = bonjour", "minishell: export: `': not a valid identifier"},
 	{"export HO\\\\\\LA=bonjour", "minishell: export: `': not a valid identifier"},
-	{"export HOLA= bonjour && env | grep HOLA", "HOLA=bon"},
+	{"export HOLA= bonjour && env | grep HOLA", "HOLA=bonjour"},
 	{"export HOLA=$HOME && env | grep HOLA", "HOLA=/home/ddecilap"},
 	{"export HOLA=bonjour$HOME && env | grep HOLA", "HOLA=bonjour/home/ddecilap"},
 	{"export HOLA=$HOMEbonjour && env | grep HOLA", "HOLA="},
@@ -321,7 +321,7 @@ t_testcase tests[] = {
 	{"ls *.hola", "ls: *.hola: No such file or directory", 1},
 	{"cat M*le", "", 1},
 	{"cat M*ee", "", 1},
-	{"cat Make*file", "", 1},*/
+	{"cat Make*file", "", 1},
 	{NULL, NULL}};
 
 void trim_newline(char *s)
@@ -365,8 +365,7 @@ int main(void)
 
 		char mini_cmd[1024];
 		char exit_icmd[1024];
-		snprintf(mini_cmd, sizeof(mini_cmd), "echo '%s' | valgrind --tool=memcheck --leak-check=full ./minishell", cmd);
-		//snprintf(mini_cmd, sizeof(mini_cmd), "echo '%s' | ./minishell", cmd);
+		snprintf(mini_cmd, sizeof(mini_cmd), "echo '%s' | valgrind ./minishell", cmd);
 		FILE *mini_fp = popen(mini_cmd, "r");
 		if (!mini_fp)
 		{

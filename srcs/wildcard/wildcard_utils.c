@@ -6,7 +6,7 @@
 /*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 12:12:01 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/19 15:10:57 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/15 01:25:58 by decilapdeni      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,21 +104,24 @@ static int	insert_wildcard_matches(char **matches, t_token *cur,
 	t_token **inserted)
 {
 	int				i;
+	char			*copy_val;
 	t_token			*new_tok;
 	t_token_data	data;
 
 	i = 0;
 	while (matches[i])
 	{
-		data = (t_token_data){
-			matches[i],      // ⬅️ Pas besoin de ft_strdup
-			cur->type,
-			cur->quoted,
-			cur->quote_char
-		};
+		copy_val = ft_strdup(matches[i]);
+		if (!copy_val)
+			return (0);
+		data = (t_token_data){copy_val, cur->type, cur->quoted,
+			cur->quote_char};
 		new_tok = add_token(inserted, data);
 		if (!new_tok)
+		{
+			free(copy_val);
 			return (0);
+		}
 		new_tok->joined = cur->joined;
 		i++;
 	}
@@ -126,38 +129,28 @@ static int	insert_wildcard_matches(char **matches, t_token *cur,
 }
 
 /**
- * @brief Expands a wildcard in the given token and replaces it with a list of matched tokens.
+ * @brief Expands wildcard for a single token if needed.
  *
- * If the token contains a wildcard (e.g., '*') and matches are found, it replaces the token
- * with a list of tokens generated from the matching filenames. It ensures memory safety and 
- * returns the next token to continue iteration safely after the replacement.
- *
- * @param tokens Pointer to the head of the full token list.
- * @param cur The current token being processed (and potentially replaced).
- * @return Pointer to the next token after the inserted matches, or NULL on error.
+ * @param tokens Pointer to the full token list head.
+ * @param cur The current token being processed.
+ * @return 1 if expanded, 0 if no expansion, -1 on malloc failure.
  */
-
-t_token *expand_wildcard_for_token(t_token **tokens, t_token *cur)
+int	expand_wildcard_for_token(t_token **tokens, t_token *cur)
 {
 	char	**matches;
 	t_token	*inserted;
-	t_token	*last;
 
 	inserted = NULL;
 	matches = wildcard_expand(cur->value);
 	if (!matches)
-		return (NULL);
+		return (0);
 	if (!insert_wildcard_matches(matches, cur, &inserted))
 	{
 		ft_free_arr(matches);
 		free_tokens(inserted);
-		return (NULL);
+		return (-1);
 	}
 	replace_token_with_list(tokens, cur, inserted);
 	ft_free_arr(matches);
-	last = inserted;
-	while (last && last->next)
-		last = last->next;
-	return (last ? last->next : NULL);
+	return (1);
 }
-

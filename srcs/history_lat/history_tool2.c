@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   history_tool2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 12:15:10 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/17 13:42:41 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/14 18:08:16 by decilapdeni      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
  * @brief Appends a character to a dynamically allocated string.
  * @param str The original string to append to (can be NULL).
  * @param buff The character to append.
- * @return A new string with the appended character, or NULL on malloc( fail.
+ * @return A new string with the appended character, or NULL on malloc fail.
  */
 static char	*ft_stradd(char *str, char buff)
 {

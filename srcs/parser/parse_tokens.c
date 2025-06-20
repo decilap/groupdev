@@ -6,7 +6,7 @@
 /*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 14:47:00 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/19 15:15:52 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/14 18:15:10 by decilapdeni      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,16 @@
  * @param cmd The command structure where allocations are stored.
  * @param count Number of arguments to allocate for.
  */
-void allocate_cmd_args(t_cmd *cmd, int count)
+void	allocate_cmd_args(t_cmd *cmd, int count)
 {
 	cmd->args = malloc(sizeof(char *) * (count + 1));
 	if (!cmd->args)
-		exit_error("malloc( failed (args)");
+		exit_error("malloc failed (args)");
 	cmd->quote_chars = malloc(sizeof(t_quote_state) * (count + 1));
 	if (!cmd->quote_chars)
 	{
 		free(cmd->args);
-		exit_error("malloc( failed (quote_chars)");
+		exit_error("malloc failed (quote_chars)");
 	}
 }
 
@@ -39,17 +39,17 @@ void allocate_cmd_args(t_cmd *cmd, int count)
  *
  * Copies all arguments and their quote information safely into
  * the command structure.
- * Handles malloc( failure safely with partial cleanup.
+ * Handles malloc failure safely with partial cleanup.
  *
  * @param cmd The command structure being filled.
  * @param args Input arguments to copy.
  * @param quote_chars Input quote state to copy.
  * @param count Total number of arguments.
  */
-void fill_cmd_args(t_cmd *cmd, char **args,
-				   t_quote_state *quote_chars, int count)
+void	fill_cmd_args(t_cmd *cmd, char **args,
+	t_quote_state *quote_chars, int count)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < count)
@@ -69,11 +69,6 @@ void fill_cmd_args(t_cmd *cmd, char **args,
 	cmd->quote_chars[i] = '\0';
 }
 
-bool is_subshell_marker(const char *s)
-{
-	return (s && ft_strncmp(s, "__SUBSHELL_", 11) == 0);
-}
-
 /**
  * @brief Expands variables and resolves the command path.
  *
@@ -85,17 +80,12 @@ bool is_subshell_marker(const char *s)
  * @param err_code Error code pointer to store resolution status.
  * @return The expanded token (must be freed after use).
  */
-t_token *expand_and_resolve_path(t_cmd *cmd, t_shell *shell, int *err_code)
+t_token	*expand_and_resolve_path(t_cmd *cmd, t_shell *shell, int *err_code)
 {
-	t_token *expanded;
+	t_token	*expanded;
 
 	*err_code = 0;
 	if (!cmd->args[0])
-	{
-		cmd->cmd_path = NULL;
-		return (NULL);
-	}
-	if (is_subshell_marker(cmd->args[0]))
 	{
 		cmd->cmd_path = NULL;
 		return (NULL);
@@ -116,10 +106,12 @@ t_token *expand_and_resolve_path(t_cmd *cmd, t_shell *shell, int *err_code)
  * @param err_code The error code returned by path resolution.
  * @param shell The shell structure to update exit_status.
  */
-void handle_path_errors(t_cmd *cmd, t_token *expanded, int err_code,
-						t_shell *shell)
+void	handle_path_errors(t_cmd *cmd, t_token *expanded, int err_code,
+	t_shell *shell)
 {
-	if (!cmd->cmd_path && (!expanded || ft_strncmp(expanded->value, "__SUBSHELL_", 11) != 0) && !is_builtin(cmd))
+	if (!cmd->cmd_path
+		&& (!expanded || ft_strncmp(expanded->value, "__SUBSHELL_", 11) != 0)
+		&& !is_builtin(cmd))
 	{
 		if (err_code == 1)
 		{
@@ -151,45 +143,28 @@ void handle_path_errors(t_cmd *cmd, t_token *expanded, int err_code,
  *
  * @param ctx The parsing context containing temporary argument data.
  */
-void finalize_cmd_args(t_parse_ctx *ctx)
+void	finalize_cmd_args(t_parse_ctx *ctx)
 {
 	if (!ctx->curr)
 	{
 		ctx->curr = setup_new_cmd();
 		ctx->head = ctx->curr;
 	}
-	if (ctx->arg_i == 0)
-		return;
 	if (ctx->curr->args)
 	{
 		free_tmp_args(ctx->curr->args, -1);
 		free(ctx->curr->args);
-		ctx->curr->args = NULL;
 	}
 	if (ctx->curr->quote_chars)
-	{
 		free(ctx->curr->quote_chars);
-		ctx->curr->quote_chars = NULL;
-	}
 	if (ctx->curr->cmd_path)
 	{
 		free(ctx->curr->cmd_path);
 		ctx->curr->cmd_path = NULL;
 	}
+	ctx->curr->args = NULL;
+	ctx->curr->quote_chars = NULL;
 	allocate_cmd_args(ctx->curr, ctx->arg_i);
 	fill_cmd_args(ctx->curr, ctx->args, ctx->quote_chars, ctx->arg_i);
 	resolve_cmd_path(ctx->curr, ctx->shell);
-	if (ctx->args)
-	{
-		free_tmp_args(ctx->args, ctx->arg_i);
-		free(ctx->args);
-		ctx->args = NULL;
-	}
-	if (ctx->quote_chars)
-	{
-		free(ctx->quote_chars);
-		ctx->quote_chars = NULL;
-	}
-	ctx->arg_i = 0;
-	ctx->quote_i = 0;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 14:52:59 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/19 15:13:06 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/16 14:57:04 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,19 +33,12 @@ t_token	*add_token(t_token **head, t_token_data data)
 	new = safe_malloc(sizeof(t_token));
 	if (!new)
 		return (NULL);
-
-	new->value = ft_strdup(data.value);
-	if (!new->value)
-	{
-		free(new);
-		return (NULL);
-	}
 	new->type = data.type;
+	new->next = NULL;
 	new->quoted = data.quoted;
 	new->quote_char = data.quote_char;
+	new->value = data.value;
 	new->joined = 0;
-	new->next = NULL;
-
 	if (!*head)
 		*head = new;
 	else
@@ -57,7 +50,6 @@ t_token	*add_token(t_token **head, t_token_data data)
 	}
 	return (new);
 }
-
 
 /**
  * @brief Processes the input string character by character for expansion.

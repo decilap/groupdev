@@ -41,7 +41,6 @@ static int	handle_merge_dollar_with_word(t_token **curr, t_token **new_tok)
 		added = add_token(new_tok, data);
 		if (!added)
 			return (free(merged), 0);
-		free(merged);
 		added->joined = 0;
 		*curr = (*curr)->next->next;
 		return (1);
@@ -143,16 +142,14 @@ static int	handle_dollar_followed_by_quoted_word(t_token **curr,
 		data = (t_token_data){merged, TOKEN_WORD, (*curr)->quoted,
 			(*curr)->next->quote_char};
 		added = add_token(new_tok, data);
-		free(merged);
 		if (!added)
-			return (0);
+			return (free(merged), 0);
 		added->joined = (*curr)->joined;
 		*curr = (*curr)->next->next;
 		return (1);
 	}
 	return (0);
 }
-
 
 /**
  * @brief The main quote extension logic. Applies all quote merging rules.
@@ -183,7 +180,7 @@ t_token	*apply_quote_extension(t_token *tokens, t_shell *shell)
 			continue ;
 		if (handle_dollar_followed_by_quoted_word(&curr, &new_tok))
 			continue ;
-		else if (handle_token_with_dollar(&curr, &new_tok))
+		if (handle_token_with_dollar(&curr, &new_tok))
 			continue ;
 		if (!copy_simple_token(&curr, &new_tok))
 			return (free_tokens(new_tok), NULL);

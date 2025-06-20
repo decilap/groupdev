@@ -27,22 +27,14 @@ int	handle_dollar_in_double_quote(t_token **curr, t_token **new_tok)
 	merged = ft_strjoin((*curr)->value, (*curr)->next->value);
 	if (!merged)
 		return (0);
-	data = (t_token_data){
-		.value = merged,
-		.type = TOKEN_WORD,
-		.quoted = 1,
-		.quote_char = Q_SINGLE_QUOTE
-	};
+	data = (t_token_data){merged, TOKEN_WORD, 1, Q_SINGLE_QUOTE};
 	added = add_token(new_tok, data);
-	free(merged);
-
 	if (!added)
-		return (0);
+		return (free(merged), 0);
 	added->joined = 0;
 	*curr = (*curr)->next->next;
 	return (1);
 }
-
 
 /**
  * @brief Handles expansion of a token containing '$' inside double quotes.
@@ -78,23 +70,22 @@ int	handle_expansion_with_dollar(t_token **curr, t_shell *shell)
  */
 int	handle_non_empty_quote_with_dollar(t_token **curr, t_token **new_tok)
 {
+	char			*merged;
 	t_token			*added;
 	t_token_data	data;
 
-	data = (t_token_data){
-		(*curr)->next->value,
-		TOKEN_WORD,
-		(*curr)->quoted,
-		(*curr)->next->quote_char
-	};
+	merged = ft_strdup((*curr)->next->value);
+	if (!merged)
+		return (0);
+	data = (t_token_data){merged, TOKEN_WORD, (*curr)->quoted,
+		(*curr)->next->quote_char};
 	added = add_token(new_tok, data);
 	if (!added)
-		return (0);
+		return (free(merged), 0);
 	added->joined = (*curr)->joined;
 	*curr = (*curr)->next->next;
 	return (1);
 }
-
 
 /**
  * @brief Simply duplicates any token containing a dollar for deferred expansion.
@@ -103,18 +94,18 @@ int	handle_non_empty_quote_with_dollar(t_token **curr, t_token **new_tok)
  */
 int	handle_token_with_dollar(t_token **curr, t_token **new_tok)
 {
+	char			*copy_val;
 	t_token_data	data;
 	t_token			*copied;
 
-	data = (t_token_data){
-		(*curr)->value,
-		(*curr)->type,
-		(*curr)->quoted,
-		(*curr)->quote_char
-	};
+	copy_val = ft_strdup((*curr)->value);
+	if (!copy_val)
+		return (0);
+	data = (t_token_data){copy_val, (*curr)->type, (*curr)->quoted,
+		(*curr)->quote_char};
 	copied = add_token(new_tok, data);
 	if (!copied)
-		return (0);
+		return (free(copy_val), 0);
 	copied->joined = (*curr)->joined;
 	*curr = (*curr)->next;
 	return (1);
@@ -128,21 +119,19 @@ int	handle_token_with_dollar(t_token **curr, t_token **new_tok)
  */
 int	handle_empty_quote_with_dollar(t_token **curr, t_token **new_tok)
 {
+	char			*merged_val;
 	t_token			*added;
 	t_token_data	data;
 
-	data = (t_token_data){
-		(*curr)->next->next->value,
-		TOKEN_WORD,
-		(*curr)->quoted,
-		(*curr)->next->quote_char
-	};
+	merged_val = ft_strdup((*curr)->next->next->value);
+	if (!merged_val)
+		return (0);
+	data = (t_token_data){merged_val, TOKEN_WORD, (*curr)->quoted,
+		(*curr)->next->quote_char};
 	added = add_token(new_tok, data);
 	if (!added)
-		return (0);
+		return (free(merged_val), 0);
 	added->joined = (*curr)->joined;
 	*curr = (*curr)->next->next->next;
 	return (1);
 }
-
-

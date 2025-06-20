@@ -15,23 +15,30 @@
 static t_token	*tokenize_lines_from_str(char **str)
 {
 	t_token_data	data;
-	t_token			*tokens = NULL;
+	t_token			*tokens;
 	t_token			*check;
+	char			*cmd;
 
+	tokens = NULL;
 	while (str && *str)
 	{
-		data = (t_token_data){*str, TOKEN_WORD, 0, Q_NONE};
+		cmd = ft_strdup(*str);
+		if (!cmd)
+		{
+			free_tokens(tokens);
+			return (NULL);
+		}
+		data = (t_token_data){cmd, TOKEN_WORD, 0, Q_NONE};
 		check = add_token(&tokens, data);
 		if (!check)
 		{
 			free_tokens(tokens);
-			return (NULL);
+			return (free(cmd), NULL);
 		}
 		str++;
 	}
 	return (tokens);
 }
-
 
 static int	ft_take_delim(char **scan, char *delim)
 {

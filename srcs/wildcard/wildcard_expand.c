@@ -66,21 +66,22 @@ int	validate_pipe_logic(t_token *tokens, t_shell *shell)
 static int	insert_match_loop(t_token *cur, t_token **inserted, char **matches)
 {
 	int				i;
+	char			*copy_val;
 	t_token_data	data;
 	t_token			*new_tok;
 
 	i = 0;
 	while (matches[i])
 	{
-		data = (t_token_data){
-			matches[i],
-			cur->type,
-			cur->quoted,
-			cur->quote_char
-		};
+		copy_val = ft_strdup(matches[i]);
+		if (!copy_val)
+			return (free_tokens(*inserted), 0);
+		data = (t_token_data){copy_val, cur->type,
+			cur->quoted, cur->quote_char};
 		new_tok = add_token(inserted, data);
 		if (!new_tok)
 		{
+			free(copy_val);
 			free_tokens(*inserted);
 			return (0);
 		}
@@ -89,7 +90,6 @@ static int	insert_match_loop(t_token *cur, t_token **inserted, char **matches)
 	}
 	return (1);
 }
-
 
 static int	insert_wildcard_matches(t_token **tokens, t_token **cur,
 	char **matches)

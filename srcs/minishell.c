@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: ddecilap <ddecilap@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 13:21:45 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/19 15:07:52 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/16 16:06:53 by ddecilap         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,44 +23,39 @@
  * @param i      Pointer to the current position in the line (will be advanced).
  * @param tokens The token list to append to.
  */
-// static void	replace_nbsp_inplace(char *s)
-// {
-// 	int	i;
-// 	i = 0;
-// 	while (s[i])
-// 	{
-// 		if ((unsigned char)s[i] == 0xC2 && (unsigned char)s[i + 1] == 0xA0)
-// 		{
-// 			s[i] = ' ';
-// 			i++;
-// 			while (s[i])
-// 			{
-// 				s[i] = s[i + 1];
-// 				i++;
-// 			}
-// 			i = 0;
-// 		}
-// 		else
-// 			i++;
-// 	}
-// }
-
-void	clean_exit(t_shell *shell)
+static void	replace_nbsp_inplace(char *s)
 {
-	if (!shell)
-		exit(1);
-	if (!save_to_file(shell, &shell->history))
-		perror(RED "minishell: Error in save_to_file for history" RESET);
-	if (shell->history)
-		free_history(&shell->history);
-	rl_clear_history();
-	if (shell->cmds)
-		free_cmds(shell->cmds);
-	if (shell->env)
-		ft_free_arr(shell->env);
-	exit(shell->exit_status);
+	int	i;
+
+	i = 0;
+	while (s[i])
+	{
+		if ((unsigned char)s[i] == 0xC2 && (unsigned char)s[i + 1] == 0xA0)
+		{
+			s[i] = ' ';
+			i++;
+			while (s[i])
+			{
+				s[i] = s[i + 1];
+				i++;
+			}
+			i = 0;
+		}
+		else
+			i++;
+	}
 }
 
+/**
+ * @brief Parses a line and executes the resulting command list.
+ *
+ * Parses the input string into commands, executes them with logical operators,
+ * and clears any stored subshells.
+ *
+ * @param shell Pointer to the main shell structure.
+ * @param result The input command line (possibly cleaned).
+ * @param tok Optional token pointer (used for multi-line/interactive inputs).
+ */
 void	ft_parsing_and_execute(t_shell *shell, char *result, t_token *tok)
 {
 	t_cmd	*cmd;
@@ -72,6 +67,16 @@ void	ft_parsing_and_execute(t_shell *shell, char *result, t_token *tok)
 	clear_subshell_table();
 }
 
+/**
+ * @brief Core logic of the shell loop — parses and executes all user input.
+ *
+ * Splits the input line by newlines, processes each command line individually:
+ * replaces non-breaking spaces, updates history, and executes parsed input.
+ *
+ * @param shell Pointer to the shell structure.
+ * @param line The full user input line (may contain multiple lines).
+ * @return true on success, false on fatal error (e.g., memory allocation).
+ */
 bool	ft_brain_of_minishell(t_shell *shell, char *line)
 {
 	char	**lines;
@@ -87,6 +92,7 @@ bool	ft_brain_of_minishell(t_shell *shell, char *line)
 	while (lines[i])
 	{
 		cmd_line = lines[i];
+		replace_nbsp_inplace(cmd_line);
 		if (!cmd_line[0] && i++)
 			continue ;
 		ft_history_loop(shell, lines[i]);
@@ -100,6 +106,14 @@ bool	ft_brain_of_minishell(t_shell *shell, char *line)
 	return (ft_free_arr(lines), true);
 }
 
+/**
+ * @brief The interactive prompt loop.
+ *
+ * Continuously reads input from the user via readline, handles signals,
+ * calls the brain function, and gracefully exits on EOF (Ctrl+D).
+ *
+ * @param shell Pointer to the shell structure.
+ */
 static void	prompt_loop(t_shell *shell)
 {
 	char	*line;
@@ -128,6 +142,18 @@ static void	prompt_loop(t_shell *shell)
 	return ;
 }
 
+/**
+ * @brief Entry point of minishell.
+ *
+ * Initializes the shell, environment, history, signals, and launches the
+ * prompt loop. On exit, it performs a final cleanup and returns the shell's
+ * exit status.
+ *
+ * @param argc Argument count (unused).
+ * @param argv Argument values (unused).
+ * @param envp Environment variables from the system.
+ * @return Exit status of the shell.
+ */
 int	main(int argc, char **argv, char **envp)
 {
 	t_shell	shell;

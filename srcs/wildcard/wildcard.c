@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wildcard.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ddecilap <ddecilap@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 09:12:01 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/17 13:42:41 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/16 12:53:18 by ddecilap         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	init_wildcard_ctx(t_wildcard_ctx *ctx)
 	ctx->count = 0;
 	ctx->results = malloc(sizeof(char *) * ctx->capacity);
 	if (!ctx->results)
-		exit_error("malloc( failed in wildcard");
+		exit_error("malloc failed in wildcard");
 }
 
 /**
@@ -94,7 +94,7 @@ static void	process_entry(struct dirent *entry,
  *
  * @param dirpart  The directory path to search.
  * @param pattern  The wildcard pattern to match.
- * @return NULL-terminated array of matching filenames (malloc('ed),
+ * @return NULL-terminated array of matching filenames (malloc'ed),
  * or NULL on error.
  */
 static char	**wildcard_expand_dir(const char *dirpart, const char *pattern)
