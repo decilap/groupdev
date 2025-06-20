@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_tokens2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 14:53:04 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/14 22:21:28 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/20 19:22:48 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ static void	handle_merge_word_continue(t_token **cur, char **merged,
 		{
 			free(*merged);
 			exit_error("ft_strjoin failed in handle_merge_word_continue");
+			return ;
 		}
 		free(*merged);
 		*merged = tmp;

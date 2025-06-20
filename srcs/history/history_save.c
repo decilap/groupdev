@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   history_save.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 13:20:35 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/14 18:06:24 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/20 20:40:39 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,31 +140,4 @@ bool	save_to_file(t_shell *shell, t_hist **history)
 	}
 	free_history(&last_hist);
 	return (true);
-}
-
-void	ft_history_loop_newline(t_shell *shell, char *line)
-{
-	size_t	histsizemax;
-	size_t	len_hist;
-	char	*line_newline;
-
-	histsizemax = ft_atoi(get_env_value("HISTSIZE", shell->env));
-	if (histsizemax > 0)
-	{
-		line_newline = ft_strjoin(line, "\n");
-		if (!line_newline)
-			return (perror(RED "minishell: ft_history_loop_newline" RESET));
-		shell->hist_len++;
-		if (!add_to_history(&shell->history, line_newline))
-			perror(RED "minishell: Error in add_to_history" RESET);
-		add_history(line_newline);
-		free(line_newline);
-		len_hist = hist_len(shell->history);
-		if (len_hist > histsizemax)
-		{
-			keep_n_hist(&shell->history, histsizemax);
-			rl_clear_history();
-			load_to_shell_history(&shell->history);
-		}
-	}
 }

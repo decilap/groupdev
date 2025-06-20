@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wildcard.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 16:57:49 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/15 02:04:47 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/20 20:36:11 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ char	**wildcard_expand(const char *pattern);
 int		match_pattern(const char *pattern, const char *str);
 int		validate_pipe_logic(t_token *tokens, t_shell *shell);
 int		validate_redirections(t_token *tokens, t_shell *shell);
-int		expand_current_wildcard(t_token **tokens, t_token **cur);
 int		expand_wildcard_for_token(t_token **tokens, t_token *cur);
 void	sort_ascii(char **array, int n);
 void	free_wildcard_ctx(t_wildcard_ctx *ctx);

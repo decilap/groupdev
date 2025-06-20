@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 15:20:40 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/15 10:51:01 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/20 20:41:56 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ typedef struct s_pending
 	int			first;
 	int			write;
 }	t_pending;
+
+int		ft_free_go_her(char *line);
 
 void	ft_init_signal_heredoc(struct sigaction *sa_old);
 int		ft_end_heredoc(t_cmd *cmd, t_shell *shell);

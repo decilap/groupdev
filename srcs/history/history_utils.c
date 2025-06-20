@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   history_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 11:06:53 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/14 15:56:06 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/20 20:53:53 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,39 +74,6 @@ void	ft_print_history(t_hist **history, size_t *i)
 	}
 	(*i)++;
 }
-
-/**
- * @brief Prints the history with a formatted bordered output.
- * @param history Pointer to the head of the history list.
- */
-/* void	print_hist(t_hist *history)
-{
-	t_hist		*current;
-	size_t		i;
-	char		*index_str;
-
-	i = 1;
-	if (!history || !history->cmd)
-	{
-		ft_putendl_fd("HISTORY     VOID	OR	ERROR---------------",
-			STDOUT_FILENO);
-		return ;
-	}
-	ft_putendl_fd("----------------------------------------", STDOUT_FILENO);
-	ft_putendl_fd("|	HISTORY     DEBUT :", STDOUT_FILENO);
-	current = history;
-	while (current && current->cmd)
-	{
-		ft_putstr_fd("| ", STDOUT_FILENO);
-		ft_putnbr_fd(i, STDOUT_FILENO);
-		ft_putstr_fd("\tCommande : ", STDOUT_FILENO);
-		ft_putendl_fd(current->cmd, STDOUT_FILENO);
-		current = current->next;
-		i++;
-	}
-	ft_putendl_fd("|        	FIN.", STDOUT_FILENO);
-	ft_putendl_fd("-----------------------------------------", STDOUT_FILENO);
-} */
 
 void	ft_history_actualise(t_shell *shell)
 {

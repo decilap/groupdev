@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 19:57:48 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/15 01:54:43 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/20 20:50:23 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ typedef struct s_token_data
 
 const char		*token_type_to_str(int type);
 void			remove_quotes(char **s);
-void			remove_last_token(t_token **head);
 void			print_syntax_error(char *token);
 int				get_token_type(char *s);
 int				is_quoted(const char *delim_raw);

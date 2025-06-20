@@ -6,7 +6,7 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 15:07:49 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/16 19:35:49 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/20 20:39:32 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,11 @@ static void	ft_output_ctrl_d(t_shell *shell, size_t i)
 		index = ft_itoa(shell->hist_len + i);
 	else
 		index = ft_itoa(i);
-	if (!index)
+	if (!index || !shell)
 	{
 		perror(RED "minishell: (idx) ft_output_ctrl_d" RESET);
-		shell->exit_status = 1;
+		if (shell)
+			shell->exit_status = 1;
 		return ;
 	}
 	msg = ft_strjoin_3("\nbash: warning: here-document at line ", index,
@@ -76,7 +77,7 @@ char	*line_expansion(char *line, t_shell *shell)
 	return (str);
 }
 
-void	ft_put_prompt(int first, int write)
+static void	ft_put_prompt(int first, int write)
 {
 	int		stand;
 
@@ -99,7 +100,7 @@ bool	go_heredoc(t_shell *shell, const char *delim, int quoted, int fd)
 	size_t		i;
 	t_pending	pen;
 
-	i = -1;
+	i = 0;
 	ft_init_pending(&pen);
 	while (!*get_heredoc_interrupt_flag() && ++i)
 	{
@@ -112,12 +113,11 @@ bool	go_heredoc(t_shell *shell, const char *delim, int quoted, int fd)
 			return (true);
 		}
 		ft_manage_hist_here_doc(shell, line);
-		if (ft_strcmp(line, delim) == 0)
+		if (ft_strcmp(line, delim) == 0 && ft_free_go_her(line))
 			break ;
 		if (!ft_output_heredoc(shell, &line, quoted, fd))
 			return (false);
 		free(line);
 	}
-	free(line);
 	return (true);
 }

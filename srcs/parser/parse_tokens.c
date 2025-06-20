@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_tokens.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 14:47:00 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/14 18:15:10 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/20 20:38:27 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
  * @param cmd The command structure where allocations are stored.
  * @param count Number of arguments to allocate for.
  */
-void	allocate_cmd_args(t_cmd *cmd, int count)
+static void	allocate_cmd_args(t_cmd *cmd, int count)
 {
 	cmd->args = malloc(sizeof(char *) * (count + 1));
 	if (!cmd->args)
@@ -46,7 +46,7 @@ void	allocate_cmd_args(t_cmd *cmd, int count)
  * @param quote_chars Input quote state to copy.
  * @param count Total number of arguments.
  */
-void	fill_cmd_args(t_cmd *cmd, char **args,
+static void	fill_cmd_args(t_cmd *cmd, char **args,
 	t_quote_state *quote_chars, int count)
 {
 	int	i;
@@ -61,6 +61,7 @@ void	fill_cmd_args(t_cmd *cmd, char **args,
 			free(cmd->args);
 			free(cmd->quote_chars);
 			exit_error("strdup failed in fill_cmd_args");
+			return ;
 		}
 		cmd->quote_chars[i] = quote_chars[i];
 		i++;
@@ -116,13 +117,15 @@ void	handle_path_errors(t_cmd *cmd, t_token *expanded, int err_code,
 		if (err_code == 1)
 		{
 			ft_putstr_fd(RED "minishell: ", STDERR_FILENO);
-			ft_putstr_fd(expanded->value, STDERR_FILENO);
+			if (expanded && expanded->value)
+				ft_putstr_fd(expanded->value, STDERR_FILENO);
 			ft_putendl_fd(": No such file or directory" RESET, STDERR_FILENO);
 		}
 		else if (err_code == 2)
 		{
 			ft_putstr_fd(RED "minishell: ", STDERR_FILENO);
-			ft_putstr_fd(expanded->value, STDERR_FILENO);
+			if (expanded && expanded->value)
+				ft_putstr_fd(expanded->value, STDERR_FILENO);
 			ft_putendl_fd(": command not found" RESET, STDERR_FILENO);
 		}
 		shell->exit_status = 127;

@@ -6,7 +6,7 @@
 #    By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/27 20:46:26 by ryoussfi          #+#    #+#              #
-#    Updated: 2025/06/16 19:38:43 by ryoussfi         ###   ########.fr        #
+#    Updated: 2025/06/20 19:54:19 by ryoussfi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,6 +62,7 @@ SRCS		=	${SRCS_DIR}minishell.c \
 				${SRCS_DIR}here_doc/here_doc.c \
 				${SRCS_DIR}here_doc/go_heredoc.c \
 				${SRCS_DIR}here_doc/here_doc_init.c \
+				${SRCS_DIR}here_doc/here_doc_utils.c \
 				$(SRCS_DIR)lexer/lexer_extract_word.c \
 				$(SRCS_DIR)lexer/lexer_redir.c \
 				$(SRCS_DIR)lexer/lexer_utils.c \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 15:39:47 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/14 18:41:51 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/20 20:38:03 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ static void	print_arithmetic_error(const char *line)
  * @param shell Pointer to the shell state for error reporting and exit status.
  * @return 1 if no error is detected; 0 if a syntax error is found.
  */
-int	check_arithmetic_and_special_syntax(char *line, t_shell *shell)
+static int	check_arithmetic_and_special_syntax(char *line, t_shell *shell)
 {
 	int	i;
 

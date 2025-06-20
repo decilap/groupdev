@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   history.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 16:19:50 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/15 01:43:02 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/20 20:33:34 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ bool	initialize_history(t_shell *shell, t_hist **history);
 
 /*			HISTORY_SAVE.C			*/
 bool	save_to_file(t_shell *shell, t_hist **history);
-void	ft_history_loop_newline(t_shell *shell, char *line);
 
 /*			HISTORY_TOOL.C			*/
 bool	invert_hist(t_hist **history);

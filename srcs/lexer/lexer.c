@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 15:12:01 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/14 17:59:26 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/20 20:37:05 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int	create_logical_token(t_token **tokens, const char *str, int type)
  * @param ctx The lexer context.
  * @return 1 if a logical operator was handled, 0 otherwise.
  */
-int	lexer_handle_logical(t_lexer_ctx *ctx)
+static int	lexer_handle_logical(t_lexer_ctx *ctx)
 {
 	if (ctx->line[ctx->i] == '&' && ctx->line[ctx->i + 1] == '&')
 	{
@@ -119,7 +119,7 @@ static void	process_one_token(t_lexer_ctx *ctx)
  * @param ctx The lexer context structure to initialize.
  * @param line The input command line to tokenize.
  */
-void	lexer_init_context(t_lexer_ctx *ctx, const char *line)
+static void	lexer_init_context(t_lexer_ctx *ctx, const char *line)
 {
 	ctx->line = line;
 	ctx->i = 0;

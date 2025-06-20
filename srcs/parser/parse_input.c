@@ -6,7 +6,7 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 14:35:24 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/16 19:34:43 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/20 21:06:40 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ t_token	*validate_and_expand_wildcards(t_token *tokens, t_shell *shell)
 				return (NULL);
 			if (res == 1)
 			{
-				cur = cur->next;
+				cur = tokens;
 				continue ;
 			}
 		}

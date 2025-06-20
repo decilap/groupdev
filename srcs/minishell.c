@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ddecilap <ddecilap@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 13:21:45 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/16 16:06:53 by ddecilap         ###   ########.fr       */
+/*   Updated: 2025/06/20 20:37:46 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static void	replace_nbsp_inplace(char *s)
  * @param result The input command line (possibly cleaned).
  * @param tok Optional token pointer (used for multi-line/interactive inputs).
  */
-void	ft_parsing_and_execute(t_shell *shell, char *result, t_token *tok)
+static void	ft_parsing_and_execute(t_shell *shell, char *result, t_token *tok)
 {
 	t_cmd	*cmd;
 
@@ -77,7 +77,7 @@ void	ft_parsing_and_execute(t_shell *shell, char *result, t_token *tok)
  * @param line The full user input line (may contain multiple lines).
  * @return true on success, false on fatal error (e.g., memory allocation).
  */
-bool	ft_brain_of_minishell(t_shell *shell, char *line)
+static bool	ft_brain_of_minishell(t_shell *shell, char *line)
 {
 	char	**lines;
 	char	*cmd_line;

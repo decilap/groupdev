@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 12:28:54 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/14 22:32:57 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/20 20:51:14 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,36 @@ static int	copy_token_content(t_token **curr, t_token **new_tok,
 }
 
 /**
+ * @brief Removes the last token from a linked list of tokens.
+ *
+ * This function traverses the list to find the last token,
+ * frees its allocated memory, and removes it from the list.
+ *
+ * @param head Pointer to the head of the token list.
+ */
+static void	remove_last_token(t_token **head)
+{
+	t_token	*prev;
+	t_token	*curr;
+
+	prev = NULL;
+	curr = *head;
+	if (!curr)
+		return ;
+	while (curr->next)
+	{
+		prev = curr;
+		curr = curr->next;
+	}
+	if (prev)
+		prev->next = NULL;
+	else
+		*head = NULL;
+	free(curr->value);
+	free(curr);
+}
+
+/**
  * @brief Copies a simple token to the new token list.
  *
  * This function duplicates the current token and adds it to the new token list.
@@ -123,34 +153,4 @@ int	copy_simple_token(t_token **curr, t_token **new_tok)
 		copied->joined = 0;
 	*curr = (*curr)->next;
 	return (1);
-}
-
-/**
- * @brief Removes the last token from a linked list of tokens.
- *
- * This function traverses the list to find the last token,
- * frees its allocated memory, and removes it from the list.
- *
- * @param head Pointer to the head of the token list.
- */
-void	remove_last_token(t_token **head)
-{
-	t_token	*prev;
-	t_token	*curr;
-
-	prev = NULL;
-	curr = *head;
-	if (!curr)
-		return ;
-	while (curr->next)
-	{
-		prev = curr;
-		curr = curr->next;
-	}
-	if (prev)
-		prev->next = NULL;
-	else
-		*head = NULL;
-	free(curr->value);
-	free(curr);
 }

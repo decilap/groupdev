@@ -6,7 +6,7 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 12:15:10 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/11 15:44:49 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/20 19:28:03 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,8 @@ int	ft_history_here_doc(t_shell *shell, char *line)
 	size_t	len;
 	char	*temp;
 
-	if (shell && (!shell->history || !shell->history->cmd))
+	if (!shell || (shell && (!shell->history || !shell->history->cmd
+				|| !shell->env)))
 		return (0);
 	histsizemax = ft_atoi(get_env_value("HISTSIZE", shell->env));
 	if (histsizemax > 0)

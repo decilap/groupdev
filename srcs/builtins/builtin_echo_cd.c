@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_echo_cd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 15:39:47 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/15 12:07:03 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/20 19:21:01 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int	builtin_echo(char **args)
 	int	i;
 	int	newline;
 
-	i = 0;
 	newline = 1;
 	i = parse_echo_flags(args, &newline);
 	while (args[i])
