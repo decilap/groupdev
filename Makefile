@@ -6,7 +6,7 @@
 #    By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/27 20:46:26 by ryoussfi          #+#    #+#              #
-#    Updated: 2025/06/20 19:54:19 by ryoussfi         ###   ########.fr        #
+#    Updated: 2025/06/21 18:49:29 by ryoussfi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -113,7 +113,8 @@ SRCS		=	${SRCS_DIR}minishell.c \
 				${SRCS_DIR}utils/string_utils.c \
 				${SRCS_DIR}utils/init_minishell.c \
 				${SRCS_DIR}utils/free_utils.c \
-				${SRCS_DIR}utils/print_utils.c \
+				${SRCS_DIR}utils/ry_ft_split_new_line.c \
+				${SRCS_DIR}utils/ry_utils.c \
 				${SRCS_DIR}token_utils/token_utils.c \
 				${SRCS_DIR}token_utils/string_utils.c \
 				${SRCS_DIR}token_utils/token_utils_errors.c \
@@ -136,6 +137,16 @@ SRCS		=	${SRCS_DIR}minishell.c \
 OBJS	=	$(patsubst ${SRCS_DIR}%.c, ${BUILD_DIR}%.o, ${SRCS})
 
 SRC_NBR	=	$(shell expr $(words ${SRCS}))
+
+SRCS_C = $(shell find $(SRCS_DIR) -type f -name "*.c")
+SRC_NBR_C = $(shell expr $(words $(SRCS_C)))
+
+HEADERS_FILE = $(shell find ${HEADERS} -type f)
+INC_NBR	=	$(shell expr $(words ${HEADERS_FILE}))
+
+HEADERS_FILE_H = $(shell find ${HEADERS} -type f -name "*.h")
+INC_NBR_H	=	$(shell expr $(words ${HEADERS_FILE_H}))
+
 
 
 all:	clear_failures ${BUILD_DIR}  ${HEADERS}
@@ -202,7 +213,7 @@ fclean:			clean clear_failures clear_norm_failures
 re:	fclean all
 
 norminette:
-	@rm -f .norm_failures .norm
+	@rm -f .norm_failures .norm .norm_failures_h .norm_h
 	@echo "🧹 ${BLUE}Checking norminette file...${NC}"
 	@for file in $(SRCS); do \
 		ERRORS=$$(norminette -R CheckForbiddenSourceHeader $$file | cat -n); \
@@ -213,11 +224,36 @@ norminette:
 	done
 	@if [ -s .norm_failures ]; then \
 		ERROR_COUNT=$$(wc -l < .norm_failures); \
-		echo "\n${RED}Norminette failed for files ($$ERROR_COUNT errors / ${SRC_NBR}):${PINK}"; \
+		echo "\n${RED}TEST .C : Norminette failed for files .c ($$ERROR_COUNT errors / ${SRC_NBR}):${PINK}"; \
 		cat .norm_failures; \
 		echo "${NC}"; \
 	else \
-		echo "\n${GREEN}Norminette passed successfully for all files! (${SRC_NBR} files checked)${NC}"; \
+		echo "\n${GREEN}TEST .C : Norminette passed successfully for all files! (${SRC_NBR} files .c checked)${NC}"; \
+	fi
+	@for file in $(HEADERS_file); do \
+		ERRORS=$$(norminette -R CheckForbiddenSourceHeader $$file | cat -n); \
+		if echo "$$ERRORS" | grep -q "Error"; then \
+			echo "$$file" >> .norm_failures_h; \
+			echo "$$ERRORS\n" >> .norm_h; \
+		fi; \
+	done
+	@if [ -s .norm_failures_h ]; then \
+		ERROR_COUNT_INC=$$(wc -l < .norm_failures_h); \
+		echo "\n${RED}TEST .H : Norminette failed for files .h ($$ERROR_COUNT_INC errors / ${INC_NBR}):${PINK}"; \
+		cat .norm_failures_h; \
+		echo "${NC}"; \
+	else \
+		echo "\n${GREEN}TEST .H : Norminette passed successfully for all files! (${INC_NBR} files .h checked)${NC}"; \
+	fi
+	@if [ "$(SRC_NBR_C)" -ne "$(SRC_NBR)" ]; then \
+		echo "\n${RED}Error: FILE.C ($(SRC_NBR_C)) is not equal to $$(echo ${SRCS_DIR} | tr '[:lower:]' '[:upper:]')FILE ($(SRC_NBR))${NC}"; \
+	else \
+		echo "\n${GREEN}FILE.C = ($(SRC_NBR_C)) is equal to $$(echo ${SRCS_DIR} | tr '[:lower:]' '[:upper:]')FILE = ($(SRC_NBR))${NC}"; \
+	fi
+	@if [ "$(INC_NBR_H)" -ne "$(INC_NBR)" ]; then \
+		echo "\n${RED}Error: FILE.H ($(INC_NBR_H)) is not equal to $$(echo ${HEADERS} | tr '[:lower:]' '[:upper:]')FILE ($(INC_NBR))${NC}"; \
+	else \
+		echo "\n${GREEN}FILE.H = ($(INC_NBR_H)) is equal to $$(echo ${HEADERS} | tr '[:lower:]' '[:upper:]')FILE = ($(INC_NBR))${NC}"; \
 	fi
 
 define entry_message
@@ -228,7 +264,7 @@ clear_failures:
 	@rm -f .failures
 
 clear_norm_failures:
-	@rm -f .norm_failures .norm
+	@rm -f .norm_failures .norm .norm_failures_h .norm_h
 
 -include $(OBJS:.o=.d)
 

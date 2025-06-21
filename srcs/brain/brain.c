@@ -6,7 +6,7 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 13:20:05 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/16 19:27:55 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/21 18:08:43 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,66 +19,68 @@ static t_token	*ft_loop_with_herdoc(char **line, int *i, char *delim)
 	tok = NULL;
 	if (!ft_init_loop_herdoc(line, &tok, i, delim))
 	{
-		free(delim);
 		return (perror(RED "minishell: Error in ft_init_loop_herdoc" RESET),
 			NULL);
 	}
-	free(delim);
 	return (tok);
 }
 
 static bool	ft_herdoc_chr(char *line, char **eof_delim)
 {
-	char	**first_line_words;
-	int		i;
+	t_token	*cmd;
 
-	first_line_words = ft_split(line, ' ');
-	if (!first_line_words)
+	cmd = lexer(line);
+	if (!cmd)
 		return (false);
-	i = 0;
-	while (first_line_words && first_line_words[i])
+	while (cmd && cmd->value)
 	{
-		if (ft_strcmp(first_line_words[i], "<<") == 0
-			&& first_line_words[i + 1] && !first_line_words[i + 2])
+		if (ft_strcmp(cmd->value, "<<") == 0)
 		{
-			*eof_delim = ft_strdup(first_line_words[i + 1]);
+			if (!cmd->next || !cmd->next->value)
+				return (free_tokens(cmd), false);
+			*eof_delim = ft_strdup(cmd->next->value);
 			if (!*eof_delim)
-				return (ft_free_arr(first_line_words), false);
+				return (free_tokens(cmd), false);
 			break ;
 		}
-		i++;
+		cmd = cmd->next;
 	}
-	ft_free_arr(first_line_words);
+	free_tokens(cmd);
 	return (true);
 }
 
-static int	has_complete_multiline_heredoc(char **lines, char **eof_delim)
+static int	has_complete_multiline_heredoc(char **lines, char **delim)
 {
 	int		j;
+	char	*eof_delim;
 
+	eof_delim = NULL;
 	if (!lines[1])
 		return (0);
-	if (!ft_herdoc_chr(lines[0], eof_delim))
+	if (!ft_herdoc_chr(lines[0], &eof_delim))
 		return (perror(RED "minishell: ft_herdoc_chr" RESET), -1);
-	if (!*eof_delim)
+	if (!eof_delim)
 		return (0);
+	*delim = ft_strdup(eof_delim);
+	if (!*delim)
+		return (free(eof_delim), perror(RED "minishell: ft_strdup" RESET), -1);
 	j = 1;
 	while (lines[j])
 	{
-		if (ft_strcmp(lines[j], *eof_delim) == 0)
-			return (1);
+		if (ft_strcmp(lines[j], eof_delim) == 0)
+			return (free(eof_delim), 1);
 		j++;
 	}
-	return (2);
+	return (free(eof_delim), 2);
 }
 
 bool	ft_loop(t_shell *shell, char **line, int *i, t_token **tok)
 {
 	int		ret_multi;
-	char	*eof_delim;
+	char	*delim;
 
-	eof_delim = NULL;
-	ret_multi = has_complete_multiline_heredoc(line, &eof_delim);
+	delim = NULL;
+	ret_multi = has_complete_multiline_heredoc(line, &delim);
 	if (ret_multi < 0)
 	{
 		shell->exit_status = 1;
@@ -87,7 +89,7 @@ bool	ft_loop(t_shell *shell, char **line, int *i, t_token **tok)
 	}
 	if (ret_multi > 0)
 	{
-		*tok = ft_loop_with_herdoc(line, i, eof_delim);
+		*tok = ft_loop_with_herdoc(line, i, delim);
 		if (*tok)
 			return (true);
 		shell->exit_status = 1;

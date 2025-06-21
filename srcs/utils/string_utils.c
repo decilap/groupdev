@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 12:05:47 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/14 22:30:26 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/21 18:17:06 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,11 @@ bool	safe_close(int fd)
 {
 	if (close(fd) < 0)
 	{
-		dprintf(STDERR_FILENO,
-			RED "minishell: failed to close fd=%d: %s" RESET "\n",
-			fd, strerror(errno));
+		ft_putstr_fd(RED "minishell: failed to close fd=", STDERR_FILENO);
+		ft_putnbr_fd(fd, STDERR_FILENO);
+		ft_putstr_fd(": ", STDERR_FILENO);
+		ft_putstr_fd(strerror(errno), STDERR_FILENO);
+		ft_putendl_fd(RESET, STDERR_FILENO);
 		return (false);
 	}
 	return (true);

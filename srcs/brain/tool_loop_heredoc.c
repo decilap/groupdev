@@ -6,13 +6,13 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 13:20:00 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/16 19:28:20 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/21 18:10:27 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/includes.h"
 
-static t_token	*tokenize_lines_from_str(char **str)
+t_token	*tokenize_lines_from_str(char **str)
 {
 	t_token_data	data;
 	t_token			*tokens;
@@ -58,6 +58,7 @@ static int	ft_take_delim(char **scan, char *delim)
 bool	ft_init_loop_herdoc(char **line, t_token **tok, int *idx, char *delim)
 {
 	int		i;
+	t_token	*token;
 
 	*tok = tokenize_lines_from_str(line);
 	if (!*tok)
@@ -65,6 +66,9 @@ bool	ft_init_loop_herdoc(char **line, t_token **tok, int *idx, char *delim)
 		perror(RED "minishell: Error in tokenize_lines_from_str" RESET);
 		return (false);
 	}
+	token = (*tok);
+	while (token && !ft_strcmp("<<", delim))
+		token = token->next;
 	i = ft_take_delim(1 + line, delim) + 1;
 	*idx += i;
 	return (true);

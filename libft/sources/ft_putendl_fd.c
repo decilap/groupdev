@@ -6,7 +6,7 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 17:00:41 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/11 10:19:56 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/21 18:44:54 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ void	ft_putendl_fd(char *c, int fd)
 		return ;
 	while (*c)
 	{
-		safe_write(fd, c, 1);
+		write(fd, c, 1);
 		c++;
 	}
-	safe_write(fd, "\n", 1);
+	write(fd, "\n", 1);
 }

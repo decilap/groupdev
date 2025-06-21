@@ -6,7 +6,7 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 17:00:07 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/11 10:19:40 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/21 18:45:00 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,5 @@
 
 void	ft_putchar_fd(char c, int fd)
 {
-	safe_write(fd, &c, 1);
+	write(fd, &c, 1);
 }

@@ -6,7 +6,7 @@
 #    By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/01 16:19:15 by ryoussfi          #+#    #+#              #
-#    Updated: 2025/06/16 14:57:34 by ryoussfi         ###   ########.fr        #
+#    Updated: 2025/06/21 18:41:07 by ryoussfi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,7 +60,7 @@ LIBC		=	ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c ft_strl
 				
 LIBA		=		ft_bonus.lstadd_back.c ft_bonus.lstadd_front.c ft_bonus.lstclear.c \
 					ft_bonus.lstdelone.c ft_bonus.lstiter.c ft_bonus.lstlast.c \
-					ft_bonus.lstmap.c ft_bonus.lstnew.c ft_bonus.lstsize.c ry_safe_write.c
+					ft_bonus.lstmap.c ft_bonus.lstnew.c ft_bonus.lstsize.c
 
 
 SOURCES		=	${LIBC} ${LIBA}

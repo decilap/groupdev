@@ -6,7 +6,7 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 15:20:40 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/20 20:41:56 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/21 13:24:29 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef struct s_pending
 {
 	int			first;
 	int			write;
+	int			cpy_pst;
 }	t_pending;
 
 int		ft_free_go_her(char *line);

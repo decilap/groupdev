@@ -6,7 +6,7 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/05 16:40:48 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/16 19:30:45 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/21 15:34:57 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ int	handle_here_doc(t_shell *shell, t_cmd *cmd, t_token *tok,
 		ret_multi = ft_multi_data(shell, multi_data->next, param, fd);
 		if (ret_multi == -1)
 			return (ft_error_here_doc(shell, param, &sa_old, fd));
+		free_tokens(multi_data);
 	}
 	ft_init_signal_heredoc(&sa_old);
 	if (ret_multi == 0 && !*get_heredoc_interrupt_flag()

@@ -6,7 +6,7 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 13:21:45 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/20 20:37:46 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/21 18:10:21 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ static bool	ft_brain_of_minishell(t_shell *shell, char *line)
 
 	i = 0;
 	tok = NULL;
-	lines = ft_split(line, '\n');
+	lines = ft_split_new_line(line, '\n');
 	if (!lines)
 		return (ft_error_brain(shell), false);
 	while (lines[i])
@@ -95,7 +95,7 @@ static bool	ft_brain_of_minishell(t_shell *shell, char *line)
 		replace_nbsp_inplace(cmd_line);
 		if (!cmd_line[0] && i++)
 			continue ;
-		ft_history_loop(shell, lines[i]);
+		ft_history_loop(shell, cmd_line);
 		if (!ft_loop(shell, i + lines, &i, &tok))
 			return (ft_free_arr(lines), false);
 		i++;

@@ -6,7 +6,7 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 13:20:26 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/16 14:56:54 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/21 18:45:18 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ typedef struct s_list
 	void			*content;
 	struct s_list	*next;
 }				t_list;
-
-bool		safe_write(int fd, char *buf, size_t n);
 
 int			ft_isalnum(int i);
 int			ft_isalpha(int i);
@@ -65,6 +63,7 @@ void		ft_lstclear(t_list **lst, void (*del)(void *));
 void		ft_lstiter(t_list *lst, void (*f)(void *));
 void		ft_free_arr(char **str);
 char		**ft_split(char const *str, char c);
+char		**ft_split_new_line(char const *str, char c);
 char		*ft_strdup(const char *s1);
 char		*ft_strchr(const char *s, int c);
 char		*ft_itoa(int n);

@@ -6,7 +6,7 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 17:01:28 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/11 10:20:14 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/21 18:44:41 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	ft_putstr_fd(char *s, int fd)
 	i = 0;
 	while (s[i])
 	{
-		safe_write(fd, &s[i], 1);
+		write(fd, &s[i], 1);
 		i++;
 	}
 }

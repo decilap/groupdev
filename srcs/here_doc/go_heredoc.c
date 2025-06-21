@@ -6,7 +6,7 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 15:07:49 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/20 20:39:32 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/21 16:06:46 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,21 +77,32 @@ char	*line_expansion(char *line, t_shell *shell)
 	return (str);
 }
 
-static void	ft_put_prompt(int first, int write)
+static void	ft_put_prompt(int *first, int *write, int *copy_past)
 {
 	int		stand;
+	int		is;
+	int		no;
 
+	stand = 0;
+	is = 0;
+	no = 0;
 	stand = pending_input();
 	if (stand > 0)
-		write = 0;
-	if (first || (isatty(STDIN_FILENO) && stand == 0))
+		*write = 0;
+	is = isatty(STDIN_FILENO);
+	if (stand)
+		*copy_past = 1;
+	if (*copy_past && !*first && *write && is && !stand)
+		no = 1;
+	if (!no && (*first || (is && stand == 0)))
 	{
-		first = 0;
-		if (write == 0)
-			write = 1;
+		*first = 0;
+		if (*write == 0)
+			*write = 1;
 		else
 			ft_putstr_fd("> ", STDOUT_FILENO);
 	}
+	*copy_past = 0;
 }
 
 bool	go_heredoc(t_shell *shell, const char *delim, int quoted, int fd)
@@ -104,7 +115,7 @@ bool	go_heredoc(t_shell *shell, const char *delim, int quoted, int fd)
 	ft_init_pending(&pen);
 	while (!*get_heredoc_interrupt_flag() && ++i)
 	{
-		ft_put_prompt(pen.first, pen.write);
+		ft_put_prompt(&pen.first, &pen.write, &pen.cpy_pst);
 		line = get_next_line_mod(STDIN_FILENO);
 		if (!line)
 		{

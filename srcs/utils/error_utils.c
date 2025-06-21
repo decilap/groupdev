@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 12:01:54 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/15 11:46:58 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/21 13:24:36 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	ft_init_pending(t_pending *pen)
 {
 	pen->first = 1;
 	pen->write = 1;
+	pen->cpy_pst = 0;
 }
 
 // Renvoie le nombre d'octets prêts à être lus dans STDIN

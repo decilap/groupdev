@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   subshell_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 16:14:01 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/14 17:09:44 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/21 18:22:51 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,8 @@ int	handle_subshell_chunk(const char *line, t_sub_ctx *ctx)
 	}
 	if (!subshell_store_and_replace(ctx, sub))
 	{
-		fprintf(stderr, "minishell: trop de sous-shells imbriqués\n");
+		ft_putendl_fd(RED "minishell: too many nested subshells" RESET,
+			STDERR_FILENO);
 		free(sub);
 		free(ctx->result);
 		return (0);
