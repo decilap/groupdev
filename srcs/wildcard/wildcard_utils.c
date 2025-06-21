@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   wildcard_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: ddecilap <ddecilap@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 12:12:01 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/15 01:25:58 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/21 16:26:58 by ddecilap         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/includes.h" 
+#include "../includes/includes.h"
 
 /**
  * @brief Checks if a string matches a wildcard pattern.
  *
- * Supports '*' (matches any sequence, including empty) and '?' 
+ * Supports '*' (matches any sequence, including empty) and '?'
  * (matches any single character).
  * Recursively matches the pattern against the string.
  *

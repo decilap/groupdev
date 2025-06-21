@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ddecilap <ddecilap@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 19:57:34 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/20 20:45:12 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/21 12:39:29 by ddecilap         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@
 # define TOKEN_NONE   9
 # define TOKEN_SUBSHELL  10
 # define MAX_SUBSHELLS 4096
-# define MAX_PIPE_CMDS 1024
+# define MAX_PIPE_CMDS 4096
 # define MAX_CMD_ARGS 4096
 
 # define MINI_PATH_MAX        4096

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   expander_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: ddecilap <ddecilap@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 15:39:47 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/15 01:19:14 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/21 14:56:44 by ddecilap         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/includes.h" 
+#include "../includes/includes.h"
 
 /**
  * @brief Appends one string to another, returning a new allocated string.
@@ -82,7 +82,6 @@ char	*expand_init_result(const char *input, size_t *i, t_shell *shell)
 {
 	char	*result;
 	char	*home;
-	char	*suffix;
 	char	*joined;
 
 	result = ft_strdup("");
@@ -93,15 +92,9 @@ char	*expand_init_result(const char *input, size_t *i, t_shell *shell)
 		home = get_env_value("HOME", shell->env);
 		if (!home)
 			home = "";
-		if (input[1])
-			suffix = ft_strdup(input + 1);
-		else
-			suffix = ft_strdup("");
-		if (!suffix)
-			return (free(result), NULL);
-		joined = ft_strjoin(home, suffix);
+		joined = ft_strjoin(result, home);
 		*i += 1;
-		return (free(suffix), free(result), joined);
+		return (joined);
 	}
 	return (result);
 }
@@ -109,7 +102,7 @@ char	*expand_init_result(const char *input, size_t *i, t_shell *shell)
 /**
  * @brief Extracts the variable name and retrieves its value
  * from the environment.
- * 
+ *
  * @param ctx  Expander context.
  * @param j    Current parsing index (start of the variable name).
  * @param next_pos Output: updated parsing index after the variable.

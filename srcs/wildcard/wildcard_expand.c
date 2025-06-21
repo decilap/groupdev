@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   wildcard_expand.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ddecilap <ddecilap@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 12:12:01 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/20 21:07:59 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/21 12:17:08 by ddecilap         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/includes.h" 
+#include "../includes/includes.h"
 
 int	validate_redirections(t_token *tokens, t_shell *shell)
 {
@@ -62,46 +62,3 @@ int	validate_pipe_logic(t_token *tokens, t_shell *shell)
 	}
 	return (1);
 }
-
-// static int	insert_match_loop(t_token *cur, t_token **inserted, char **matches)
-// {
-// 	int				i;
-// 	char			*copy_val;
-// 	t_token_data	data;
-// 	t_token			*new_tok;
-
-// 	i = 0;
-// 	while (matches[i])
-// 	{
-// 		copy_val = ft_strdup(matches[i]);
-// 		if (!copy_val)
-// 			return (free_tokens(*inserted), 0);
-// 		data = (t_token_data){copy_val, cur->type,
-// 			cur->quoted, cur->quote_char};
-// 		new_tok = add_token(inserted, data);
-// 		if (!new_tok)
-// 		{
-// 			free(copy_val);
-// 			free_tokens(*inserted);
-// 			return (0);
-// 		}
-// 		new_tok->joined = cur->joined;
-// 		i++;
-// 	}
-// 	return (1);
-// }
-
-// static int	insert_wildcard_matches(t_token **tokens, t_token **cur,
-// 	char **matches)
-// {
-// 	t_token	*inserted;
-
-// 	inserted = NULL;
-// 	if (!insert_match_loop(*cur, &inserted, matches))
-// 		return (0);
-// 	replace_token_with_list(tokens, *cur, inserted);
-// 	*cur = inserted;
-// 	while (*cur && (*cur)->next)
-// 		*cur = (*cur)->next;
-// 	return (1);
-// }

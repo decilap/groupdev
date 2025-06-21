@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: ddecilap <ddecilap@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 18:20:18 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/15 01:08:28 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/21 15:49:12 by ddecilap         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,13 +116,13 @@ t_token	*expand_variables(const char *input, t_shell *shell, int quoted,
 
 /**
  * @brief Expands variables inside a heredoc input.
- * 
- * This function prepares the expander context and processes the heredoc input 
+ *
+ * This function prepares the expander context and processes the heredoc input
  * with correct handling of quotes and environment variables.
- * 
+ *
  * - If the heredoc is unquoted, variables like $VAR and $? are expanded.
  * - If the heredoc is quoted, no expansion occurs (depending on quote_char).
- * 
+ *
  * @param input        The original heredoc string.
  * @param shell        The shell context (for environment access).
  * @param quoted       Whether the heredoc was quoted.
