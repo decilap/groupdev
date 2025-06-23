@@ -6,7 +6,7 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 13:50:50 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/11 14:11:51 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/23 13:56:18 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,11 @@
 void	ft_init_shell_struct(t_shell *shell, char **envp)
 {
 	shell->env = copy_env(envp);
+	shell->groups = NULL;
+	shell->saved_in = -1;
+	shell->saved_out = -1;
+	shell->line = NULL;
+	shell->lines = NULL;
 	shell->cmds = NULL;
 	shell->locals = NULL;
 	shell->history = NULL;

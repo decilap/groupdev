@@ -6,7 +6,7 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 15:39:47 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/16 14:54:12 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/23 13:58:43 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,13 @@ int	builtin_exit(char **args, t_shell *shell)
 	if (err)
 		return (1);
 	shell->exit_status = (unsigned char)exit_code;
+	free_groups(shell->groups);
+	dup2(shell->saved_in, STDIN_FILENO);
+	dup2(shell->saved_out, STDOUT_FILENO);
+	close(shell->saved_in);
+	close(shell->saved_out);
+	free(shell->line);
+	ft_free_arr(shell->lines);
 	clean_exit(shell);
 	return (404);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 15:39:47 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/14 23:21:31 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/23 13:54:27 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,12 +81,10 @@ int	run_builtin(t_cmd *cmd, t_shell *shell)
  */
 int	execute_builtin(t_cmd *cmd, t_shell *shell)
 {
-	int	saved_in;
-	int	saved_out;
 	int	ret;
 
-	saved_in = dup(STDIN_FILENO);
-	saved_out = dup(STDOUT_FILENO);
+	shell->saved_in = dup(STDIN_FILENO);
+	shell->saved_out = dup(STDOUT_FILENO);
 	if (cmd->fd_in != STDIN_FILENO)
 	{
 		dup2(cmd->fd_in, STDIN_FILENO);
@@ -98,9 +96,9 @@ int	execute_builtin(t_cmd *cmd, t_shell *shell)
 		close(cmd->fd_out);
 	}
 	ret = run_builtin(cmd, shell);
-	dup2(saved_in, STDIN_FILENO);
-	dup2(saved_out, STDOUT_FILENO);
-	close(saved_in);
-	close(saved_out);
+	dup2(shell->saved_in, STDIN_FILENO);
+	dup2(shell->saved_out, STDOUT_FILENO);
+	close(shell->saved_in);
+	close(shell->saved_out);
 	return (ret);
 }

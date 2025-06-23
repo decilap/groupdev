@@ -6,7 +6,7 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 19:57:55 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/21 18:49:05 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/23 13:13:49 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 const char	*handle_separator(const char **str, char **result);
 const char	*handle_word(const char **str, char c, char **result);
+
+char		**ft_split_new_line(char const *str, char c, t_shell *shell);
 
 void		ft_init_pending(t_pending *pen);
 void		ft_error_brain(t_shell *shell);

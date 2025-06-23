@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ddecilap <ddecilap@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 19:57:34 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/21 12:39:29 by ddecilap         ###   ########.fr       */
+/*   Updated: 2025/06/23 14:02:14 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,11 @@ typedef struct s_var
  */
 typedef struct s_shell
 {
+	struct s_group	*groups;
+	int				saved_in;
+	int				saved_out;
+	char			*line;
+	char			**lines;
 	char			**env;
 	int				exit_status;
 	t_var			*locals;

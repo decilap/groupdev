@@ -6,7 +6,7 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/21 13:56:53 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/21 18:48:20 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/23 13:15:03 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static int	ft_split_string(const char *str, char c, char **result)
 	return (1);
 }
 
-char	**ft_split_new_line(const char *str, char c)
+char	**ft_split_new_line(const char *str, char c, t_shell *shell)
 {
 	char	**result;
 	int		word_count;
@@ -83,5 +83,6 @@ char	**ft_split_new_line(const char *str, char c)
 		return (NULL);
 	}
 	result[word_count] = (NULL);
+	shell->lines = result;
 	return (result);
 }

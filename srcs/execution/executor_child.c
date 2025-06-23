@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor_child.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ddecilap <ddecilap@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 15:39:47 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/21 12:46:40 by ddecilap         ###   ########.fr       */
+/*   Updated: 2025/06/23 13:49:02 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static void	handle_exec_err(t_cmd *cmd, struct stat *sb)
  */
 static int	execute_builtin_no_redir(t_cmd *cmd, t_shell *shell)
 {
-	return (run_builtin(cmd, shell));
+	return (run_builtin(cmd, shell));//la
 }
 
 /**
@@ -104,7 +104,7 @@ void	child_process(t_cmd *cmd, t_shell *shell, t_pipe_ctx *ctx,
 		exit(127);
 	if (is_builtin(cmd))
 	{
-		status = execute_builtin_no_redir(cmd, shell);
+		status = execute_builtin_no_redir(cmd, shell);// la , t_pipe_ctx *pipe_ctx
 		exit(status);
 	}
 	if (!cmd->cmd_path)

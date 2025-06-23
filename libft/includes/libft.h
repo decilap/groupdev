@@ -6,7 +6,7 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 13:20:26 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/21 18:45:18 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/23 13:13:30 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ void		ft_lstclear(t_list **lst, void (*del)(void *));
 void		ft_lstiter(t_list *lst, void (*f)(void *));
 void		ft_free_arr(char **str);
 char		**ft_split(char const *str, char c);
-char		**ft_split_new_line(char const *str, char c);
 char		*ft_strdup(const char *s1);
 char		*ft_strchr(const char *s, int c);
 char		*ft_itoa(int n);
