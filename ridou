@@ -1,0 +1,103 @@
+ EXISTePAS < cat | cat > test.txt			// fichier exite pas
+
+
+
+
+minishell> &&
+minishell: syntax error near unexpected token			`&&'
+minishell> e
+minishell: e: command not found
+minishell> ;;
+minishell: syntax error near unexpected token			`;;'
+minishell> e||
+minishell: syntax error near unexpected token!! `||
+minishell> f
+minishell: f: command not found
+
+
+%
+
+
+minishell> e||
+minishell: syntax error near unexpected token!! `||
+minishell> ls
+'??'   build   includes   libft   libft.a   Makefile   minishell   out	 out2   readline.supp   srcs
+minishell> e
+minishell: e: command not found
+
+
+➜  lengarci git:(main) ✗ ./minishell 
+minishell> ||
+minishell: syntax error near unexpected token			`||'
+minishell> ||
+minishell: syntax error near unexpected token			`||'
+minishell> e||
+minishell: syntax error near unexpected token!! `||
+minishell> e\
+minishell: e\: command not found
+
+
+
+SUMMARY: AddressSanitizer: 84 byte(s) leaked in 4 allocation(s).
+minishell> |
+minishell: syntax error near unexpected token			`|'
+minishell> ||
+minishell: syntax error near unexpected token			`||'
+minishell> exit
+exit
+
+
+minishell> \
+minishell: \: command not found
+
+
+
+minishell> <>
+minishell: syntax error near unexpected token!! `>
+minishell> 
+minishell> l
+minishell: l: command not found
+
+
+
+minishell> >>
+minishell: syntax error near unexpected token!! `newline'
+minishell> >??
+
+
+minishell> >??
+minishell> >??
+minishell> <>
+minishell: syntax error near unexpected token!! `>
+minishell> >??
+
+
+
+minishell> ls
+build  includes  libft	libft.a  Makefile  minishell  out  out2  readline.supp	srcs
+minishell> *
+minishell: Makefile: command not found
+minishell> /****
+minishell: /****: No such file or directory
+minishell> *
+minishell: Makefile: command not found
+minishell> fewh
+minishell: fewh: command not found
+minishell> 43
+minishell: 43: command not found
+minishell> 43
+minishell: 43: command not found
+minishell> 3t
+minishell: 3t: command not found
+minishell> 4t
+minishell: 4t: command not found
+4minishell> 4wte84f*-7*4
+minishell: 4wte84f*-7*4: command not found
+minishell> 
+minishell> 48
+minishell: 48: command not found
+minishell> 4
+minishell: 4: command not found
+minishell> <>
+minishell: syntax error near unexpected token!! `>
+minishell> >??

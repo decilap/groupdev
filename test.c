@@ -14,7 +14,7 @@ typedef struct s_testcase
 } t_testcase;
 
 t_testcase tests[] = {
-   /*  {"echo $\"HOME\"", "HOME"},
+    {"echo $\"HOME\"", "HOME"},
 	{"echo $\"\"", "$"},
 	{"echo \"$\"\"\"", "$"},
 	{"echo '$'''", "$"},
@@ -313,7 +313,7 @@ t_testcase tests[] = {
 	{"echo hola|cat", "hola", 0},
 	{"echo hola ||| cat", "minishell: syntax error near unexpected token!! `||", 0},
 	{"echo hola | cat", "hola", 0},
-	{"ech|o hola | cat", "", 1}, */
+	{"ech|o hola | cat", "", 1},
 	// {"cat Makefile | cat -e | cat -e", "", 1},
 	{"cat Makefile | grep srcs | cat -e", "SRCS_DIR	=	./srcs/$", 0},
 	{"ls *", "", 1},

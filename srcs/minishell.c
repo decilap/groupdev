@@ -6,7 +6,7 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 13:21:45 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/23 14:10:26 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/23 17:31:24 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ static void	prompt_loop(t_shell *shell)
 	{
 		line = readline("minishell> ");
 		if (!line)
-			return (clean_exit(shell));
+			return (ft_putstr_fd("exit\n", 1), clean_exit(shell));
 		shell->line = line;
 		if (g_signal == SIGINT)
 		{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ddecilap <ddecilap@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 14:35:24 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/21 15:52:59 by ddecilap         ###   ########.fr       */
+/*   Updated: 2025/06/23 17:00:32 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ t_token	*validate_and_expand_wildcards(t_token *tokens, t_shell *shell)
 	cur = tokens;
 	if (!validate_pipe_logic(tokens, shell)
 		|| !validate_redirections(tokens, shell))
-		return (NULL);
+		return (free_tokens(tokens), NULL);
 	while (cur)
 	{
 		next = cur->next;
@@ -78,7 +78,7 @@ t_token	*validate_and_expand_wildcards(t_token *tokens, t_shell *shell)
 		{
 			res = expand_wildcard_for_token(&tokens, cur, shell);
 			if (res == -1)
-				return (NULL);
+				return (free_tokens(tokens), NULL);
 			if (res == 1)
 			{
 				cur = tokens; // la liste peut avoir changé

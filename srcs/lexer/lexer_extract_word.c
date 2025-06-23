@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_extract_word.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 14:12:01 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/14 17:15:33 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/23 17:24:18 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,13 @@ static int	append_quoted_char(const char *line, int *i, char **result,
 	char	*add;
 	char	*tmp;
 
-	if (quote == '"' && line[*i] == '\\' && line[*i + 1])
-	{
-		add = ft_substr(line, *i + 1, 1);
-		*i += 2;
-	}
-	else
+	// if (quote == '"' && line[*i] == '\\' && line[*i + 1])
+	// {
+	// 	add = ft_substr(line, *i + 1, 1);
+	// 	*i += 2;
+	// }
+	// else
+	(void)quote;
 	{
 		add = ft_substr(line, *i, 1);
 		(*i)++;
@@ -101,12 +102,12 @@ static char	*extract_unquoted_char(const char *line, int *i)
 {
 	char	*add;
 
-	if (line[*i] == '\\' && line[*i + 1])
-	{
-		add = ft_substr(line, *i + 1, 1);
-		*i += 2;
-	}
-	else
+	// if (line[*i] == '\\' && line[*i + 1])
+	// {
+	// 	add = ft_substr(line, *i + 1, 1);
+	// 	*i += 2;
+	// }
+	// else
 	{
 		add = ft_substr(line, *i, 1);
 		(*i)++;
