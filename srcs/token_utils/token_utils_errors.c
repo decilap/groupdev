@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils_errors.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 14:52:59 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/14 22:12:07 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/23 15:14:56 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,11 @@ void	print_syntax_error(char *token)
 	else
 		ft_putstr_fd("newline'", 2);
 	ft_putstr_fd(RESET "\n", 2);
+}
+
+void	ft_free_token(t_token *target)
+{
+	if (target->value)
+		free(target->value);
+	free(target);
 }

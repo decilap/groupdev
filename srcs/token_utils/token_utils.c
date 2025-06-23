@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ddecilap <ddecilap@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 14:52:59 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/21 16:25:04 by ddecilap         ###   ########.fr       */
+/*   Updated: 2025/06/23 15:16:22 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_token	*add_token(t_token **head, t_token_data data)
 	t_token	*new;
 	t_token	*tmp;
 
-	new = safe_malloc(sizeof(t_token));
+	new = malloc(sizeof(t_token));
 	if (!new)
 		return (NULL);
 	new->type = data.type;
@@ -162,7 +162,7 @@ void	replace_token_with_list(t_token **head, t_token *target,
 			prev->next = target->next;
 		else
 			*head = target->next;
-		free_tokens(target);
+		ft_free_token(target);
 		return ;
 	}
 	if (prev)
@@ -173,4 +173,5 @@ void	replace_token_with_list(t_token **head, t_token *target,
 	while (last->next)
 		last = last->next;
 	last->next = target->next;
+	ft_free_token(target);
 }

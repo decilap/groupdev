@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote_extension.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 16:02:20 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/15 12:03:23 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/23 15:51:07 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

@@ -6,7 +6,7 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 19:57:48 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/20 20:50:23 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/23 15:15:38 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ typedef struct s_token_data
 	t_quote_state	quote_char;
 }	t_token_data;
 
+void			ft_free_token(t_token *target);
 const char		*token_type_to_str(int type);
 void			remove_quotes(char **s);
 void			print_syntax_error(char *token);
