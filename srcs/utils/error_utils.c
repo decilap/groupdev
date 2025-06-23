@@ -17,10 +17,10 @@
  * 
  * @param msg The error message to display.
  */
-void	exit_error(char *msg)
+void	exit_error(char *msg, t_shell *shell)
 {
 	perror(msg);
-	exit(EXIT_FAILURE);
+	clean_exit(shell);
 }
 
 /**
@@ -29,13 +29,13 @@ void	exit_error(char *msg)
  * @param size The size of memory to allocate.
  * @return A pointer to the allocated memory.
  */
-void	*safe_malloc(size_t size)
+void	*safe_malloc(size_t size, t_shell *shell)
 {
 	void	*ptr;
 
 	ptr = malloc(size);
 	if (!ptr)
-		exit_error(RED "minishell: 00 unset" RESET);
+		exit_error(RED "minishell: 00 unset" RESET, shell);
 	return (ptr);
 }
 

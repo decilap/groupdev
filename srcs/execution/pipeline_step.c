@@ -85,7 +85,7 @@ static void	handle_pipeline_fork(t_cmd *cmd, t_shell *shell,
 {
 	struct stat	sb;
 
-	pipe_prepare(ctx->pipe_ctx, cmd);
+	pipe_prepare(ctx->pipe_ctx, cmd, shell);
 	ctx->pids[*(ctx->i)] = fork();
 	if (ctx->pids[*(ctx->i)] == -1)
 	{
@@ -103,7 +103,7 @@ int	handle_pipeline_step(t_cmd *cmd, t_shell *shell, t_pipeline_ctx *ctx)
 {
 	int	precheck;
 
-	pipe_prepare(ctx->pipe_ctx, cmd);
+	pipe_prepare(ctx->pipe_ctx, cmd, shell);
 	precheck = handle_pipeline_prechecks(cmd, shell, ctx);
 	if (precheck != -1)
 		return (precheck);

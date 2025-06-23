@@ -23,7 +23,7 @@
  * @param ctx   The parsing context containing current command and tokens.
  * @return 1 if a subshell was processed; 0 otherwise.
  */
-int	process_token_subshell(t_parse_ctx *ctx)
+int	process_token_subshell(t_parse_ctx *ctx, t_shell *shell)
 {
 	if (ctx->tok->type != TOKEN_SUBSHELL)
 		return (0);
@@ -40,12 +40,12 @@ int	process_token_subshell(t_parse_ctx *ctx)
 		ctx->args = malloc(sizeof(char *) * MAX_CMD_ARGS);
 		ctx->quote_chars = malloc(sizeof(t_quote_state) * MAX_CMD_ARGS);
 		if (!ctx->args || !ctx->quote_chars)
-			exit_error("malloc failed in subshell");
+			exit_error("malloc failed in subshell", shell);
 		ft_memset(ctx->args, 0, sizeof(char *) * MAX_CMD_ARGS);
 		ft_memset(ctx->quote_chars, 0, sizeof(t_quote_state) * MAX_CMD_ARGS);
 		ctx->arg_i = 0;
 		ctx->quote_i = 0;
-		ctx->curr = setup_new_cmd();
+		ctx->curr = setup_new_cmd(shell);
 		if (!ctx->head)
 			ctx->head = ctx->curr;
 	}
@@ -63,6 +63,7 @@ t_token	*validate_and_expand_wildcards(t_token *tokens, t_shell *shell)
 {
 	int		res;
 	t_token	*cur;
+	t_token	*next;
 
 	cur = tokens;
 	if (!validate_pipe_logic(tokens, shell)
@@ -70,19 +71,21 @@ t_token	*validate_and_expand_wildcards(t_token *tokens, t_shell *shell)
 		return (NULL);
 	while (cur)
 	{
+		next = cur->next;
+
 		if (cur->type == TOKEN_WORD && cur->quoted == 0
 			&& ft_strchr(cur->value, '*') && !ft_strchr(cur->value, '='))
 		{
-			res = expand_wildcard_for_token(&tokens, cur);
+			res = expand_wildcard_for_token(&tokens, cur, shell);
 			if (res == -1)
 				return (NULL);
 			if (res == 1)
 			{
-				cur = tokens;
-				continue ;
+				cur = tokens; // la liste peut avoir changé
+				continue;
 			}
 		}
-		cur = cur->next;
+		cur = next;
 	}
 	return (tokens);
 }

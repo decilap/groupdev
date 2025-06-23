@@ -98,7 +98,7 @@ int	waitpids(pid_t *pids, int count, int final_status)
  * @param ctx Pipe context to update.
  * @param cmd The current command (checked for pipe necessity).
  */
-void	pipe_prepare(t_pipe_ctx *ctx, t_cmd *cmd)
+void	pipe_prepare(t_pipe_ctx *ctx, t_cmd *cmd, t_shell *shell)
 {
 	if (cmd->next && cmd->next_type == TOKEN_PIPE)
 		ctx->pipe_needed = 1;
@@ -107,6 +107,6 @@ void	pipe_prepare(t_pipe_ctx *ctx, t_cmd *cmd)
 	if (ctx->pipe_needed)
 	{
 		if (pipe(ctx->pipefd) == -1)
-			exit_error("pipe failed");
+			exit_error("pipe failed", shell);
 	}
 }

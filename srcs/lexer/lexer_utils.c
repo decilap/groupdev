@@ -124,7 +124,7 @@ static char	*extract_dollar_quote_content(const char *line, int *i)
  * @param tokens The token list.
  * @return 0 on success, 1 on failure.
  */
-int	handle_dollar_quote(t_lexer_ctx *ctx)
+int	handle_dollar_quote(t_lexer_ctx *ctx, t_shell *shell)
 {
 	char	*quoted_word;
 
@@ -132,7 +132,7 @@ int	handle_dollar_quote(t_lexer_ctx *ctx)
 	quoted_word = extract_dollar_quote_content(ctx->line, &ctx->i);
 	if (!quoted_word)
 		return (1);
-	if (add_trimmed_dollar_token(ctx, quoted_word))
+	if (add_trimmed_dollar_token(ctx, quoted_word, shell))
 		return (1);
 	return (0);
 }

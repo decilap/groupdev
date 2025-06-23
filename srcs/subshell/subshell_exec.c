@@ -32,7 +32,7 @@ static void	subshell_prepare_fds_and_env(t_cmd *cmd, t_shell *shell,
 	redir_in(cmd);
 	redir_out(cmd);
 	*env_backup = shell->env;
-	shell->env = copy_env(shell->env);
+	shell->env = copy_env(shell, shell->env);
 }
 
 /**
@@ -86,12 +86,12 @@ static void	subshell_prepare_and_check(t_cmd *cmd, t_shell *shell,
  * @return The next t_cmd to process, or NULL.
  */
 t_cmd	*group_add_subshell(t_cmd *cmds, t_group **head,
-	t_group **curr_group)
+	t_group **curr_group, t_shell *shell)
 {
 	t_group	*new_group;
 	t_cmd	*next;
 
-	new_group = create_group(cmds);
+	new_group = create_group(cmds, shell);
 	if (!new_group)
 		return (NULL);
 	new_group->next_op = cmds->next_type;
@@ -149,7 +149,7 @@ int	step_subshell(t_cmd *cmd, t_shell *shell, t_pipeline_ctx *ctx)
 
 	if (!cmd || !cmd->args || !cmd->args[0])
 		return (1);
-	pipe_prepare(ctx->pipe_ctx, cmd);
+	pipe_prepare(ctx->pipe_ctx, cmd, shell);
 	subctx.prev_fd = ctx->pipe_ctx->prev_fd;
 	subctx.pipefd = ctx->pipe_ctx->pipefd;
 	subctx.pipe_needed = (cmd->next_type == TOKEN_PIPE);

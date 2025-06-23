@@ -12,7 +12,7 @@
 
 #include "../includes/includes.h"
 
-static void	handle_operator_token(t_token *tok, t_parse_ctx *ctx)
+static void	handle_operator_token(t_token *tok, t_parse_ctx *ctx, t_shell *shell)
 {
 	t_cmd	*new;
 	t_cmd	*current;
@@ -22,14 +22,14 @@ static void	handle_operator_token(t_token *tok, t_parse_ctx *ctx)
 	{
 		ctx->args[ctx->arg_i] = NULL;
 		current = ctx->curr;
-		finalize_cmd_args(ctx);
+		finalize_cmd_args(ctx, shell);
 		current->next_type = tok->type;
-		new = setup_new_cmd();
+		new = setup_new_cmd(shell);
 		current->next = new;
 		new->prev = current;
 		new->prev_type = tok->type;
 		ctx->curr = new;
-		reset_args_and_quotes(ctx);
+		reset_args_and_quotes(ctx, shell);
 	}
 }
 
@@ -53,12 +53,12 @@ static int	process_current_token(t_parse_ctx *ctx, t_shell *shell,
 		return (-1);
 	if (heredoc_status == 1)
 		return (1);
-	if (process_token_subshell(ctx))
+	if (process_token_subshell(ctx, shell))
 		return (1);
 	if (ctx->tok->type == TOKEN_WORD)
-		ctx->tok = handle_word_token_block(ctx);
+		ctx->tok = handle_word_token_block(ctx, shell);
 	handle_redirection_token(&ctx->tok, ctx->curr, shell);
-	handle_operator_token(ctx->tok, ctx);
+	handle_operator_token(ctx->tok, ctx, shell);
 	return (0);
 }
 
@@ -79,7 +79,7 @@ static void	process_token_loop(t_parse_ctx *ctx, t_shell *shell,
 	{
 		if (!ctx->curr)
 		{
-			ctx->curr = setup_new_cmd();
+			ctx->curr = setup_new_cmd(shell);
 			if (!ctx->head)
 				ctx->head = ctx->curr;
 		}
@@ -112,7 +112,7 @@ static void	init_parse_context(t_parse_ctx *ctx, t_token *tok, t_shell *shell)
 	ctx->args = malloc(sizeof(char *) * MAX_CMD_ARGS);
 	ctx->quote_chars = malloc(sizeof(t_quote_state) * MAX_CMD_ARGS);
 	if (!ctx->args || !ctx->quote_chars)
-		exit_error("malloc args or quote_chars failed");
+		exit_error("malloc args or quote_chars failed", shell);
 	ft_memset(ctx->args, 0, sizeof(char *) * MAX_CMD_ARGS);
 	ft_memset(ctx->quote_chars, 0, sizeof(t_quote_state) * MAX_CMD_ARGS);
 }
@@ -132,7 +132,7 @@ t_cmd	*parse_tokens(t_token *tok, t_shell *shell, t_token *multi_data)
 	init_parse_context(&ctx, tok, shell);
 	process_token_loop(&ctx, shell, multi_data);
 	if (ctx.curr && ctx.arg_i > 0)
-		finalize_cmd_args(&ctx);
+		finalize_cmd_args(&ctx, shell);
 	if (ctx.args)
 	{
 		free_tmp_args(ctx.args, ctx.arg_i);

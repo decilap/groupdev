@@ -20,7 +20,7 @@
  * @param quote Pointeur vers le quote_state.
  */
 static void	handle_merge_word_start(t_token *cur, char **merged,
-		t_quote_state *quote)
+		t_quote_state *quote, t_shell *shell)
 {
 	char	*curr_value;
 
@@ -30,7 +30,7 @@ static void	handle_merge_word_start(t_token *cur, char **merged,
 		curr_value = "";
 	*merged = ft_strdup(curr_value);
 	if (!*merged)
-		exit_error("ft_strdup failed in handle_merge_word_start");
+		exit_error("ft_strdup failed in handle_merge_word_start", shell);
 	*quote = cur->quote_char;
 }
 
@@ -42,7 +42,7 @@ static void	handle_merge_word_start(t_token *cur, char **merged,
  * @param quote Pointeur vers le quote_state (mis à jour selon les tokens).
  */
 static void	handle_merge_word_continue(t_token **cur, char **merged,
-	t_quote_state *quote)
+	t_quote_state *quote, t_shell *shell)
 {
 	char	*tmp;
 
@@ -61,7 +61,7 @@ static void	handle_merge_word_continue(t_token **cur, char **merged,
 		if (!tmp)
 		{
 			free(*merged);
-			exit_error("ft_strjoin failed in handle_merge_word_continue");
+			exit_error("ft_strjoin failed in handle_merge_word_continue", shell);
 			return ;
 		}
 		free(*merged);
@@ -74,15 +74,15 @@ static void	handle_merge_word_continue(t_token **cur, char **merged,
 /**
  * @brief Gère un bloc de token WORD avec fusions et quotes.
  */
-t_token	*handle_word_token_block(t_parse_ctx *ctx)
+t_token	*handle_word_token_block(t_parse_ctx *ctx, t_shell *shell)
 {
 	char			*merged;
 	t_token			*cur;
 	t_quote_state	quote;
 
 	cur = ctx->tok;
-	handle_merge_word_start(cur, &merged, &quote);
-	handle_merge_word_continue(&cur, &merged, &quote);
+	handle_merge_word_start(cur, &merged, &quote, shell);
+	handle_merge_word_continue(&cur, &merged, &quote, shell);
 	ctx->args[ctx->arg_i] = merged;
 	ctx->quote_chars[ctx->quote_i] = quote;
 	ctx->arg_i++;
@@ -143,21 +143,23 @@ t_cmd	*parse_tokens_flow(char *replaced, t_shell *shell, t_token *multi_data)
 	t_token	*tmp;
 	t_cmd	*cmds;
 
-	tokens = lexer(replaced);
+	tokens = lexer(replaced, shell);
 	if (!tokens)
 		return (NULL);
+
+	shell->temp_tokens = tokens;
 	tmp = apply_quote_extension(tokens, shell);
 	if (!tmp)
-	{
-		free_tokens(tokens);
 		return (NULL);
-	}
 	free_tokens(tokens);
 	tokens = tmp;
+	shell->temp_tokens = tokens;
 	tokens = validate_and_expand_wildcards(tokens, shell);
 	if (!tokens)
 		return (NULL);
 	cmds = parse_tokens(tokens, shell, multi_data);
 	free_tokens(tokens);
+	shell->temp_tokens = NULL;
 	return (cmds);
 }
+

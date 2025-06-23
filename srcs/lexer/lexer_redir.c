@@ -48,7 +48,7 @@ static char	*extract_redir_op(const char *line, int *i)
  * @param i Pointer to the current parsing index (will be updated).
  * @param tokens Pointer to the token list to append to.
  */
-void	lexer_handle_redir(t_lexer_ctx *ctx)
+void	lexer_handle_redir(t_lexer_ctx *ctx, t_shell *shell)
 {
 	int				type;
 	char			*op;
@@ -67,7 +67,7 @@ void	lexer_handle_redir(t_lexer_ctx *ctx)
 		return ;
 	}
 	data = (t_token_data){value, type, 0, Q_NONE};
-	if (!add_token(&ctx->tokens, data))
+	if (!add_token(&ctx->tokens, data, shell))
 	{
 		free(value);
 		perror("lexer: add_token failed");

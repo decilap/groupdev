@@ -118,6 +118,24 @@ typedef struct s_var
 }	t_var;
 
 /**
+ * @brief Represents a token produced by lexical analysis.
+ *
+ * Contains the token type, quoting information, value, and links to the next
+ * token.
+ */
+typedef struct s_token
+{
+	int				type;
+	int				quoted;
+	int				joined;
+	char			*value;
+	int				owned;
+	t_quote_state	quote_char;
+	struct s_token	*next;
+}	t_token;
+
+
+/**
  * @brief Global state/context for the shell session.
  *
  * Stores environment, exit status, variables, history, and other global state.
@@ -139,23 +157,9 @@ typedef struct s_shell
 	size_t			histfile_len;
 	size_t			hist_len;
 	struct s_cmd	*cmds;
+	t_token			*temp_tokens; 
 }	t_shell;
 
-/**
- * @brief Represents a token produced by lexical analysis.
- *
- * Contains the token type, quoting information, value, and links to the next
- * token.
- */
-typedef struct s_token
-{
-	int				type;
-	int				quoted;
-	int				joined;
-	char			*value;
-	t_quote_state	quote_char;
-	struct s_token	*next;
-}	t_token;
 
 /**
  * @brief Represents a group of commands joined by logical operators (&&, ||).

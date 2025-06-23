@@ -43,12 +43,12 @@ typedef struct s_word_ctx
 int		is_quoted_word(const char *str);
 int		is_token_joined(const char *line, int curr_end, int next_start);
 int		is_unquoted_word_char(const char *line, int i);
-int		handle_dollar_quote(t_lexer_ctx *ctx);
-int		add_trimmed_dollar_token(t_lexer_ctx *ctx, char *quoted_word);
-void	lexer_handle_redir(t_lexer_ctx *ctx);
-void	lexer_handle_word(t_lexer_ctx *ctx);
+int		handle_dollar_quote(t_lexer_ctx *ctx, t_shell *shell);
+int		add_trimmed_dollar_token(t_lexer_ctx *ctx, char *quoted_word, t_shell *shell);
+void	lexer_handle_redir(t_lexer_ctx *ctx, t_shell *shell);
+void	lexer_handle_word(t_lexer_ctx *ctx, t_shell *shell);
 char	*extract_word(const char *line, int *i, int *quoted_out,
 			t_quote_state *quote_char_out);
-t_token	*lexer(const char *line);
+t_token	*lexer(const char *line, t_shell *shell);
 
 #endif

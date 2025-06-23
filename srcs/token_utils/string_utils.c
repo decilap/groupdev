@@ -72,7 +72,7 @@ int	get_token_type(char *s)
 }
 
 static int	copy_token_content(t_token **curr, t_token **new_tok,
-	t_token **copied)
+	t_token **copied, t_shell *shell)
 {
 	char			*copy_val;
 	t_token_data	data;
@@ -82,7 +82,7 @@ static int	copy_token_content(t_token **curr, t_token **new_tok,
 		return (0);
 	data = (t_token_data){copy_val, (*curr)->type, (*curr)->quoted,
 		(*curr)->quote_char};
-	*copied = add_token(new_tok, data);
+	*copied = add_token(new_tok, data, shell);
 	if (!(*copied))
 		return (free(copy_val), 0);
 	return (1);
@@ -132,11 +132,11 @@ static void	remove_last_token(t_token **head)
  * @param new_tok Pointer to the head of the new token list.
  * @return 1 on success, 0 on allocation failure.
  */
-int	copy_simple_token(t_token **curr, t_token **new_tok)
+int	copy_simple_token(t_token **curr, t_token **new_tok, t_shell *shell)
 {
 	t_token	*copied;
 
-	if (!copy_token_content(curr, new_tok, &copied))
+	if (!copy_token_content(curr, new_tok, &copied, shell))
 		return (0);
 	if (copied->value && copied->value[0] == '\0' && copied->quoted == 0)
 	{

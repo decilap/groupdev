@@ -25,12 +25,12 @@
  * @param type An integer representing the type of the token.
  * @return A pointer to the newly added token.
  */
-t_token	*add_token(t_token **head, t_token_data data)
+t_token	*add_token(t_token **head, t_token_data data, t_shell *shell)
 {
 	t_token	*new;
 	t_token	*tmp;
 
-	new = malloc(sizeof(t_token));
+	new = safe_malloc(sizeof(t_token), shell);
 	if (!new)
 		return (NULL);
 	new->type = data.type;
@@ -38,6 +38,7 @@ t_token	*add_token(t_token **head, t_token_data data)
 	new->quoted = data.quoted;
 	new->quote_char = data.quote_char;
 	new->value = data.value;
+	new->owned = 1;
 	new->joined = 0;
 	if (!*head)
 		*head = new;
@@ -147,8 +148,7 @@ static t_token	*find_previous_token(t_token *head, t_token *target)
  * @param target The token to replace.
  * @param new_tokens The new token list to insert (can be NULL).
  */
-void	replace_token_with_list(t_token **head, t_token *target,
-	t_token *new_tokens)
+void	replace_token_with_list(t_token **head, t_token *target, t_token *new_tokens)
 {
 	t_token	*prev;
 	t_token	*last;
@@ -162,7 +162,7 @@ void	replace_token_with_list(t_token **head, t_token *target,
 			prev->next = target->next;
 		else
 			*head = target->next;
-		ft_free_token(target);
+		free_one_token(target);
 		return ;
 	}
 	if (prev)
@@ -173,5 +173,6 @@ void	replace_token_with_list(t_token **head, t_token *target,
 	while (last->next)
 		last = last->next;
 	last->next = target->next;
-	ft_free_token(target);
+	free_one_token(target);
 }
+

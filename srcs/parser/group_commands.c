@@ -19,14 +19,14 @@
  * and pointers.
  * @return Pointer to the newly allocated t_cmd structure.
  */
-t_cmd	*setup_new_cmd(void)
+t_cmd	*setup_new_cmd(t_shell *shell)
 {
 	t_cmd	*cmd;
 
 	cmd = malloc(sizeof(t_cmd));
 	if (!cmd)
 	{
-		exit_error("malloc failed");
+		exit_error("malloc failed", shell);
 		return (NULL);
 	}
 	cmd->args = NULL;
@@ -49,7 +49,7 @@ t_cmd	*setup_new_cmd(void)
  * or NULL if cmds is NULL.
  */
 
-t_group	*create_group(t_cmd *cmds)
+t_group	*create_group(t_cmd *cmds, t_shell *shell)
 {
 	t_group	*group;
 
@@ -58,7 +58,7 @@ t_group	*create_group(t_cmd *cmds)
 	group = malloc(sizeof(t_group));
 	if (!group)
 	{
-		exit_error("malloc group_commands");
+		exit_error("malloc group_commands", shell);
 		return (NULL);
 	}
 	group->cmds = cmds;
@@ -78,12 +78,12 @@ t_group	*create_group(t_cmd *cmds)
  * @return Pointer to the next command after the pipeline (may be NULL).
  */
 static t_cmd	*group_add_pipeline(t_cmd *cmds, t_group **head,
-	t_group **curr_group)
+	t_group **curr_group, t_shell *shell)
 {
 	t_group	*new_group;
 	t_cmd	*next;
 
-	new_group = create_group(cmds);
+	new_group = create_group(cmds, shell);
 	if (!new_group)
 		return (NULL);
 	while (cmds->next && cmds->next_type == TOKEN_PIPE)
@@ -108,7 +108,7 @@ static t_cmd	*group_add_pipeline(t_cmd *cmds, t_group **head,
  * @param cmds Linked list of parsed commands.
  * @return Head of the new linked list of command groups.
  */
-t_group	*group_commands(t_cmd *cmds)
+t_group	*group_commands(t_cmd *cmds, t_shell *shell)
 {
 	t_group	*head;
 	t_group	*curr_group;
@@ -119,9 +119,9 @@ t_group	*group_commands(t_cmd *cmds)
 	{
 		if (cmds->cmd_path && ft_strncmp(cmds->cmd_path,
 				"__SUBSHELL_", 11) == 0)
-			cmds = group_add_subshell(cmds, &head, &curr_group);
+			cmds = group_add_subshell(cmds, &head, &curr_group, shell);
 		else
-			cmds = group_add_pipeline(cmds, &head, &curr_group);
+			cmds = group_add_pipeline(cmds, &head, &curr_group, shell);
 	}
 	return (head);
 }

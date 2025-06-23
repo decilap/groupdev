@@ -49,7 +49,7 @@ char	*get_env_value(const char *name, char **env)
  * @param envp The source environment array.
  * @return A new copy of the environment array.
  */
-char	**copy_env(char **envp)
+char	**copy_env(t_shell *shell, char **envp)
 {
 	int		i;
 	int		env_count;
@@ -58,7 +58,7 @@ char	**copy_env(char **envp)
 	env_count = 0;
 	while (envp[env_count])
 		env_count++;
-	new_env = safe_malloc(sizeof(char *) * (env_count + 1));
+	new_env = safe_malloc(sizeof(char *) * (env_count + 1), shell);
 	i = 0;
 	while (i < env_count)
 	{
@@ -68,7 +68,7 @@ char	**copy_env(char **envp)
 			while (i > 0)
 				free(new_env[--i]);
 			free(new_env);
-			exit_error(RED "minishell: unset" RESET);
+			exit_error(RED "minishell: unset" RESET, shell);
 			return (NULL);
 		}
 		i++;

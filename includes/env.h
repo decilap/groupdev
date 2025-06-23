@@ -21,7 +21,7 @@ void	set_local_var(t_shell *shell, const char *name, const char *value);
 void	add_to_env_from_local(t_shell *shell, const char *name);
 char	*get_cmd_path(char *cmd, char **env, int *err_code);
 char	*get_env_value(const char *name, char **env);
-char	**copy_env(char **envp);
+char	**copy_env(t_shell *shell, char **envp);
 char	*search_in_path(char *cmd, char **paths);
 void	add_to_env(t_shell *shell, char *args);
 void	remove_env_var(const char *name, t_shell *shell);

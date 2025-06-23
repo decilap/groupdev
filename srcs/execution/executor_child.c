@@ -42,7 +42,7 @@ static void	handle_execve(t_cmd *cmd, t_shell *shell)
 			ft_putendl_fd(": No such file or directory" RESET, STDERR_FILENO);
 			exit(127);
 		}
-		exit_error("execve failed");
+		exit_error("execve failed", shell);
 	}
 }
 

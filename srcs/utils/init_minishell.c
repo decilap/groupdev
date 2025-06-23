@@ -14,12 +14,7 @@
 
 void	ft_init_shell_struct(t_shell *shell, char **envp)
 {
-	shell->env = copy_env(envp);
-	shell->groups = NULL;
-	shell->saved_in = -1;
-	shell->saved_out = -1;
-	shell->line = NULL;
-	shell->lines = NULL;
+	shell->env = copy_env(shell, envp);
 	shell->cmds = NULL;
 	shell->locals = NULL;
 	shell->history = NULL;

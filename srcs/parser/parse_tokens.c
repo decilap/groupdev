@@ -21,16 +21,16 @@
  * @param cmd The command structure where allocations are stored.
  * @param count Number of arguments to allocate for.
  */
-static void	allocate_cmd_args(t_cmd *cmd, int count)
+static void	allocate_cmd_args(t_cmd *cmd, int count, t_shell *shell)
 {
 	cmd->args = malloc(sizeof(char *) * (count + 1));
 	if (!cmd->args)
-		exit_error("malloc failed (args)");
+		exit_error("malloc failed (args)", shell);
 	cmd->quote_chars = malloc(sizeof(t_quote_state) * (count + 1));
 	if (!cmd->quote_chars)
 	{
 		free(cmd->args);
-		exit_error("malloc failed (quote_chars)");
+		exit_error("malloc failed (quote_chars)", shell);
 	}
 }
 
@@ -47,7 +47,7 @@ static void	allocate_cmd_args(t_cmd *cmd, int count)
  * @param count Total number of arguments.
  */
 static void	fill_cmd_args(t_cmd *cmd, char **args,
-	t_quote_state *quote_chars, int count)
+	t_quote_state *quote_chars, int count, t_shell *shell)
 {
 	int	i;
 
@@ -60,7 +60,7 @@ static void	fill_cmd_args(t_cmd *cmd, char **args,
 			free_partial_args(cmd->args, i);
 			free(cmd->args);
 			free(cmd->quote_chars);
-			exit_error("strdup failed in fill_cmd_args");
+			exit_error("strdup failed in fill_cmd_args", shell);
 			return ;
 		}
 		cmd->quote_chars[i] = quote_chars[i];
@@ -126,7 +126,7 @@ void	handle_path_errors(t_cmd *cmd, t_token *expanded, int err_code,
 			ft_putstr_fd(RED "minishell: ", STDERR_FILENO);
 			if (expanded && expanded->value)
 				ft_putstr_fd(expanded->value, STDERR_FILENO);
-			ft_putendl_fd(": command not found" RESET, STDERR_FILENO);
+			ft_putendl_fd(": command not found!" RESET, STDERR_FILENO);
 		}
 		shell->exit_status = 127;
 	}
@@ -146,11 +146,11 @@ void	handle_path_errors(t_cmd *cmd, t_token *expanded, int err_code,
  *
  * @param ctx The parsing context containing temporary argument data.
  */
-void	finalize_cmd_args(t_parse_ctx *ctx)
+void	finalize_cmd_args(t_parse_ctx *ctx, t_shell *shell)
 {
 	if (!ctx->curr)
 	{
-		ctx->curr = setup_new_cmd();
+		ctx->curr = setup_new_cmd(shell);
 		ctx->head = ctx->curr;
 	}
 	if (ctx->curr->args)
@@ -167,7 +167,7 @@ void	finalize_cmd_args(t_parse_ctx *ctx)
 	}
 	ctx->curr->args = NULL;
 	ctx->curr->quote_chars = NULL;
-	allocate_cmd_args(ctx->curr, ctx->arg_i);
-	fill_cmd_args(ctx->curr, ctx->args, ctx->quote_chars, ctx->arg_i);
+	allocate_cmd_args(ctx->curr, ctx->arg_i, shell);
+	fill_cmd_args(ctx->curr, ctx->args, ctx->quote_chars, ctx->arg_i, shell);
 	resolve_cmd_path(ctx->curr, ctx->shell);
 }

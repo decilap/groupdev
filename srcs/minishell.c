@@ -163,7 +163,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	ft_init_shell_struct(&shell, envp);
 	ft_init_shlvl_env(&shell);
-	ft_init_history_env(&shell);
+	//ft_init_history_env(&shell);
 	init_signals();
 	prompt_loop(&shell);
 	perror(RED "\nminishell: Error in prompt_loop" RESET);

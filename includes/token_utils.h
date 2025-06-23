@@ -28,8 +28,8 @@ void			print_syntax_error(char *token);
 int				get_token_type(char *s);
 int				is_quoted(const char *delim_raw);
 int				is_syntax_error(t_token *t);
-int				copy_simple_token(t_token **curr, t_token **new_tok);
-t_token			*add_token(t_token **head, t_token_data data);
+int				copy_simple_token(t_token **curr, t_token **new_tok, t_shell *shell);
+t_token			*add_token(t_token **head, t_token_data data, t_shell *shell);
 t_quote_state	merge_quote_state(t_quote_state a, t_quote_state b);
 
 #endif

@@ -15,6 +15,7 @@
 
 const char	*handle_separator(const char **str, char **result);
 const char	*handle_word(const char **str, char c, char **result);
+void print_tokens(t_token *tok);
 
 char		**ft_split_new_line(char const *str, char c, t_shell *shell);
 
@@ -23,12 +24,12 @@ void		ft_error_brain(t_shell *shell);
 int			pending_input(void);
 int			parse_echo_flags(char **args, int *newline);
 void		free_tmp_args(char **args, int count);
-void		exit_error(char *msg);
-void		*safe_malloc(size_t size);
+void		exit_error(char *msg, t_shell *shell);
+void		*safe_malloc(size_t size, t_shell *shell);
 void		free_tokens(t_token *tokens);
 void		free_cmds(t_cmd *cmd);
 void		free_groups(t_group *group);
-
+void        free_one_token(t_token *tok);
 void		ft_init_history_env(t_shell *shell);
 void		ft_init_shlvl_env(t_shell *shell);
 void		ft_init_shell_struct(t_shell *shell, char **envp);

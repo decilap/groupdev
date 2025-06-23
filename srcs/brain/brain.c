@@ -12,12 +12,12 @@
 
 #include "../includes/includes.h"
 
-static t_token	*ft_loop_with_herdoc(char **line, int *i, char *delim)
+static t_token	*ft_loop_with_herdoc(char **line, int *i, char *delim, t_shell *shell)
 {
 	t_token	*tok;
 
 	tok = NULL;
-	if (!ft_init_loop_herdoc(line, &tok, i, delim))
+	if (!ft_init_loop_herdoc(line, &tok, i, delim, shell))
 	{
 		return (perror(RED "minishell: Error in ft_init_loop_herdoc" RESET),
 			NULL);
@@ -25,11 +25,11 @@ static t_token	*ft_loop_with_herdoc(char **line, int *i, char *delim)
 	return (tok);
 }
 
-static bool	ft_herdoc_chr(char *line, char **eof_delim)
+static bool	ft_herdoc_chr(char *line, char **eof_delim, t_shell *shell)
 {
 	t_token	*cmd;
 
-	cmd = lexer(line);
+	cmd = lexer(line, shell);
 	if (!cmd)
 		return (false);
 	while (cmd && cmd->value)
@@ -49,7 +49,7 @@ static bool	ft_herdoc_chr(char *line, char **eof_delim)
 	return (true);
 }
 
-static int	has_complete_multiline_heredoc(char **lines, char **delim)
+static int	has_complete_multiline_heredoc(char **lines, char **delim, t_shell *shell)
 {
 	int		j;
 	char	*eof_delim;
@@ -57,7 +57,7 @@ static int	has_complete_multiline_heredoc(char **lines, char **delim)
 	eof_delim = NULL;
 	if (!lines[1])
 		return (0);
-	if (!ft_herdoc_chr(lines[0], &eof_delim))
+	if (!ft_herdoc_chr(lines[0], &eof_delim, shell))
 		return (perror(RED "minishell: ft_herdoc_chr" RESET), -1);
 	if (!eof_delim)
 		return (0);
@@ -80,7 +80,7 @@ bool	ft_loop(t_shell *shell, char **line, int *i, t_token **tok)
 	char	*delim;
 
 	delim = NULL;
-	ret_multi = has_complete_multiline_heredoc(line, &delim);
+	ret_multi = has_complete_multiline_heredoc(line, &delim, shell);
 	if (ret_multi < 0)
 	{
 		shell->exit_status = 1;
@@ -89,7 +89,7 @@ bool	ft_loop(t_shell *shell, char **line, int *i, t_token **tok)
 	}
 	if (ret_multi > 0)
 	{
-		*tok = ft_loop_with_herdoc(line, i, delim);
+		*tok = ft_loop_with_herdoc(line, i, delim, shell);
 		if (*tok)
 			return (true);
 		shell->exit_status = 1;

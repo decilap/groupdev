@@ -45,7 +45,7 @@ int	is_syntax_error(t_token *t)
  */
 void	print_syntax_error(char *token)
 {
-	ft_putstr_fd(RED "minishell: syntax error near unexpected token!! `", 2);
+	ft_putstr_fd(RED "minishell: syntax error near unexpected token! `", 2);
 	if (token)
 		ft_putstr_fd(token, 2);
 	else

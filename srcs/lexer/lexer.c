@@ -22,7 +22,7 @@
  * @param type The token type (TOKEN_AND, TOKEN_OR, TOKEN_PIPE).
  * @return 1 on success, 0 on failure.
  */
-static int	create_logical_token(t_token **tokens, const char *str, int type)
+static int	create_logical_token(t_token **tokens, const char *str, int type, t_shell *shell)
 {
 	char			*op;
 	t_token_data	data;
@@ -31,7 +31,7 @@ static int	create_logical_token(t_token **tokens, const char *str, int type)
 	if (!op)
 		return (0);
 	data = (t_token_data){op, type, 0, Q_NONE};
-	if (!add_token(tokens, data))
+	if (!add_token(tokens, data, shell))
 	{
 		free(op);
 		return (0);
@@ -47,25 +47,25 @@ static int	create_logical_token(t_token **tokens, const char *str, int type)
  * @param ctx The lexer context.
  * @return 1 if a logical operator was handled, 0 otherwise.
  */
-static int	lexer_handle_logical(t_lexer_ctx *ctx)
+static int	lexer_handle_logical(t_lexer_ctx *ctx,t_shell *shell)
 {
 	if (ctx->line[ctx->i] == '&' && ctx->line[ctx->i + 1] == '&')
 	{
-		if (!create_logical_token(&ctx->tokens, "&&", TOKEN_AND))
+		if (!create_logical_token(&ctx->tokens, "&&", TOKEN_AND, shell))
 			return (0);
 		ctx->i += 2;
 		return (1);
 	}
 	else if (ctx->line[ctx->i] == '|' && ctx->line[ctx->i + 1] == '|')
 	{
-		if (!create_logical_token(&ctx->tokens, "||", TOKEN_OR))
+		if (!create_logical_token(&ctx->tokens, "||", TOKEN_OR, shell))
 			return (0);
 		ctx->i += 2;
 		return (1);
 	}
 	else if (ctx->line[ctx->i] == '|')
 	{
-		if (!create_logical_token(&ctx->tokens, "|", TOKEN_PIPE))
+		if (!create_logical_token(&ctx->tokens, "|", TOKEN_PIPE, shell))
 			return (0);
 		ctx->i++;
 		return (1);
@@ -81,7 +81,7 @@ static int	lexer_handle_logical(t_lexer_ctx *ctx)
  *
  * @param ctx The lexer context.
  */
-static void	process_one_token(t_lexer_ctx *ctx)
+static void	process_one_token(t_lexer_ctx *ctx, t_shell *shell)
 {
 	while (ft_isspace(ctx->line[ctx->i]))
 		ctx->i++;
@@ -89,11 +89,11 @@ static void	process_one_token(t_lexer_ctx *ctx)
 		return ;
 	ctx->start = ctx->i;
 	if (ctx->line[ctx->i] == '>' || ctx->line[ctx->i] == '<')
-		lexer_handle_redir(ctx);
-	else if (lexer_handle_logical(ctx))
+		lexer_handle_redir(ctx, shell);
+	else if (lexer_handle_logical(ctx, shell))
 		return ;
 	else
-		lexer_handle_word(ctx);
+		lexer_handle_word(ctx, shell);
 	ctx->end = ctx->i;
 	ctx->curr = ctx->tokens;
 	while (ctx->curr && ctx->curr->next)
@@ -137,12 +137,12 @@ static void	lexer_init_context(t_lexer_ctx *ctx, const char *line)
  * @param line The input string to tokenize.
  * @return The generated token list.
  */
-t_token	*lexer(const char *line)
+t_token	*lexer(const char *line, t_shell *shell)
 {
 	t_lexer_ctx	ctx;
 
 	lexer_init_context(&ctx, line);
 	while (line[ctx.i])
-		process_one_token(&ctx);
+		process_one_token(&ctx, shell);
 	return (ctx.tokens);
 }

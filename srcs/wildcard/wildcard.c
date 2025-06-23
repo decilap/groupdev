@@ -19,13 +19,13 @@
  *
  * @param ctx Pointer to the wildcard context to initialize.
  */
-static void	init_wildcard_ctx(t_wildcard_ctx *ctx)
+static void	init_wildcard_ctx(t_wildcard_ctx *ctx, t_shell *shell)
 {
 	ctx->capacity = WILDCARD_CAPACITY;
 	ctx->count = 0;
 	ctx->results = malloc(sizeof(char *) * ctx->capacity);
 	if (!ctx->results)
-		exit_error("malloc failed in wildcard");
+		exit_error("malloc failed in wildcard", shell);
 }
 
 /**
@@ -37,7 +37,7 @@ static void	init_wildcard_ctx(t_wildcard_ctx *ctx)
  *
  * @param ctx Pointer to the wildcard context to grow.
  */
-static void	wildcard_grow_results(t_wildcard_ctx *ctx)
+static void	wildcard_grow_results(t_wildcard_ctx *ctx, t_shell *shell)
 {
 	int		new_cap;
 	int		i;
@@ -49,7 +49,7 @@ static void	wildcard_grow_results(t_wildcard_ctx *ctx)
 	if (!new_results)
 	{
 		free_wildcard_ctx(ctx);
-		exit_error("realloc failed in wildcard");
+		exit_error("realloc failed in wildcard", shell);
 		return ;
 	}
 	while (i < ctx->count)
@@ -73,7 +73,7 @@ static void	wildcard_grow_results(t_wildcard_ctx *ctx)
  * @param ctx     Pointer to the wildcard context.
  */
 static void	process_entry(struct dirent *entry,
-	const char *pattern, t_wildcard_ctx *ctx)
+	const char *pattern, t_wildcard_ctx *ctx, t_shell *shell)
 {
 	if ((entry->d_name[0] == '.' && pattern[0] != '.')
 		|| ft_strcmp(entry->d_name, ".") == 0
@@ -82,7 +82,7 @@ static void	process_entry(struct dirent *entry,
 	if (!match_pattern(pattern, entry->d_name))
 		return ;
 	if (ctx->count >= ctx->capacity - 1)
-		wildcard_grow_results(ctx);
+		wildcard_grow_results(ctx, shell);
 	ctx->results[ctx->count++] = ft_strdup(entry->d_name);
 }
 
@@ -97,20 +97,20 @@ static void	process_entry(struct dirent *entry,
  * @return NULL-terminated array of matching filenames (malloc'ed),
  * or NULL on error.
  */
-static char	**wildcard_expand_dir(const char *dirpart, const char *pattern)
+static char	**wildcard_expand_dir(const char *dirpart, const char *pattern, t_shell *shell)
 {
 	DIR				*dir;
 	t_wildcard_ctx	ctx;
 	struct dirent	*entry;
 
-	init_wildcard_ctx(&ctx);
+	init_wildcard_ctx(&ctx, shell);
 	dir = opendir(dirpart);
 	if (!dir)
 		return (free(ctx.results), NULL);
 	entry = readdir(dir);
 	while (entry)
 	{
-		process_entry(entry, pattern, &ctx);
+		process_entry(entry, pattern, &ctx, shell);
 		entry = readdir(dir);
 	}
 	closedir(dir);
@@ -130,7 +130,7 @@ static char	**wildcard_expand_dir(const char *dirpart, const char *pattern)
  * @param pattern The full pattern to expand (may include directory).
  * @return NULL-terminated array of matching filenames, or NULL on error.
  */
-char	**wildcard_expand(const char *pattern)
+char	**wildcard_expand(const char *pattern, t_shell *shell)
 {
 	char	pat[MINI_PATH_MAX];
 	char	*slash;
@@ -151,5 +151,5 @@ char	**wildcard_expand(const char *pattern)
 		dirpart = ".";
 		patternpart = pat;
 	}
-	return (wildcard_expand_dir(dirpart, patternpart));
+	return (wildcard_expand_dir(dirpart, patternpart, shell));
 }

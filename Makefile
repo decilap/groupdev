@@ -36,7 +36,7 @@ CC			=	gcc -g
 
 DFLAGS		=	-MMD -MP
 UNAME_S		=	${shell uname -s}
-
+ #-fsanitize=address,leak
 ifeq ($(UNAME_S),Linux)
 	CFLAGS  = -Wall -Wextra -Werror
 	LDFLAGS = -lreadline
@@ -113,6 +113,7 @@ SRCS		=	${SRCS_DIR}minishell.c \
 				${SRCS_DIR}utils/string_utils.c \
 				${SRCS_DIR}utils/init_minishell.c \
 				${SRCS_DIR}utils/free_utils.c \
+				${SRCS_DIR}utils/print_utils.c \
 				${SRCS_DIR}utils/ry_ft_split_new_line.c \
 				${SRCS_DIR}utils/ry_utils.c \
 				${SRCS_DIR}token_utils/token_utils.c \

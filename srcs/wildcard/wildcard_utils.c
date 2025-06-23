@@ -101,7 +101,7 @@ void	free_wildcard_ctx(t_wildcard_ctx *ctx)
  * @return 1 on success, 0 on failure.
  */
 static int	insert_wildcard_matches(char **matches, t_token *cur,
-	t_token **inserted)
+	t_token **inserted, t_shell *shell)
 {
 	int				i;
 	char			*copy_val;
@@ -116,7 +116,7 @@ static int	insert_wildcard_matches(char **matches, t_token *cur,
 			return (0);
 		data = (t_token_data){copy_val, cur->type, cur->quoted,
 			cur->quote_char};
-		new_tok = add_token(inserted, data);
+		new_tok = add_token(inserted, data, shell);
 		if (!new_tok)
 		{
 			free(copy_val);
@@ -135,16 +135,16 @@ static int	insert_wildcard_matches(char **matches, t_token *cur,
  * @param cur The current token being processed.
  * @return 1 if expanded, 0 if no expansion, -1 on malloc failure.
  */
-int	expand_wildcard_for_token(t_token **tokens, t_token *cur)
+int	expand_wildcard_for_token(t_token **tokens, t_token *cur, t_shell *shell)
 {
 	char	**matches;
 	t_token	*inserted;
 
 	inserted = NULL;
-	matches = wildcard_expand(cur->value);
+	matches = wildcard_expand(cur->value, shell);
 	if (!matches)
 		return (0);
-	if (!insert_wildcard_matches(matches, cur, &inserted))
+	if (!insert_wildcard_matches(matches, cur, &inserted, shell))
 	{
 		ft_free_arr(matches);
 		free_tokens(inserted);

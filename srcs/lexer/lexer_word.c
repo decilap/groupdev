@@ -30,7 +30,7 @@ static int	extract_and_trim_word(const char *line, int *i, t_word_ctx *word)
 	raw_word = extract_word(line, i, &word->quoted, &word->quote_char);
 	if (!raw_word)
 		return (1);
-	word->trimmed = ft_strtrim(raw_word, " \t\n\r");
+	word->trimmed = ft_strtrim(raw_word, "\t\n\r");
 	free(raw_word);
 	if (!word->trimmed)
 		return (1);
@@ -50,7 +50,7 @@ static int	extract_and_trim_word(const char *line, int *i, t_word_ctx *word)
  * @return The added token, or NULL on failure.
  */
 static t_token	*add_word_token(t_token **tokens, char *trimmed,
-	int quoted, t_quote_state quote_char)
+	int quoted, t_quote_state quote_char, t_shell *shell)
 {
 	t_token_data	data;
 
@@ -58,7 +58,7 @@ static t_token	*add_word_token(t_token **tokens, char *trimmed,
 		data = (t_token_data){trimmed, TOKEN_SUBSHELL, quoted, quote_char};
 	else
 		data = (t_token_data){trimmed, TOKEN_WORD, quoted, quote_char};
-	return (add_token(tokens, data));
+	return (add_token(tokens, data, shell));
 }
 
 /**
@@ -107,7 +107,7 @@ static void	handle_joined_flag(t_lexer_ctx *ctx, t_token *tok)
  * @param quoted_word The extracted quoted word (untrimmed).
  * @return 0 on success, 1 on failure.
  */
-int	add_trimmed_dollar_token(t_lexer_ctx *ctx, char *quoted_word)
+int	add_trimmed_dollar_token(t_lexer_ctx *ctx, char *quoted_word, t_shell *shell)
 {
 	char			*trimmed;
 	t_token_data	data;
@@ -119,7 +119,7 @@ int	add_trimmed_dollar_token(t_lexer_ctx *ctx, char *quoted_word)
 	if (!trimmed)
 		return (1);
 	data = (t_token_data){trimmed, TOKEN_WORD, 1, Q_DOUBLE_QUOTE};
-	tok = add_token(&ctx->tokens, data);
+	tok = add_token(&ctx->tokens, data, shell);
 	if (!tok)
 		return (1);
 	if (tok && ctx->tokens && ctx->tokens->next)
@@ -143,7 +143,7 @@ int	add_trimmed_dollar_token(t_lexer_ctx *ctx, char *quoted_word)
  * @param i Pointer to the current index.
  * @param tokens The token list.
  */
-void	lexer_handle_word(t_lexer_ctx *ctx)
+void	lexer_handle_word(t_lexer_ctx *ctx, t_shell *shell)
 {
 	t_word_ctx	word;
 	t_token		*tok;
@@ -151,7 +151,7 @@ void	lexer_handle_word(t_lexer_ctx *ctx)
 	ctx->start = ctx->i;
 	if (ctx->line[ctx->i] == '$' && ctx->line[ctx->i + 1] == '"')
 	{
-		if (handle_dollar_quote(ctx))
+		if (handle_dollar_quote(ctx, shell))
 			return ;
 		return ;
 	}
@@ -159,6 +159,6 @@ void	lexer_handle_word(t_lexer_ctx *ctx)
 		return ;
 	ctx->end = ctx->i;
 	tok = add_word_token(&ctx->tokens, word.trimmed, word.quoted,
-			word.quote_char);
+			word.quote_char, shell);
 	handle_joined_flag(ctx, tok);
 }

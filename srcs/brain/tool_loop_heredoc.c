@@ -12,7 +12,7 @@
 
 #include "../includes/includes.h"
 
-t_token	*tokenize_lines_from_str(char **str)
+t_token	*tokenize_lines_from_str(char **str, t_shell *shell)
 {
 	t_token_data	data;
 	t_token			*tokens;
@@ -29,7 +29,7 @@ t_token	*tokenize_lines_from_str(char **str)
 			return (NULL);
 		}
 		data = (t_token_data){cmd, TOKEN_WORD, 0, Q_NONE};
-		check = add_token(&tokens, data);
+		check = add_token(&tokens, data, shell);
 		if (!check)
 		{
 			free_tokens(tokens);
@@ -55,12 +55,12 @@ static int	ft_take_delim(char **scan, char *delim)
 	return (i - 1);
 }
 
-bool	ft_init_loop_herdoc(char **line, t_token **tok, int *idx, char *delim)
+bool	ft_init_loop_herdoc(char **line, t_token **tok, int *idx, char *delim, t_shell *shell)
 {
 	int		i;
 	t_token	*token;
 
-	*tok = tokenize_lines_from_str(line);
+	*tok = tokenize_lines_from_str(line, shell);
 	if (!*tok)
 	{
 		perror(RED "minishell: Error in tokenize_lines_from_str" RESET);

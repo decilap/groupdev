@@ -21,7 +21,7 @@
  * 
  * @return 1 if handled, 0 if not applicable or error.
  */
-static int	handle_merge_dollar_with_word(t_token **curr, t_token **new_tok)
+static int	handle_merge_dollar_with_word(t_token **curr, t_token **new_tok, t_shell *shell)
 {
 	char			*merged;
 	t_token			*added;
@@ -38,7 +38,7 @@ static int	handle_merge_dollar_with_word(t_token **curr, t_token **new_tok)
 		if (!merged)
 			return (0);
 		data = (t_token_data){merged, TOKEN_WORD, 1, Q_SINGLE_QUOTE};
-		added = add_token(new_tok, data);
+		added = add_token(new_tok, data, shell);
 		if (!added)
 			return (free(merged), 0);
 		added->joined = 0;
@@ -88,7 +88,7 @@ static int	handle_lazy_expand_double_quote(t_token **curr, t_shell *shell)
  * @return 1 if handled, 0 if not applicable or error.
  */
 static int	handle_empty_quote_followed_by_word(t_token **curr,
-	t_token **new_tok)
+	t_token **new_tok, t_shell *shell)
 {
 	char			*merged_val;
 	t_token			*added;
@@ -106,7 +106,7 @@ static int	handle_empty_quote_followed_by_word(t_token **curr,
 			return (0);
 		data = (t_token_data){merged_val, TOKEN_WORD, (*curr)->quoted,
 			(*curr)->next->quote_char};
-		added = add_token(new_tok, data);
+		added = add_token(new_tok, data, shell);
 		if (!added)
 			return (free(merged_val), 0);
 		added->joined = (*curr)->joined;
@@ -124,7 +124,7 @@ static int	handle_empty_quote_followed_by_word(t_token **curr,
  * @return 1 if handled, 0 if not applicable or error.
  */
 static int	handle_dollar_followed_by_quoted_word(t_token **curr,
-	t_token **new_tok)
+	t_token **new_tok, t_shell *shell)
 {
 	char			*merged;
 	t_token			*added;
@@ -141,7 +141,7 @@ static int	handle_dollar_followed_by_quoted_word(t_token **curr,
 			return (0);
 		data = (t_token_data){merged, TOKEN_WORD, (*curr)->quoted,
 			(*curr)->next->quote_char};
-		added = add_token(new_tok, data);
+		added = add_token(new_tok, data, shell);
 		if (!added)
 			return (free(merged), 0);
 		added->joined = (*curr)->joined;
@@ -169,20 +169,20 @@ t_token	*apply_quote_extension(t_token *tokens, t_shell *shell)
 	new_tok = NULL;
 	while (curr)
 	{
-		if (handle_merge_dollar_with_word(&curr, &new_tok))
+		if (handle_merge_dollar_with_word(&curr, &new_tok, shell))
 			continue ;
 		res = handle_lazy_expand_double_quote(&curr, shell);
 		if (res == -1)
 			return (free_tokens(new_tok), NULL);
 		if (res == 2)
 			continue ;
-		if (handle_empty_quote_followed_by_word(&curr, &new_tok))
+		if (handle_empty_quote_followed_by_word(&curr, &new_tok, shell))
 			continue ;
-		if (handle_dollar_followed_by_quoted_word(&curr, &new_tok))
+		if (handle_dollar_followed_by_quoted_word(&curr, &new_tok, shell))
 			continue ;
-		if (handle_token_with_dollar(&curr, &new_tok))
+		if (handle_token_with_dollar(&curr, &new_tok, shell))
 			continue ;
-		if (!copy_simple_token(&curr, &new_tok))
+		if (!copy_simple_token(&curr, &new_tok, shell))
 			return (free_tokens(new_tok), NULL);
 	}
 	return (new_tok);

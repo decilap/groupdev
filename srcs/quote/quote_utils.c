@@ -12,7 +12,7 @@
 
 #include "../../includes/includes.h"
 
-void	reset_args_and_quotes(t_parse_ctx *ctx)
+void	reset_args_and_quotes(t_parse_ctx *ctx, t_shell *shell)
 {
 	if (ctx->args)
 		free_tmp_args(ctx->args, ctx->arg_i);
@@ -21,7 +21,7 @@ void	reset_args_and_quotes(t_parse_ctx *ctx)
 	ctx->args = malloc(sizeof(char *) * MAX_CMD_ARGS);
 	ctx->quote_chars = malloc(sizeof(t_quote_state) * MAX_CMD_ARGS);
 	if (!ctx->args || !ctx->quote_chars)
-		exit_error("malloc failed");
+		exit_error("malloc failed", shell);
 	ft_memset(ctx->args, 0, sizeof(char *) * MAX_CMD_ARGS);
 	ft_memset(ctx->quote_chars, 0, sizeof(t_quote_state) * MAX_CMD_ARGS);
 	ctx->arg_i = 0;

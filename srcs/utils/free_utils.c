@@ -150,6 +150,8 @@ void	clean_exit(t_shell *shell)
 {
 	if (!shell)
 		exit(1);
+	if (shell->temp_tokens)
+		free_tokens(shell->temp_tokens);
 	if (!save_to_file(shell, &shell->history))
 		perror(RED "minishell: Error in save_to_file for history" RESET);
 	if (shell->history)
@@ -160,4 +162,19 @@ void	clean_exit(t_shell *shell)
 	if (shell->env)
 		ft_free_arr(shell->env);
 	exit(shell->exit_status);
+}
+
+/**
+ * @brief Frees a single token and its associated memory if owned.
+ *
+ * If the token owns its value (i.e., `owned` is true), the function
+ * frees the string pointed to by `value`, then frees the token itself.
+ *
+ * @param tok Pointer to the token to be freed.
+ */
+void	free_one_token(t_token *tok)
+{
+	if (tok->value && tok->owned)
+		free(tok->value);
+	free(tok);
 }

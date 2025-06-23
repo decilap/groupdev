@@ -61,7 +61,7 @@ int	execute_with_logical(t_cmd *cmd, t_shell *shell)
 	int		status;
 	t_group	*groups;
 
-	groups = group_commands(cmd);
+	groups = group_commands(cmd, shell);
 	status = 0;
 	if (groups)
 	{

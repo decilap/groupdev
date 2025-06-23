@@ -95,7 +95,7 @@ int		waitpids(pid_t *pids, int count, int final_status);
 void	child_process(t_cmd *cmd, t_shell *shell, t_pipe_ctx *ctx,
 			struct stat *sb);
 void	redir_all(t_cmd *cmd, t_pipe_ctx *ctx);
-void	pipe_prepare(t_pipe_ctx *ctx, t_cmd *cmd);
+void	pipe_prepare(t_pipe_ctx *ctx, t_cmd *cmd, t_shell *shell);
 void	print_subshell_syntax_error(const char *line);
 void	update_ctx_after_cmd(t_pipe_ctx *ctx);
 void	child_process(t_cmd *cmd, t_shell *shell, t_pipe_ctx *ct,
