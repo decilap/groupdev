@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wildcard.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ddecilap <ddecilap@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 09:12:01 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/21 16:21:58 by ddecilap         ###   ########.fr       */
+/*   Updated: 2025/06/23 17:53:23 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,8 @@ static void	process_entry(struct dirent *entry,
  * @return NULL-terminated array of matching filenames (malloc'ed),
  * or NULL on error.
  */
-static char	**wildcard_expand_dir(const char *dirpart, const char *pattern, t_shell *shell)
+static char	**wildcard_expand_dir(const char *dirpart, const char *pattern,
+		t_shell *shell)
 {
 	DIR				*dir;
 	t_wildcard_ctx	ctx;

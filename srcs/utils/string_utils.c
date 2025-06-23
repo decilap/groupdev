@@ -6,7 +6,7 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 12:05:47 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/21 18:17:06 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/23 17:53:37 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,4 +114,3 @@ void	free_tokens(t_token *tokens)
 		tokens = tmp;
 	}
 }
-

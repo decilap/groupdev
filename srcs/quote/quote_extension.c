@@ -6,7 +6,7 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 16:02:20 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/23 16:02:40 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/23 17:51:30 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@
  * 
  * @return 1 if handled, 0 if not applicable or error.
  */
-static int	handle_merge_dollar_with_word(t_token **curr, t_token **new_tok, t_shell *shell)
+static int	handle_merge_dollar_with_word(t_token **curr, t_token **new_tok,
+		t_shell *shell)
 {
 	char			*merged;
 	t_token			*added;

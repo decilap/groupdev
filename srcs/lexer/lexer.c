@@ -6,7 +6,7 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 15:12:01 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/20 20:37:05 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/23 17:51:19 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@
  * @param type The token type (TOKEN_AND, TOKEN_OR, TOKEN_PIPE).
  * @return 1 on success, 0 on failure.
  */
-static int	create_logical_token(t_token **tokens, const char *str, int type, t_shell *shell)
+static int	create_logical_token(t_token **tokens, const char *str, int type,
+		t_shell *shell)
 {
 	char			*op;
 	t_token_data	data;
@@ -47,7 +48,7 @@ static int	create_logical_token(t_token **tokens, const char *str, int type, t_s
  * @param ctx The lexer context.
  * @return 1 if a logical operator was handled, 0 otherwise.
  */
-static int	lexer_handle_logical(t_lexer_ctx *ctx,t_shell *shell)
+static int	lexer_handle_logical(t_lexer_ctx *ctx, t_shell *shell)
 {
 	if (ctx->line[ctx->i] == '&' && ctx->line[ctx->i + 1] == '&')
 	{

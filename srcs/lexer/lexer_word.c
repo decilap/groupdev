@@ -6,7 +6,7 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/24 14:12:01 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/23 17:20:45 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/23 17:50:55 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,8 @@ static void	handle_joined_flag(t_lexer_ctx *ctx, t_token *tok)
  * @param quoted_word The extracted quoted word (untrimmed).
  * @return 0 on success, 1 on failure.
  */
-int	add_trimmed_dollar_token(t_lexer_ctx *ctx, char *quoted_word, t_shell *shell)
+int	add_trimmed_dollar_token(t_lexer_ctx *ctx, char *quoted_word,
+		t_shell *shell)
 {
 	char			*trimmed;
 	t_token_data	data;

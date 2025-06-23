@@ -6,7 +6,7 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 13:20:00 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/21 18:10:27 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/23 17:50:44 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ static int	ft_take_delim(char **scan, char *delim)
 	return (i - 1);
 }
 
-bool	ft_init_loop_herdoc(char **line, t_token **tok, int *idx, char *delim, t_shell *shell)
+bool	ft_init_loop_herdoc(char **line, t_token **tok, int *idx, char *delim,
+		t_shell *shell)
 {
 	int		i;
 	t_token	*token;

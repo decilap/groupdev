@@ -6,7 +6,7 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 14:35:24 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/23 17:00:32 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/23 17:55:07 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ t_token	*validate_and_expand_wildcards(t_token *tokens, t_shell *shell)
 	while (cur)
 	{
 		next = cur->next;
-
 		if (cur->type == TOKEN_WORD && cur->quoted == 0
 			&& ft_strchr(cur->value, '*') && !ft_strchr(cur->value, '='))
 		{
@@ -82,7 +81,7 @@ t_token	*validate_and_expand_wildcards(t_token *tokens, t_shell *shell)
 			if (res == 1)
 			{
 				cur = tokens; // la liste peut avoir changé
-				continue;
+				continue ;
 			}
 		}
 		cur = next;

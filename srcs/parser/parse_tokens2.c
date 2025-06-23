@@ -6,7 +6,7 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 14:53:04 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/20 19:22:48 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/23 17:54:32 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static void	handle_merge_word_continue(t_token **cur, char **merged,
 		if (!tmp)
 		{
 			free(*merged);
-			exit_error("ft_strjoin failed in handle_merge_word_continue", shell);
+			exit_error("ft_strjoin failed in handle_merge_word_conti.", shell);
 			return ;
 		}
 		free(*merged);
@@ -146,7 +146,6 @@ t_cmd	*parse_tokens_flow(char *replaced, t_shell *shell, t_token *multi_data)
 	tokens = lexer(replaced, shell);
 	if (!tokens)
 		return (NULL);
-
 	shell->temp_tokens = tokens;
 	tmp = apply_quote_extension(tokens, shell);
 	if (!tmp)
@@ -162,4 +161,3 @@ t_cmd	*parse_tokens_flow(char *replaced, t_shell *shell, t_token *multi_data)
 	shell->temp_tokens = NULL;
 	return (cmds);
 }
-

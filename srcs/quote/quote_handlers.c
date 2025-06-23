@@ -6,7 +6,7 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 16:02:20 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/23 15:27:53 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/23 17:51:45 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
  * 
  * When $ is followed by a quoted non-empty word or subshell.
  */
-int	handle_non_empty_quote_with_dollar(t_token **curr, t_token **new_tok, t_shell *shell)
+int	handle_non_empty_quote_with_dollar(t_token **curr, t_token **new_tok,
+		t_shell *shell)
 {
 	char			*merged;
 	t_token			*added;
@@ -66,7 +67,8 @@ int	handle_token_with_dollar(t_token **curr, t_token **new_tok, t_shell *shell)
  * When $ is followed by an empty quote and then a WORD/SUBSHELL, 
  * it merges the third token into the result.
  */
-int	handle_empty_quote_with_dollar(t_token **curr, t_token **new_tok, t_shell *shell)
+int	handle_empty_quote_with_dollar(t_token **curr, t_token **new_tok,
+		t_shell *shell)
 {
 	char			*merged_val;
 	t_token			*added;

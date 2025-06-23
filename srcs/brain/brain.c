@@ -6,13 +6,14 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 13:20:05 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/21 18:08:43 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/23 17:50:36 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/includes.h"
 
-static t_token	*ft_loop_with_herdoc(char **line, int *i, char *delim, t_shell *shell)
+static t_token	*ft_loop_with_herdoc(char **line, int *i, char *delim,
+		t_shell *shell)
 {
 	t_token	*tok;
 
@@ -49,7 +50,8 @@ static bool	ft_herdoc_chr(char *line, char **eof_delim, t_shell *shell)
 	return (true);
 }
 
-static int	has_complete_multiline_heredoc(char **lines, char **delim, t_shell *shell)
+static int	has_complete_multiline_heredoc(char **lines, char **delim,
+		t_shell *shell)
 {
 	int		j;
 	char	*eof_delim;

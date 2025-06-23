@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: decilapdenis <decilapdenis@student.42.f    +#+  +:+       +#+        */
+/*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 14:35:24 by ddecilap          #+#    #+#             */
-/*   Updated: 2025/06/14 22:54:51 by decilapdeni      ###   ########.fr       */
+/*   Updated: 2025/06/23 17:53:15 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/includes.h"
 
-static void	handle_operator_token(t_token *tok, t_parse_ctx *ctx, t_shell *shell)
+static void	handle_operator_token(t_token *tok, t_parse_ctx *ctx,
+		t_shell *shell)
 {
 	t_cmd	*new;
 	t_cmd	*current;

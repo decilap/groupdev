@@ -6,7 +6,7 @@
 /*   By: ryoussfi <ryoussfi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 13:21:45 by ryoussfi          #+#    #+#             */
-/*   Updated: 2025/06/23 17:31:24 by ryoussfi         ###   ########.fr       */
+/*   Updated: 2025/06/23 17:50:16 by ryoussfi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,7 +163,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	ft_init_shell_struct(&shell, envp);
 	ft_init_shlvl_env(&shell);
-	//ft_init_history_env(&shell);
+	ft_init_history_env(&shell);
 	init_signals();
 	prompt_loop(&shell);
 	perror(RED "\nminishell: Error in prompt_loop" RESET);
