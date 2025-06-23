@@ -16,6 +16,8 @@
 const char	*handle_separator(const char **str, char **result);
 const char	*handle_word(const char **str, char c, char **result);
 void print_tokens(t_token *tok);
+void	print_env(char **env);
+
 
 char		**ft_split_new_line(char const *str, char c, t_shell *shell);
 
